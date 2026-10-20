@@ -1,0 +1,1253 @@
+{
+  "instance": "Heterogeneous-64-seed42",
+  "seed": 2,
+  "method": "ga",
+  "objective": "fuel_litres",
+  "population": 32,
+  "generations": 80,
+  "evaluations": 2432,
+  "runtime_seconds": 0.5003607529999954,
+  "best": {
+    "genome": [
+      [
+        30,
+        39,
+        13,
+        35,
+        11,
+        43,
+        1,
+        51,
+        40,
+        50,
+        36,
+        2,
+        3,
+        17,
+        29,
+        8,
+        6,
+        7,
+        4,
+        41,
+        54,
+        46,
+        42,
+        5,
+        22,
+        37,
+        12,
+        49,
+        15,
+        61,
+        18,
+        33,
+        21,
+        27,
+        28,
+        31,
+        23,
+        32,
+        16,
+        48,
+        58,
+        45,
+        34,
+        53,
+        56,
+        19,
+        24,
+        38,
+        60,
+        59,
+        44,
+        55,
+        52,
+        64,
+        25,
+        9,
+        10,
+        47,
+        57,
+        62,
+        26,
+        63,
+        20,
+        14
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        2,
+        0,
+        0,
+        0,
+        2,
+        0,
+        1,
+        0,
+        1,
+        1,
+        2,
+        1,
+        0,
+        1,
+        1,
+        2,
+        2,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        2,
+        1,
+        0,
+        0,
+        0,
+        2,
+        1,
+        0,
+        1,
+        1,
+        2,
+        1,
+        1,
+        1,
+        1,
+        2,
+        2,
+        2
+      ]
+    ],
+    "transports": [
+      {
+        "vehicle": 0,
+        "customers": [
+          30,
+          39
+        ],
+        "start_minutes": 0.0,
+        "finish_minutes": 56.406,
+        "distance_km": 21.063,
+        "fuel_litres": 1.1182704770999998
+      },
+      {
+        "vehicle": 0,
+        "customers": [
+          13,
+          35,
+          11,
+          43,
+          1,
+          51
+        ],
+        "start_minutes": 56.406,
+        "finish_minutes": 244.33571428571432,
+        "distance_km": 74.033,
+        "fuel_litres": 3.9305378260999997
+      },
+      {
+        "vehicle": 0,
+        "customers": [
+          40,
+          50,
+          36,
+          2,
+          3,
+          17
+        ],
+        "start_minutes": 244.33571428571432,
+        "finish_minutes": 410.8165714285715,
+        "distance_km": 65.517,
+        "fuel_litres": 3.4784089088999997
+      },
+      {
+        "vehicle": 0,
+        "customers": [
+          29,
+          8
+        ],
+        "start_minutes": 410.8165714285715,
+        "finish_minutes": 514.3545714285715,
+        "distance_km": 47.859,
+        "fuel_litres": 2.5409156703
+      },
+      {
+        "vehicle": 0,
+        "customers": [
+          6,
+          7,
+          4,
+          41,
+          54,
+          46,
+          42,
+          5
+        ],
+        "start_minutes": 514.3545714285715,
+        "finish_minutes": 694.0137142857143,
+        "distance_km": 56.78,
+        "fuel_litres": 3.014546726
+      },
+      {
+        "vehicle": 0,
+        "customers": [
+          22
+        ],
+        "start_minutes": 694.0137142857143,
+        "finish_minutes": 752.4371428571428,
+        "distance_km": 28.548,
+        "fuel_litres": 1.5156618516
+      },
+      {
+        "vehicle": 0,
+        "customers": [
+          37,
+          12,
+          49,
+          15
+        ],
+        "start_minutes": 752.4371428571428,
+        "finish_minutes": 854.8898571428571,
+        "distance_km": 38.627,
+        "fuel_litres": 2.0507730959
+      },
+      {
+        "vehicle": 1,
+        "customers": [
+          61,
+          18,
+          33
+        ],
+        "start_minutes": 0.0,
+        "finish_minutes": 67.66771428571428,
+        "distance_km": 23.101,
+        "fuel_litres": 2.0899751911999997
+      },
+      {
+        "vehicle": 1,
+        "customers": [
+          21,
+          27,
+          28,
+          31
+        ],
+        "start_minutes": 67.66771428571428,
+        "finish_minutes": 170.28285714285715,
+        "distance_km": 37.103,
+        "fuel_litres": 3.3567529336
+      },
+      {
+        "vehicle": 1,
+        "customers": [
+          23,
+          32
+        ],
+        "start_minutes": 170.28285714285715,
+        "finish_minutes": 242.4207142857143,
+        "distance_km": 30.363,
+        "fuel_litres": 2.7469770455999996
+      },
+      {
+        "vehicle": 1,
+        "customers": [
+          16,
+          48,
+          58,
+          45,
+          34,
+          53,
+          56,
+          19,
+          24
+        ],
+        "start_minutes": 242.4207142857143,
+        "finish_minutes": 458.04657142857144,
+        "distance_km": 76.192,
+        "fuel_litres": 6.8931816704
+      },
+      {
+        "vehicle": 1,
+        "customers": [
+          38,
+          60,
+          59,
+          44,
+          55
+        ],
+        "start_minutes": 458.04657142857144,
+        "finish_minutes": 600.5455714285715,
+        "distance_km": 56.133,
+        "fuel_litres": 5.0784198696
+      },
+      {
+        "vehicle": 2,
+        "customers": [
+          52,
+          64,
+          25,
+          9,
+          10,
+          47,
+          57,
+          62,
+          26,
+          63,
+          20,
+          14
+        ],
+        "start_minutes": 0.0,
+        "finish_minutes": 238.85885714285715,
+        "distance_km": 64.376,
+        "fuel_litres": 13.4472966368
+      }
+    ],
+    "distance_km": 619.695,
+    "fuel_litres": 51.2617179031
+  },
+  "baseline_decoded": {
+    "genome": [
+      [
+        5,
+        3,
+        7,
+        4,
+        6,
+        10,
+        8,
+        11,
+        1,
+        2,
+        9,
+        34,
+        43,
+        44,
+        38,
+        41,
+        40,
+        35,
+        42,
+        36,
+        39,
+        37,
+        13,
+        17,
+        20,
+        21,
+        16,
+        18,
+        12,
+        15,
+        19,
+        14,
+        47,
+        55,
+        46,
+        50,
+        52,
+        53,
+        54,
+        48,
+        56,
+        49,
+        51,
+        45,
+        32,
+        28,
+        31,
+        25,
+        23,
+        26,
+        22,
+        29,
+        24,
+        33,
+        30,
+        27,
+        61,
+        60,
+        59,
+        58,
+        64,
+        57,
+        63,
+        62
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ]
+    ],
+    "transports": [
+      {
+        "vehicle": 0,
+        "customers": [
+          5,
+          3,
+          7,
+          4,
+          6,
+          10,
+          8
+        ],
+        "start_minutes": 0.0,
+        "finish_minutes": 187.596,
+        "distance_km": 67.928,
+        "fuel_litres": 3.6064129975999997
+      },
+      {
+        "vehicle": 0,
+        "customers": [
+          11,
+          1,
+          2,
+          9,
+          34,
+          43,
+          44,
+          38,
+          41,
+          40
+        ],
+        "start_minutes": 187.596,
+        "finish_minutes": 613.5434285714286,
+        "distance_km": 191.69,
+        "fuel_litres": 10.177147973
+      },
+      {
+        "vehicle": 0,
+        "customers": [
+          35,
+          42,
+          36,
+          39,
+          37
+        ],
+        "start_minutes": 613.5434285714286,
+        "finish_minutes": 820.5875714285714,
+        "distance_km": 93.607,
+        "fuel_litres": 4.9697547619
+      },
+      {
+        "vehicle": 1,
+        "customers": [
+          13,
+          17,
+          20,
+          21,
+          16,
+          18,
+          12,
+          15,
+          19
+        ],
+        "start_minutes": 0.0,
+        "finish_minutes": 273.56399999999996,
+        "distance_km": 110.222,
+        "fuel_litres": 9.971916606399999
+      },
+      {
+        "vehicle": 1,
+        "customers": [
+          14,
+          47,
+          55,
+          46,
+          50,
+          52,
+          53,
+          54,
+          48,
+          56,
+          49,
+          51,
+          45
+        ],
+        "start_minutes": 273.56399999999996,
+        "finish_minutes": 813.9012857142857,
+        "distance_km": 239.056,
+        "fuel_litres": 21.6276831872
+      },
+      {
+        "vehicle": 2,
+        "customers": [
+          32,
+          28,
+          31,
+          25,
+          23,
+          26,
+          22,
+          29,
+          24
+        ],
+        "start_minutes": 0.0,
+        "finish_minutes": 316.5467142857143,
+        "distance_km": 132.371,
+        "fuel_litres": 27.650554602800003
+      },
+      {
+        "vehicle": 2,
+        "customers": [
+          33,
+          30,
+          27,
+          61,
+          60,
+          59,
+          58,
+          64,
+          57,
+          63,
+          62
+        ],
+        "start_minutes": 316.5467142857143,
+        "finish_minutes": 694.4117142857143,
+        "distance_km": 155.008,
+        "fuel_litres": 32.3791250944
+      }
+    ],
+    "distance_km": 989.8820000000001,
+    "fuel_litres": 110.3825952233
+  },
+  "generated_witness": {
+    "feasible": true,
+    "distance_km": 1178.115,
+    "fuel_litres": 134.3407409644,
+    "trips": 6,
+    "vehicles_used": 3,
+    "finish_minutes_by_vehicle": [
+      930.5607142857143,
+      891.5961428571429,
+      829.4288571428572
+    ],
+    "trip_details": [
+      {
+        "vehicle": "caddy",
+        "customers": [
+          7,
+          3,
+          5,
+          4,
+          6,
+          10,
+          8,
+          11,
+          1,
+          2,
+          9
+        ],
+        "weight_kg": 143.60921400095782,
+        "volume_m3": 2.468510249943395,
+        "distance_km": 171.78,
+        "fuel_litres": 9.120092226
+      },
+      {
+        "vehicle": "caddy",
+        "customers": [
+          34,
+          43,
+          41,
+          38,
+          44,
+          40,
+          35,
+          42,
+          39,
+          36,
+          37
+        ],
+        "weight_kg": 161.15259022400454,
+        "volume_m3": 2.5490097025372704,
+        "distance_km": 245.596,
+        "fuel_litres": 13.0391091532
+      },
+      {
+        "vehicle": "sprinter",
+        "customers": [
+          13,
+          17,
+          20,
+          15,
+          12,
+          18,
+          16,
+          21,
+          19,
+          14
+        ],
+        "weight_kg": 517.3367522620704,
+        "volume_m3": 9.174455822322043,
+        "distance_km": 142.591,
+        "fuel_litres": 12.9003788792
+      },
+      {
+        "vehicle": "sprinter",
+        "customers": [
+          47,
+          55,
+          46,
+          52,
+          50,
+          53,
+          54,
+          48,
+          56,
+          49,
+          51,
+          45
+        ],
+        "weight_kg": 331.7754453354819,
+        "volume_m3": 8.096594724461191,
+        "distance_km": 252.009,
+        "fuel_litres": 22.799556640799995
+      },
+      {
+        "vehicle": "man",
+        "customers": [
+          32,
+          28,
+          22,
+          26,
+          23,
+          25,
+          31,
+          29,
+          24,
+          33,
+          30,
+          27
+        ],
+        "weight_kg": 1320.1793303662946,
+        "volume_m3": 35.972886683113416,
+        "distance_km": 210.699,
+        "fuel_litres": 44.0122398732
+      },
+      {
+        "vehicle": "man",
+        "customers": [
+          61,
+          60,
+          62,
+          63,
+          57,
+          64,
+          58,
+          59
+        ],
+        "weight_kg": 1050.9943750588307,
+        "volume_m3": 33.2673724872745,
+        "distance_km": 155.44,
+        "fuel_litres": 32.469364192
+      }
+    ]
+  },
+  "validation": {
+    "feasible": true,
+    "distance_km": 619.695,
+    "fuel_litres": 51.26171790309999,
+    "trips": 13,
+    "vehicles_used": 3,
+    "finish_minutes_by_vehicle": [
+      854.8898571428571,
+      600.5455714285715,
+      238.85885714285715
+    ],
+    "trip_details": [
+      {
+        "vehicle": "caddy",
+        "customers": [
+          30,
+          39
+        ],
+        "weight_kg": 159.8545647911,
+        "volume_m3": 2.8335333532008433,
+        "distance_km": 21.063,
+        "fuel_litres": 1.1182704770999998
+      },
+      {
+        "vehicle": "caddy",
+        "customers": [
+          13,
+          35,
+          11,
+          43,
+          1,
+          51
+        ],
+        "weight_kg": 110.4807701982343,
+        "volume_m3": 2.116070211991595,
+        "distance_km": 74.033,
+        "fuel_litres": 3.9305378260999997
+      },
+      {
+        "vehicle": "caddy",
+        "customers": [
+          40,
+          50,
+          36,
+          2,
+          3,
+          17
+        ],
+        "weight_kg": 180.71156691210302,
+        "volume_m3": 2.7861109856115434,
+        "distance_km": 65.517,
+        "fuel_litres": 3.4784089088999997
+      },
+      {
+        "vehicle": "caddy",
+        "customers": [
+          29,
+          8
+        ],
+        "weight_kg": 83.97926768384691,
+        "volume_m3": 2.378758052607026,
+        "distance_km": 47.859,
+        "fuel_litres": 2.5409156703
+      },
+      {
+        "vehicle": "caddy",
+        "customers": [
+          6,
+          7,
+          4,
+          41,
+          54,
+          46,
+          42,
+          5
+        ],
+        "weight_kg": 125.45081793917231,
+        "volume_m3": 2.8103746136641656,
+        "distance_km": 56.78,
+        "fuel_litres": 3.014546726
+      },
+      {
+        "vehicle": "caddy",
+        "customers": [
+          22
+        ],
+        "weight_kg": 97.11816163288393,
+        "volume_m3": 2.637269706603885,
+        "distance_km": 28.548,
+        "fuel_litres": 1.5156618516
+      },
+      {
+        "vehicle": "caddy",
+        "customers": [
+          37,
+          12,
+          49,
+          15
+        ],
+        "weight_kg": 162.22933178927914,
+        "volume_m3": 3.0438979396002357,
+        "distance_km": 38.627,
+        "fuel_litres": 2.0507730959
+      },
+      {
+        "vehicle": "sprinter",
+        "customers": [
+          61,
+          18,
+          33
+        ],
+        "weight_kg": 287.450534003673,
+        "volume_m3": 8.01261743900957,
+        "distance_km": 23.101,
+        "fuel_litres": 2.0899751911999997
+      },
+      {
+        "vehicle": "sprinter",
+        "customers": [
+          21,
+          27,
+          28,
+          31
+        ],
+        "weight_kg": 388.748697659299,
+        "volume_m3": 9.412979708829607,
+        "distance_km": 37.103,
+        "fuel_litres": 3.3567529336
+      },
+      {
+        "vehicle": "sprinter",
+        "customers": [
+          23,
+          32
+        ],
+        "weight_kg": 222.78294644573214,
+        "volume_m3": 5.815547837225925,
+        "distance_km": 30.363,
+        "fuel_litres": 2.7469770455999996
+      },
+      {
+        "vehicle": "sprinter",
+        "customers": [
+          16,
+          48,
+          58,
+          45,
+          34,
+          53,
+          56,
+          19,
+          24
+        ],
+        "weight_kg": 458.22260285905486,
+        "volume_m3": 9.371109994628116,
+        "distance_km": 76.192,
+        "fuel_litres": 6.8931816704
+      },
+      {
+        "vehicle": "sprinter",
+        "customers": [
+          38,
+          60,
+          59,
+          44,
+          55
+        ],
+        "weight_kg": 353.5984932123932,
+        "volume_m3": 9.194319139082737,
+        "distance_km": 56.133,
+        "fuel_litres": 5.0784198696
+      },
+      {
+        "vehicle": "man",
+        "customers": [
+          52,
+          64,
+          25,
+          9,
+          10,
+          47,
+          57,
+          62,
+          26,
+          63,
+          20,
+          14
+        ],
+        "weight_kg": 894.419952120868,
+        "volume_m3": 31.116240687596566,
+        "distance_km": 64.376,
+        "fuel_litres": 13.4472966368
+      }
+    ]
+  },
+  "history": [
+    {
+      "generation": 0,
+      "objective": 103.3722351059
+    },
+    {
+      "generation": 1,
+      "objective": 95.6357925559
+    },
+    {
+      "generation": 2,
+      "objective": 91.0683288034
+    },
+    {
+      "generation": 3,
+      "objective": 81.73500700849999
+    },
+    {
+      "generation": 4,
+      "objective": 81.73500700849999
+    },
+    {
+      "generation": 5,
+      "objective": 77.4627452849
+    },
+    {
+      "generation": 6,
+      "objective": 71.69292742799999
+    },
+    {
+      "generation": 7,
+      "objective": 71.69292742799999
+    },
+    {
+      "generation": 8,
+      "objective": 71.69292742799999
+    },
+    {
+      "generation": 9,
+      "objective": 69.1255069873
+    },
+    {
+      "generation": 10,
+      "objective": 64.6464329797
+    },
+    {
+      "generation": 11,
+      "objective": 63.516495427799995
+    },
+    {
+      "generation": 12,
+      "objective": 63.516495427799995
+    },
+    {
+      "generation": 13,
+      "objective": 62.925984813700005
+    },
+    {
+      "generation": 14,
+      "objective": 62.8429626271
+    },
+    {
+      "generation": 15,
+      "objective": 61.2368350362
+    },
+    {
+      "generation": 16,
+      "objective": 61.2368350362
+    },
+    {
+      "generation": 17,
+      "objective": 61.2368350362
+    },
+    {
+      "generation": 18,
+      "objective": 60.819746641
+    },
+    {
+      "generation": 19,
+      "objective": 60.819746641
+    },
+    {
+      "generation": 20,
+      "objective": 60.819746641
+    },
+    {
+      "generation": 21,
+      "objective": 60.3786090698
+    },
+    {
+      "generation": 22,
+      "objective": 59.9279720226
+    },
+    {
+      "generation": 23,
+      "objective": 59.9279720226
+    },
+    {
+      "generation": 24,
+      "objective": 59.9279720226
+    },
+    {
+      "generation": 25,
+      "objective": 59.9279720226
+    },
+    {
+      "generation": 26,
+      "objective": 59.8740839471
+    },
+    {
+      "generation": 27,
+      "objective": 59.849799168299995
+    },
+    {
+      "generation": 28,
+      "objective": 59.61292153709999
+    },
+    {
+      "generation": 29,
+      "objective": 59.61292153709999
+    },
+    {
+      "generation": 30,
+      "objective": 58.7613929669
+    },
+    {
+      "generation": 31,
+      "objective": 58.6458748803
+    },
+    {
+      "generation": 32,
+      "objective": 58.1864244613
+    },
+    {
+      "generation": 33,
+      "objective": 58.1864244613
+    },
+    {
+      "generation": 34,
+      "objective": 58.0992478899
+    },
+    {
+      "generation": 35,
+      "objective": 58.0695696296
+    },
+    {
+      "generation": 36,
+      "objective": 58.0695696296
+    },
+    {
+      "generation": 37,
+      "objective": 57.9493262712
+    },
+    {
+      "generation": 38,
+      "objective": 57.9493262712
+    },
+    {
+      "generation": 39,
+      "objective": 57.9493262712
+    },
+    {
+      "generation": 40,
+      "objective": 57.9493262712
+    },
+    {
+      "generation": 41,
+      "objective": 57.1465116081
+    },
+    {
+      "generation": 42,
+      "objective": 56.1228500251
+    },
+    {
+      "generation": 43,
+      "objective": 56.1228500251
+    },
+    {
+      "generation": 44,
+      "objective": 55.9306734287
+    },
+    {
+      "generation": 45,
+      "objective": 55.4777746015
+    },
+    {
+      "generation": 46,
+      "objective": 55.4777746015
+    },
+    {
+      "generation": 47,
+      "objective": 55.0524706791
+    },
+    {
+      "generation": 48,
+      "objective": 55.0524706791
+    },
+    {
+      "generation": 49,
+      "objective": 55.0524706791
+    },
+    {
+      "generation": 50,
+      "objective": 55.0524706791
+    },
+    {
+      "generation": 51,
+      "objective": 55.0524706791
+    },
+    {
+      "generation": 52,
+      "objective": 55.0524706791
+    },
+    {
+      "generation": 53,
+      "objective": 54.901000059
+    },
+    {
+      "generation": 54,
+      "objective": 54.8001841761
+    },
+    {
+      "generation": 55,
+      "objective": 54.648713556
+    },
+    {
+      "generation": 56,
+      "objective": 54.648713556
+    },
+    {
+      "generation": 57,
+      "objective": 54.648713556
+    },
+    {
+      "generation": 58,
+      "objective": 54.3656302222
+    },
+    {
+      "generation": 59,
+      "objective": 54.3656302222
+    },
+    {
+      "generation": 60,
+      "objective": 54.3656302222
+    },
+    {
+      "generation": 61,
+      "objective": 54.3656302222
+    },
+    {
+      "generation": 62,
+      "objective": 53.7499209088
+    },
+    {
+      "generation": 63,
+      "objective": 53.7499209088
+    },
+    {
+      "generation": 64,
+      "objective": 53.6415091073
+    },
+    {
+      "generation": 65,
+      "objective": 53.525190448
+    },
+    {
+      "generation": 66,
+      "objective": 53.4955573075
+    },
+    {
+      "generation": 67,
+      "objective": 53.4955573075
+    },
+    {
+      "generation": 68,
+      "objective": 53.4955573075
+    },
+    {
+      "generation": 69,
+      "objective": 53.4955573075
+    },
+    {
+      "generation": 70,
+      "objective": 53.019757464
+    },
+    {
+      "generation": 71,
+      "objective": 53.019757464
+    },
+    {
+      "generation": 72,
+      "objective": 52.6867481272
+    },
+    {
+      "generation": 73,
+      "objective": 52.2812213292
+    },
+    {
+      "generation": 74,
+      "objective": 51.5819139458
+    },
+    {
+      "generation": 75,
+      "objective": 51.5819139458
+    },
+    {
+      "generation": 76,
+      "objective": 51.5819139458
+    },
+    {
+      "generation": 77,
+      "objective": 51.5819139458
+    },
+    {
+      "generation": 78,
+      "objective": 51.4143034489
+    },
+    {
+      "generation": 79,
+      "objective": 51.3675827529
+    },
+    {
+      "generation": 80,
+      "objective": 51.2617179031
+    }
+  ],
+  "optimality_gap": null,
+  "warning": "No certified optimum. Static aggregate-capacity proxy model; no shift limits or 3D loading."
+}
