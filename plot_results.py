@@ -20,13 +20,13 @@ def main():
         ax.legend(fontsize=7);ax.grid(alpha=.15)
     fig.suptitle('Development pilot | three seeds per method, equal evaluation counts',fontsize=11)
     fig.savefig(out/'convergence.png',dpi=180);plt.close(fig)
-    fig,ax=plt.subplots(figsize=(8,4.3),layout='constrained');palette=['#176B87','#D58820','#4B986A'];coords=inst['coordinates_km']
+    fig,ax=plt.subplots(figsize=(8,4.3),layout='constrained');palette={'caddy':'#176B87','sprinter':'#D58820','man':'#4B986A'};coords=inst['coordinates_km']
     for trip in solution['best']['transports']:
         path=[0]+trip['customers']+[0];k=trip['vehicle']
-        ax.plot([coords[i][0] for i in path],[coords[i][1] for i in path],color=palette[k],lw=1,alpha=.7)
+        ax.plot([coords[i][0] for i in path],[coords[i][1] for i in path],color=palette[solution['best']['fleet'][k]['type_id']],lw=1,alpha=.7)
     ax.scatter([x[0] for x in coords[1:]],[x[1] for x in coords[1:]],s=10,c='#354653')
     ax.scatter(0,0,s=110,color='black',marker='s',label='Depot')
-    for k,v in enumerate(inst['vehicles']):ax.plot([],[],color=palette[k],label=v['id'])
+    for type_id,color in palette.items():ax.plot([],[],color=color,label=type_id)
     ax.set(title='Fuel-objective GA | multiple sequential depot trips',xlabel='Synthetic x coordinate (km)',ylabel='Synthetic y coordinate (km)')
     ax.legend(fontsize=8);ax.grid(alpha=.1)
     fig.savefig(out/'routes.png',dpi=180);plt.close(fig)

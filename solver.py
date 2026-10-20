@@ -1,7 +1,7 @@
-"""Two-part GA for a simplified heterogeneous, multi-trip delivery problem.
+"""Three-part GA for a simplified five-vehicle heterogeneous routing problem.
 
-Chromosome = (customer permutation, vehicle ID per customer). Each vehicle's
-subsequence is split into capacity-feasible sequential depot tours by DP.
+Chromosome = (customer permutation, physical vehicle per customer, type per
+vehicle). Each vehicle's sequence is split into feasible depot tours by DP.
 No time windows, daily horizon or geometric packing. Python standard library.
 """
 import argparse,json,math,random,time
@@ -12,21 +12,36 @@ EPS=1e-7
 
 def route_m(route,d):return sum(d[a][b] for a,b in zip([0]+route,route+[0]))
 
+def make_fleet(inst,type_indices):
+    types=inst['vehicle_types']
+    if len(type_indices)!=inst['fleet_size'] or any(not isinstance(t,int) or not 0<=t<len(types) for t in type_indices):
+        raise ValueError('Expected exactly fleet_size vehicle type choices')
+    return [dict(types[t],id=f'{types[t]["id"]}-{k+1}',type_id=types[t]['id']) for k,t in enumerate(type_indices)]
+
+def feasible_types(inst):
+    return [[t for t,v in enumerate(inst['vehicle_types'])
+             if c['weight_kg']<=v['payload_kg']+EPS and c['volume_m3']<=v['volume_m3']+EPS]
+            for c in inst['customers']]
+
 def validate_instance(inst):
     customers=inst['customers'];vehicles=inst['vehicles'];d=inst['distance_matrix_m'];n=len(customers)
     if not vehicles or n<2 or len(d)!=n or any(len(row)!=n for row in d):raise ValueError('Invalid input dimensions')
+    if inst.get('fleet_size')!=5 or len(vehicles)!=5 or len(inst.get('vehicle_types',[]))!=3:
+        raise ValueError('This experiment requires five physical vehicles chosen from three types')
     if [c['id'] for c in customers]!=list(range(n)):raise ValueError('IDs must be contiguous; 0 is depot')
     for c in customers:
         if any(not math.isfinite(c[k]) or c[k]<0 for k in ['weight_kg','volume_m3','service_minutes']):raise ValueError('Invalid customer demand')
     if customers[0]['weight_kg'] or customers[0]['volume_m3']:raise ValueError('Depot demand must be zero')
-    for v in vehicles:
+    for v in vehicles+inst['vehicle_types']:
         if any(not math.isfinite(v[k]) or v[k]<=0 for k in ['payload_kg','volume_m3','fuel_l_per_100km']):raise ValueError('Invalid vehicle')
+    indices=[next((t for t,v in enumerate(inst['vehicle_types']) if v['id']==vehicle['type_id']),None) for vehicle in vehicles]
+    if None in indices or vehicles!=make_fleet(inst,indices):raise ValueError('Invalid reference fleet')
     for i in range(n):
         for j in range(n):
             if not math.isfinite(d[i][j]) or d[i][j]<0 or abs(d[i][j]-d[j][i])>EPS:raise ValueError('Require finite symmetric nonnegative costs')
         if d[i][i]:raise ValueError('Distance diagonal must be zero')
     if not math.isfinite(inst['model']['schedule_average_speed_kmh']) or inst['model']['schedule_average_speed_kmh']<=0:raise ValueError('Invalid assumed average speed')
-    return [[k for k,v in enumerate(vehicles) if c['weight_kg']<=v['payload_kg']+EPS and c['volume_m3']<=v['volume_m3']+EPS] for c in customers]
+    return feasible_types(inst)
 
 def split_vehicle(order,v,inst):
     """O(n^2) DP: exact contiguous trip boundaries for fixed order/allocation."""
@@ -60,10 +75,11 @@ def two_opt(route,d,passes=1):
         i,j=pair;r[i:j+1]=reversed(r[i:j+1])
     return r
 
-def schedule(route_groups,inst):
+def schedule(route_groups,inst,vehicles=None):
     customers=inst['customers'];d=inst['distance_matrix_m'];speed=inst['model']['schedule_average_speed_kmh'];result=[]
+    vehicles=inst['vehicles'] if vehicles is None else vehicles
     for k,trips in enumerate(route_groups):
-        clock=0.;v=inst['vehicles'][k]
+        clock=0.;v=vehicles[k]
         for order in trips:
             km=route_m(order,d)/1000;duration=km/speed*60+sum(customers[i]['service_minutes'] for i in order)
             result.append({'vehicle':k,'customers':order,'start_minutes':clock,'finish_minutes':clock+duration,
@@ -71,15 +87,17 @@ def schedule(route_groups,inst):
             clock+=duration
     return result
 
-def validate_solution(inst,trips):
+def validate_solution(inst,trips,vehicles=None):
     """Recompute capacity, coverage, distance, fuel, and nonoverlapping schedules."""
-    n=len(inst['customers'])-1;visits=[];distance=fuel=0.;clocks=[0.]*len(inst['vehicles']);details=[]
+    vehicles=inst['vehicles'] if vehicles is None else vehicles
+    if len(vehicles)!=inst['fleet_size']:raise ValueError('Wrong fleet size')
+    n=len(inst['customers'])-1;visits=[];distance=fuel=0.;clocks=[0.]*len(vehicles);details=[]
     d=inst['distance_matrix_m'];c=inst['customers'];speed=inst['model']['schedule_average_speed_kmh']
     for trip in sorted(trips,key=lambda t:(t['vehicle'],t['start_minutes'])):
         if any(not math.isfinite(trip[field]) for field in ['start_minutes','finish_minutes','distance_km','fuel_litres']):raise ValueError('Nonfinite trip metric')
         k=trip['vehicle']
-        if not isinstance(k,int) or not 0<=k<len(inst['vehicles']):raise ValueError('Invalid physical vehicle ID')
-        v=inst['vehicles'][k];route=trip['customers']
+        if not isinstance(k,int) or not 0<=k<len(vehicles):raise ValueError('Invalid physical vehicle ID')
+        v=vehicles[k];route=trip['customers']
         if not route or any(not isinstance(i,int) or not 1<=i<=n for i in route):raise ValueError('Invalid visit')
         visits.extend(route);w=sum(c[i]['weight_kg'] for i in route);vol=sum(c[i]['volume_m3'] for i in route)
         if w>v['payload_kg']+EPS or vol>v['volume_m3']+EPS:raise ValueError('Overloaded trip')
@@ -93,21 +111,28 @@ def validate_solution(inst,trips):
         details.append({'vehicle':v['id'],'customers':route,'weight_kg':w,'volume_m3':vol,'distance_km':km,'fuel_litres':litres})
     if sorted(visits)!=list(range(1,n+1)):raise ValueError('Missing or duplicated customers')
     return {'feasible':True,'distance_km':distance,'fuel_litres':fuel,'trips':len(trips),
+        'fleet_type_ids':[v['type_id'] for v in vehicles],
         'vehicles_used':len(set(t['vehicle'] for t in trips)),'finish_minutes_by_vehicle':clocks,'trip_details':details}
 
 def decode(genome,inst,local_search=True):
-    order,assignment=genome;n=len(inst['customers'])-1
+    order,assignment,type_indices=genome;n=len(inst['customers'])-1
     if sorted(order)!=list(range(1,n+1)) or len(assignment)!=n:raise ValueError('Invalid chromosome')
+    vehicles=make_fleet(inst,type_indices)
+    if any(not isinstance(k,int) or not 0<=k<len(vehicles) or
+           inst['customers'][i]['weight_kg']>vehicles[k]['payload_kg']+EPS or
+           inst['customers'][i]['volume_m3']>vehicles[k]['volume_m3']+EPS
+           for i,k in enumerate(assignment,1)):raise ValueError('Invalid or incompatible vehicle allocation')
     groups=[];new_order=[]
-    for k,v in enumerate(inst['vehicles']):
+    for k,v in enumerate(vehicles):
         subseq=[i for i in order if assignment[i-1]==k]
         trips=split_vehicle(subseq,v,inst)
         if local_search:trips=[two_opt(r,inst['distance_matrix_m']) for r in trips]
         groups.append(trips);new_order.extend(i for r in trips for i in r)
     if len(new_order)!=n:raise ValueError('Unknown vehicle allocation')
-    trips=schedule(groups,inst)
+    trips=schedule(groups,inst,vehicles)
     km=sum(t['distance_km'] for t in trips);fuel=sum(t['fuel_litres'] for t in trips)
-    return {'genome':[new_order,assignment[:]],'transports':trips,'distance_km':km,'fuel_litres':fuel}
+    return {'genome':[new_order,assignment[:],type_indices[:]],'fleet':vehicles,
+        'transports':trips,'distance_km':km,'fuel_litres':fuel}
 
 def ox(a,b,rng):
     if len(a)<2:return a[:]
@@ -118,7 +143,7 @@ def ox(a,b,rng):
 
 def solve(inst,seed=0,population=40,generations=100,objective='fuel_litres',method='ga'):
     allowed=validate_instance(inst);n=len(inst['customers'])-1
-    if any(not allowed[i] for i in range(1,n+1)):raise ValueError('An indivisible order fits no vehicle')
+    if any(not allowed[i] for i in range(1,n+1)):raise ValueError('An indivisible order fits no vehicle type')
     if objective not in ['fuel_litres','distance'] or method not in ['ga','random'] or population<4 or generations<0:raise ValueError('Invalid search configuration')
     key='distance_km' if objective=='distance' else 'fuel_litres';rng=random.Random(seed);start=time.perf_counter();evaluations=0
     def evaluate(g):
@@ -129,9 +154,25 @@ def solve(inst,seed=0,population=40,generations=100,objective='fuel_litres',meth
     for trip in inst['reference_transports']:
         for i in trip['customers']:base_assign[i-1]=trip['vehicle']
     validate_solution(inst,inst['reference_transports'])
-    base=evaluate([base_order,base_assign]);pool=[base]
+    type_by_id={v['id']:i for i,v in enumerate(inst['vehicle_types'])}
+    base_types=[type_by_id[v['type_id']] for v in inst['vehicles']]
+    base=evaluate([base_order,base_assign,base_types]);pool=[base]
+    def repair(g):
+        order,assignment,types=g
+        for i in range(1,n+1):
+            k=assignment[i-1]
+            if 0<=k<len(types) and types[k] in allowed[i]:continue
+            slots=[j for j,t in enumerate(types) if t in allowed[i]]
+            if not slots:
+                k=rng.randrange(len(types));types[k]=rng.choice(allowed[i]);slots=[k]
+            assignment[i-1]=rng.choice(slots)
+        return g
     def random_genome():
-        return [rng.sample(range(1,n+1),n),[rng.choice(allowed[i]) for i in range(1,n+1)]]
+        types=[rng.randrange(len(inst['vehicle_types'])) for _ in range(inst['fleet_size'])]
+        # At least one slot must carry every indivisible order.
+        if any(not any(t in allowed[i] for t in types) for i in range(1,n+1)):
+            hard=max(range(1,n+1),key=lambda i:-len(allowed[i]));types[rng.randrange(len(types))]=rng.choice(allowed[hard])
+        return repair([rng.sample(range(1,n+1),n),[rng.randrange(len(types)) for _ in range(n)],types])
     for _ in range(population-1):pool.append(evaluate(random_genome()))
     pool.sort(key=lambda x:x[key]);best=pool[0];history=[{'generation':0,'objective':best[key]}]
     for generation in range(1,generations+1):
@@ -148,7 +189,10 @@ def solve(inst,seed=0,population=40,generations=100,objective='fuel_litres',meth
                     else:order[i:j+1]=reversed(order[i:j+1])
                 if rng.random()<.3:
                     i=rng.randrange(n);assignment[i]=rng.choice(allowed[i+1])
-                g=[order,assignment]
+                types=[aa if rng.random()<.5 else bb for aa,bb in zip(a[2],b[2])]
+                if rng.random()<.3:
+                    j=rng.randrange(len(types));types[j]=rng.randrange(len(inst['vehicle_types']))
+                g=repair([order,assignment,types])
             child=evaluate(g);next_pool.append(child)
         pool=sorted(next_pool,key=lambda x:x[key]);best=min(best,pool[0],key=lambda x:x[key])
         history.append({'generation':generation,'objective':best[key]})
@@ -156,8 +200,8 @@ def solve(inst,seed=0,population=40,generations=100,objective='fuel_litres',meth
     return {'instance':inst['name'],'seed':seed,'method':method,'objective':objective,'population':population,
         'generations':generations,'evaluations':evaluations,'runtime_seconds':elapsed,
         'best':best,'baseline_decoded':base,'generated_witness':validate_solution(inst,inst['reference_transports']),
-        'validation':validate_solution(inst,best['transports']),'history':history,
-        'optimality_gap':None,'warning':'No certified optimum. Static aggregate-capacity proxy model; no shift limits or 3D loading.'}
+        'validation':validate_solution(inst,best['transports'],best['fleet']),'history':history,
+        'optimality_gap':None,'warning':'No certified optimum or uniquely justified fleet mix. Five available vehicles; idle slots are allowed. No shift limits, fixed fleet costs or 3D loading.'}
 
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--instance',type=Path,default=ROOT/'data/example.json')
