@@ -18,12 +18,24 @@ The generated-witness routes are used for a feasible initial candidate, never
 as a purported optimum. Output contains all transports, physical vehicle IDs,
 trip schedules, chromosome, distance, fuel estimate, settings and validation.
 
-Optional figures:
+Optional figures and benchmark table:
 
 ```powershell
 python -m pip install matplotlib
 python plot_results.py
+python plot_results.py --results results/solution.json --pilot results/pilot.json --instance data/example.json --out figures --shift-hours 8
+python -m unittest -v test_plot_results
 ```
+
+`plot_results.py` writes to `figures/`: `dataset.png` (customer map and order
+weight/volume/service-time histograms), `routes.png` (generated witness plan
+next to the GA plan, one colour per physical vehicle), `gantt.png` (trips per
+vehicle on a time axis with the shift line, so overtime is visible),
+`utilisation.png` (payload/volume use and stops per trip against the 10-50
+brief), `convergence.png` (GA vs random per objective) and `BENCHMARK.md`
+(per-run table from `results/pilot.json`). The shift length and volume buffer
+default to `model.shift_hours` / `model.volume_buffer` in the instance when
+present; the optional `cost` block of a solution is shown when present.
 
 ## Problem variant
 
@@ -89,3 +101,12 @@ include Prins (2009) on memetic heterogeneous-fleet routing, Vidal (2022) on HGS
 Zhao et al. (2024) on multi-trip splitting, and Hvattum (2025) on split starts.
 Our explicit three-array representation is a simpler design choice, not a claim that
 those papers implement exactly this chromosome or this prototype.
+
+
+## Cost and Evaluation Engine Calibration Notes
+
+Driver wages and fuel price defaults are calibrated from official EU statistical benchmarks as baseline assumptions until supervisor values are provided:
+- Driver wage: €20.00/h base (Eurostat dataset `lc_lci_lev`, NACE Rev. 2 Section H Division 49 Land Transport average labour cost), with double wage (€40.00/h) for shift duration exceeding 8 hours per project brief.
+- Fuel price: €1.65/L diesel (European Commission DG ENER Weekly Oil Bulletin EU weighted pump average).
+- Maintenance: €50 (Caddy), €80 (Sprinter), €120 (MAN) per 1,000 km based on commercial fleet servicing and wear benchmarks.
+- Volume buffer: Configurable (default 0.10) to support Course Option 1 reserve loading.
