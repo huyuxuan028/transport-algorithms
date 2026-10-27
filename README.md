@@ -18,12 +18,24 @@ The generated-witness routes are used for a feasible initial candidate, never
 as a purported optimum. Output contains all transports, physical vehicle IDs,
 trip schedules, chromosome, distance, fuel estimate, settings and validation.
 
-Optional figures:
+Optional figures and benchmark table:
 
 ```powershell
 python -m pip install matplotlib
 python plot_results.py
+python plot_results.py --results results/solution.json --pilot results/pilot.json --instance data/example.json --out figures --shift-hours 8
+python -m unittest -v test_plot_results
 ```
+
+`plot_results.py` writes to `figures/`: `dataset.png` (customer map and order
+weight/volume/service-time histograms), `routes.png` (generated witness plan
+next to the GA plan, one colour per physical vehicle), `gantt.png` (trips per
+vehicle on a time axis with the shift line, so overtime is visible),
+`utilisation.png` (payload/volume use and stops per trip against the 10-50
+brief), `convergence.png` (GA vs random per objective) and `BENCHMARK.md`
+(per-run table from `results/pilot.json`). The shift length and volume buffer
+default to `model.shift_hours` / `model.volume_buffer` in the instance when
+present; the optional `cost` block of a solution is shown when present.
 
 ## Problem variant
 
