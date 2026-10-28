@@ -1,0 +1,1886 @@
+{
+  "instance": "Heterogeneous-102-five-vehicle-seed42",
+  "seed": 0,
+  "method": "ga",
+  "objective": "cost",
+  "population": 32,
+  "generations": 80,
+  "evaluations": 2432,
+  "runtime_seconds": 1.1787490189999517,
+  "best": {
+    "genome": [
+      [
+        63,
+        58,
+        60,
+        64,
+        11,
+        62,
+        61,
+        2,
+        3,
+        9,
+        10,
+        8,
+        6,
+        7,
+        4,
+        57,
+        83,
+        13,
+        16,
+        67,
+        15,
+        19,
+        65,
+        69,
+        70,
+        17,
+        68,
+        72,
+        71,
+        20,
+        14,
+        66,
+        18,
+        21,
+        37,
+        24,
+        59,
+        80,
+        12,
+        77,
+        73,
+        27,
+        28,
+        31,
+        75,
+        81,
+        33,
+        30,
+        25,
+        74,
+        78,
+        26,
+        79,
+        76,
+        29,
+        82,
+        32,
+        22,
+        55,
+        23,
+        5,
+        40,
+        36,
+        89,
+        41,
+        85,
+        42,
+        84,
+        90,
+        91,
+        38,
+        39,
+        44,
+        88,
+        43,
+        35,
+        87,
+        86,
+        53,
+        49,
+        34,
+        98,
+        93,
+        48,
+        45,
+        96,
+        94,
+        1,
+        51,
+        99,
+        102,
+        92,
+        47,
+        97,
+        95,
+        100,
+        50,
+        46,
+        54,
+        56,
+        101,
+        52
+      ],
+      [
+        4,
+        0,
+        0,
+        0,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        4,
+        3,
+        3,
+        1,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        2,
+        4,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        0,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      [
+        0,
+        1,
+        2,
+        0,
+        1
+      ]
+    ],
+    "fleet": [
+      {
+        "id": "caddy-1",
+        "name": "VW Caddy Cargo SWB",
+        "length_m": 4.5,
+        "volume_m3": 3.1,
+        "payload_kg": 680,
+        "fuel_range_l_per_100km": [
+          4.5,
+          6.2
+        ],
+        "top_speed_range_kmh": [
+          178,
+          178
+        ],
+        "wage_eur_per_h": 12.0,
+        "maintenance_eur_per_1000km": 80.0,
+        "speed_kmh": 35.0,
+        "source": "Instructor-provided VW MY26 spec-sheet values; adopted course inputs, not independently verified vehicle documentation.",
+        "fuel_l_per_100km": 5.30917,
+        "type_id": "caddy"
+      },
+      {
+        "id": "sprinter-2",
+        "name": "Mercedes Sprinter 315 CDI L2H2",
+        "length_m": 5.93,
+        "volume_m3": 10.5,
+        "payload_kg": 1231,
+        "fuel_range_l_per_100km": [
+          9.0,
+          9.1
+        ],
+        "top_speed_range_kmh": [
+          161,
+          161
+        ],
+        "wage_eur_per_h": 12.0,
+        "maintenance_eur_per_1000km": 110.0,
+        "speed_kmh": 35.0,
+        "source": "Instructor-provided Vanaways (CAP HPI) spec values; adopted course inputs.",
+        "fuel_l_per_100km": 9.04712,
+        "type_id": "sprinter"
+      },
+      {
+        "id": "man-3",
+        "name": "MAN TGL 12.190 box",
+        "length_m": 9.2,
+        "volume_m3": 42.7,
+        "payload_kg": 5480,
+        "fuel_range_l_per_100km": [
+          18,
+          24
+        ],
+        "top_speed_range_kmh": [
+          90,
+          110
+        ],
+        "wage_eur_per_h": 12.0,
+        "maintenance_eur_per_1000km": 180.0,
+        "speed_kmh": 35.0,
+        "source": "Instructor-provided Mascus listing and operator-report values; adopted course inputs.",
+        "fuel_l_per_100km": 20.88868,
+        "type_id": "man"
+      },
+      {
+        "id": "caddy-4",
+        "name": "VW Caddy Cargo SWB",
+        "length_m": 4.5,
+        "volume_m3": 3.1,
+        "payload_kg": 680,
+        "fuel_range_l_per_100km": [
+          4.5,
+          6.2
+        ],
+        "top_speed_range_kmh": [
+          178,
+          178
+        ],
+        "wage_eur_per_h": 12.0,
+        "maintenance_eur_per_1000km": 80.0,
+        "speed_kmh": 35.0,
+        "source": "Instructor-provided VW MY26 spec-sheet values; adopted course inputs, not independently verified vehicle documentation.",
+        "fuel_l_per_100km": 5.30917,
+        "type_id": "caddy"
+      },
+      {
+        "id": "sprinter-5",
+        "name": "Mercedes Sprinter 315 CDI L2H2",
+        "length_m": 5.93,
+        "volume_m3": 10.5,
+        "payload_kg": 1231,
+        "fuel_range_l_per_100km": [
+          9.0,
+          9.1
+        ],
+        "top_speed_range_kmh": [
+          161,
+          161
+        ],
+        "wage_eur_per_h": 12.0,
+        "maintenance_eur_per_1000km": 110.0,
+        "speed_kmh": 35.0,
+        "source": "Instructor-provided Vanaways (CAP HPI) spec values; adopted course inputs.",
+        "fuel_l_per_100km": 9.04712,
+        "type_id": "sprinter"
+      }
+    ],
+    "transports": [
+      {
+        "vehicle": 0,
+        "customers": [
+          63,
+          58,
+          60,
+          64,
+          11,
+          62,
+          61,
+          2,
+          3
+        ],
+        "start_minutes": 0.0,
+        "finish_minutes": 319.6795714285714,
+        "distance_km": 135.602,
+        "fuel_litres": 7.199340703400001
+      },
+      {
+        "vehicle": 0,
+        "customers": [
+          9,
+          10,
+          8,
+          6,
+          7,
+          4,
+          57,
+          83
+        ],
+        "start_minutes": 319.6795714285714,
+        "finish_minutes": 475.969,
+        "distance_km": 43.794,
+        "fuel_litres": 2.3250979097999998
+      },
+      {
+        "vehicle": 1,
+        "customers": [
+          13,
+          16,
+          67,
+          15,
+          19,
+          65,
+          69,
+          70
+        ],
+        "start_minutes": 0.0,
+        "finish_minutes": 232.5327142857143,
+        "distance_km": 92.541,
+        "fuel_litres": 8.3722953192
+      },
+      {
+        "vehicle": 1,
+        "customers": [
+          17,
+          68,
+          72,
+          71,
+          20,
+          14,
+          66,
+          18,
+          21,
+          37
+        ],
+        "start_minutes": 232.5327142857143,
+        "finish_minutes": 463.1147142857143,
+        "distance_km": 78.421,
+        "fuel_litres": 7.0948419752000005
+      },
+      {
+        "vehicle": 2,
+        "customers": [
+          24,
+          59,
+          80,
+          12,
+          77,
+          73,
+          27,
+          28,
+          31,
+          75,
+          81,
+          33,
+          30
+        ],
+        "start_minutes": 0.0,
+        "finish_minutes": 292.31385714285716,
+        "distance_km": 101.266,
+        "fuel_litres": 21.1531306888
+      },
+      {
+        "vehicle": 2,
+        "customers": [
+          25,
+          74,
+          78,
+          26,
+          79,
+          76,
+          29,
+          82,
+          32,
+          22,
+          55,
+          23
+        ],
+        "start_minutes": 292.31385714285716,
+        "finish_minutes": 528.165,
+        "distance_km": 69.422,
+        "fuel_litres": 14.5013394296
+      },
+      {
+        "vehicle": 3,
+        "customers": [
+          5,
+          40,
+          36,
+          89,
+          41,
+          85,
+          42,
+          84,
+          90
+        ],
+        "start_minutes": 0.0,
+        "finish_minutes": 233.8555714285714,
+        "distance_km": 83.571,
+        "fuel_litres": 4.4369264607
+      },
+      {
+        "vehicle": 3,
+        "customers": [
+          91,
+          38,
+          39,
+          44,
+          88,
+          43,
+          35,
+          87,
+          86
+        ],
+        "start_minutes": 233.8555714285714,
+        "finish_minutes": 413.0908571428571,
+        "distance_km": 50.623,
+        "fuel_litres": 2.6876611291
+      },
+      {
+        "vehicle": 4,
+        "customers": [
+          53,
+          49,
+          34,
+          98,
+          93,
+          48,
+          45,
+          96,
+          94,
+          1,
+          51,
+          99,
+          102,
+          92
+        ],
+        "start_minutes": 0.0,
+        "finish_minutes": 326.2538571428571,
+        "distance_km": 113.292,
+        "fuel_litres": 10.2496631904
+      },
+      {
+        "vehicle": 4,
+        "customers": [
+          47,
+          97,
+          95,
+          100,
+          50,
+          46,
+          54,
+          56,
+          101,
+          52
+        ],
+        "start_minutes": 326.2538571428571,
+        "finish_minutes": 576.1061428571428,
+        "distance_km": 87.359,
+        "fuel_litres": 7.903473560799999
+      }
+    ],
+    "distance_km": 855.891,
+    "fuel_litres": 85.923770367,
+    "cost": {
+      "fuel_eur": 137.478,
+      "wage_eur": 520.1434,
+      "overtime_hours": 2.4045,
+      "maintenance_eur": 96.6885,
+      "total_eur": 754.3099,
+      "trips_below_min": 5,
+      "trips_above_max": 0
+    },
+    "total_eur": 754.3099
+  },
+  "baseline_decoded": {
+    "genome": [
+      [
+        5,
+        3,
+        7,
+        4,
+        6,
+        10,
+        8,
+        11,
+        1,
+        2,
+        61,
+        9,
+        57,
+        58,
+        60,
+        64,
+        62,
+        59,
+        63,
+        13,
+        20,
+        17,
+        15,
+        12,
+        18,
+        16,
+        21,
+        19,
+        65,
+        69,
+        14,
+        66,
+        70,
+        71,
+        72,
+        68,
+        67,
+        32,
+        28,
+        31,
+        25,
+        23,
+        26,
+        22,
+        29,
+        24,
+        33,
+        30,
+        27,
+        74,
+        82,
+        76,
+        79,
+        78,
+        81,
+        77,
+        75,
+        73,
+        80,
+        34,
+        43,
+        44,
+        38,
+        41,
+        40,
+        35,
+        88,
+        84,
+        37,
+        36,
+        39,
+        42,
+        89,
+        90,
+        91,
+        85,
+        83,
+        86,
+        87,
+        47,
+        55,
+        46,
+        50,
+        52,
+        53,
+        54,
+        48,
+        56,
+        49,
+        51,
+        45,
+        94,
+        101,
+        95,
+        100,
+        97,
+        99,
+        92,
+        98,
+        93,
+        96,
+        102
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      [
+        0,
+        1,
+        2,
+        0,
+        1
+      ]
+    ],
+    "fleet": [
+      {
+        "id": "caddy-1",
+        "name": "VW Caddy Cargo SWB",
+        "length_m": 4.5,
+        "volume_m3": 3.1,
+        "payload_kg": 680,
+        "fuel_range_l_per_100km": [
+          4.5,
+          6.2
+        ],
+        "top_speed_range_kmh": [
+          178,
+          178
+        ],
+        "wage_eur_per_h": 12.0,
+        "maintenance_eur_per_1000km": 80.0,
+        "speed_kmh": 35.0,
+        "source": "Instructor-provided VW MY26 spec-sheet values; adopted course inputs, not independently verified vehicle documentation.",
+        "fuel_l_per_100km": 5.30917,
+        "type_id": "caddy"
+      },
+      {
+        "id": "sprinter-2",
+        "name": "Mercedes Sprinter 315 CDI L2H2",
+        "length_m": 5.93,
+        "volume_m3": 10.5,
+        "payload_kg": 1231,
+        "fuel_range_l_per_100km": [
+          9.0,
+          9.1
+        ],
+        "top_speed_range_kmh": [
+          161,
+          161
+        ],
+        "wage_eur_per_h": 12.0,
+        "maintenance_eur_per_1000km": 110.0,
+        "speed_kmh": 35.0,
+        "source": "Instructor-provided Vanaways (CAP HPI) spec values; adopted course inputs.",
+        "fuel_l_per_100km": 9.04712,
+        "type_id": "sprinter"
+      },
+      {
+        "id": "man-3",
+        "name": "MAN TGL 12.190 box",
+        "length_m": 9.2,
+        "volume_m3": 42.7,
+        "payload_kg": 5480,
+        "fuel_range_l_per_100km": [
+          18,
+          24
+        ],
+        "top_speed_range_kmh": [
+          90,
+          110
+        ],
+        "wage_eur_per_h": 12.0,
+        "maintenance_eur_per_1000km": 180.0,
+        "speed_kmh": 35.0,
+        "source": "Instructor-provided Mascus listing and operator-report values; adopted course inputs.",
+        "fuel_l_per_100km": 20.88868,
+        "type_id": "man"
+      },
+      {
+        "id": "caddy-4",
+        "name": "VW Caddy Cargo SWB",
+        "length_m": 4.5,
+        "volume_m3": 3.1,
+        "payload_kg": 680,
+        "fuel_range_l_per_100km": [
+          4.5,
+          6.2
+        ],
+        "top_speed_range_kmh": [
+          178,
+          178
+        ],
+        "wage_eur_per_h": 12.0,
+        "maintenance_eur_per_1000km": 80.0,
+        "speed_kmh": 35.0,
+        "source": "Instructor-provided VW MY26 spec-sheet values; adopted course inputs, not independently verified vehicle documentation.",
+        "fuel_l_per_100km": 5.30917,
+        "type_id": "caddy"
+      },
+      {
+        "id": "sprinter-5",
+        "name": "Mercedes Sprinter 315 CDI L2H2",
+        "length_m": 5.93,
+        "volume_m3": 10.5,
+        "payload_kg": 1231,
+        "fuel_range_l_per_100km": [
+          9.0,
+          9.1
+        ],
+        "top_speed_range_kmh": [
+          161,
+          161
+        ],
+        "wage_eur_per_h": 12.0,
+        "maintenance_eur_per_1000km": 110.0,
+        "speed_kmh": 35.0,
+        "source": "Instructor-provided Vanaways (CAP HPI) spec values; adopted course inputs.",
+        "fuel_l_per_100km": 9.04712,
+        "type_id": "sprinter"
+      }
+    ],
+    "transports": [
+      {
+        "vehicle": 0,
+        "customers": [
+          5,
+          3,
+          7,
+          4,
+          6,
+          10,
+          8
+        ],
+        "start_minutes": 0.0,
+        "finish_minutes": 187.596,
+        "distance_km": 67.928,
+        "fuel_litres": 3.6064129975999997
+      },
+      {
+        "vehicle": 0,
+        "customers": [
+          11,
+          1,
+          2,
+          61,
+          9,
+          57
+        ],
+        "start_minutes": 187.596,
+        "finish_minutes": 454.77,
+        "distance_km": 121.618,
+        "fuel_litres": 6.4569063706
+      },
+      {
+        "vehicle": 0,
+        "customers": [
+          58,
+          60,
+          64,
+          62,
+          59,
+          63
+        ],
+        "start_minutes": 454.77,
+        "finish_minutes": 740.7707142857142,
+        "distance_km": 133.141,
+        "fuel_litres": 7.0686820297
+      },
+      {
+        "vehicle": 1,
+        "customers": [
+          13,
+          20,
+          17
+        ],
+        "start_minutes": 0.0,
+        "finish_minutes": 99.55028571428572,
+        "distance_km": 42.139,
+        "fuel_litres": 3.8123658968000003
+      },
+      {
+        "vehicle": 1,
+        "customers": [
+          15,
+          12,
+          18,
+          16,
+          21,
+          19,
+          65,
+          69,
+          14
+        ],
+        "start_minutes": 99.55028571428572,
+        "finish_minutes": 390.9298571428572,
+        "distance_km": 118.298,
+        "fuel_litres": 10.7025620176
+      },
+      {
+        "vehicle": 1,
+        "customers": [
+          66,
+          70,
+          71,
+          72,
+          68,
+          67
+        ],
+        "start_minutes": 390.9298571428572,
+        "finish_minutes": 635.8432857142858,
+        "distance_km": 109.286,
+        "fuel_litres": 9.887235563199999
+      },
+      {
+        "vehicle": 2,
+        "customers": [
+          32,
+          28,
+          31,
+          25,
+          23,
+          26,
+          22,
+          29,
+          24,
+          33,
+          30,
+          27
+        ],
+        "start_minutes": 0.0,
+        "finish_minutes": 411.6712857142857,
+        "distance_km": 172.5,
+        "fuel_litres": 36.032973
+      },
+      {
+        "vehicle": 2,
+        "customers": [
+          74,
+          82,
+          76,
+          79,
+          78,
+          81,
+          77,
+          75,
+          73,
+          80
+        ],
+        "start_minutes": 411.6712857142857,
+        "finish_minutes": 737.9844285714286,
+        "distance_km": 139.59,
+        "fuel_litres": 29.158508412
+      },
+      {
+        "vehicle": 3,
+        "customers": [
+          34,
+          43,
+          44,
+          38,
+          41,
+          40
+        ],
+        "start_minutes": 0.0,
+        "finish_minutes": 239.61857142857144,
+        "distance_km": 108.12,
+        "fuel_litres": 5.740274604
+      },
+      {
+        "vehicle": 3,
+        "customers": [
+          35,
+          88,
+          84,
+          37,
+          36,
+          39,
+          42,
+          89,
+          90,
+          91
+        ],
+        "start_minutes": 239.61857142857144,
+        "finish_minutes": 641.5492857142858,
+        "distance_km": 175.218,
+        "fuel_litres": 9.3026214906
+      },
+      {
+        "vehicle": 3,
+        "customers": [
+          85,
+          83,
+          86,
+          87
+        ],
+        "start_minutes": 641.5492857142858,
+        "finish_minutes": 776.2674285714287,
+        "distance_km": 53.721,
+        "fuel_litres": 2.8521392157
+      },
+      {
+        "vehicle": 4,
+        "customers": [
+          47,
+          55,
+          46,
+          50,
+          52,
+          53,
+          54,
+          48,
+          56,
+          49
+        ],
+        "start_minutes": 0.0,
+        "finish_minutes": 352.9267142857143,
+        "distance_km": 149.038,
+        "fuel_litres": 13.483646705600002
+      },
+      {
+        "vehicle": 4,
+        "customers": [
+          51,
+          45,
+          94,
+          101,
+          95,
+          100,
+          97,
+          99,
+          92,
+          98,
+          93,
+          96,
+          102
+        ],
+        "start_minutes": 352.9267142857143,
+        "finish_minutes": 910.3701428571428,
+        "distance_km": 249.755,
+        "fuel_litres": 22.595634556
+      }
+    ],
+    "distance_km": 1640.352,
+    "fuel_litres": 160.6999628594,
+    "cost": {
+      "fuel_eur": 257.1199,
+      "wage_eur": 1040.4944,
+      "overtime_hours": 23.3539,
+      "maintenance_eur": 182.4926,
+      "total_eur": 1480.107,
+      "trips_below_min": 8,
+      "trips_above_max": 0
+    },
+    "total_eur": 1480.107
+  },
+  "generated_witness": {
+    "feasible": true,
+    "distance_km": 1951.919,
+    "fuel_litres": 192.5093821598,
+    "trips": 11,
+    "fleet_type_ids": [
+      "caddy",
+      "sprinter",
+      "man",
+      "caddy",
+      "sprinter"
+    ],
+    "vehicles_used": 5,
+    "finish_minutes_by_vehicle": [
+      829.382142857143,
+      718.873,
+      856.5015714285714,
+      897.0182857142858,
+      1033.5758571428573
+    ],
+    "trip_details": [
+      {
+        "vehicle": "caddy-1",
+        "customers": [
+          7,
+          3,
+          5,
+          4,
+          6,
+          10,
+          8,
+          11,
+          1,
+          2,
+          9
+        ],
+        "weight_kg": 143.60921400095782,
+        "volume_m3": 2.468510249943395,
+        "distance_km": 171.78,
+        "fuel_litres": 9.120092226
+      },
+      {
+        "vehicle": "caddy-1",
+        "customers": [
+          61,
+          57,
+          58,
+          60,
+          64,
+          63,
+          59,
+          62
+        ],
+        "weight_kg": 92.8041377035063,
+        "volume_m3": 2.4128356507452917,
+        "distance_km": 202.597,
+        "fuel_litres": 10.756219144900001
+      },
+      {
+        "vehicle": "sprinter-2",
+        "customers": [
+          13,
+          17,
+          20,
+          15,
+          12,
+          18,
+          16,
+          21,
+          19,
+          14
+        ],
+        "weight_kg": 517.3367522620704,
+        "volume_m3": 9.174455822322043,
+        "distance_km": 142.591,
+        "fuel_litres": 12.9003788792
+      },
+      {
+        "vehicle": "sprinter-2",
+        "customers": [
+          69,
+          65,
+          66,
+          70,
+          71,
+          72,
+          67,
+          68
+        ],
+        "weight_kg": 394.6816821068683,
+        "volume_m3": 9.028129406536923,
+        "distance_km": 175.566,
+        "fuel_litres": 15.8836666992
+      },
+      {
+        "vehicle": "man-3",
+        "customers": [
+          32,
+          28,
+          22,
+          26,
+          23,
+          25,
+          31,
+          29,
+          24,
+          33,
+          30,
+          27
+        ],
+        "weight_kg": 1320.1793303662946,
+        "volume_m3": 35.972886683113416,
+        "distance_km": 210.699,
+        "fuel_litres": 44.0122398732
+      },
+      {
+        "vehicle": "man-3",
+        "customers": [
+          74,
+          82,
+          73,
+          75,
+          77,
+          81,
+          78,
+          79,
+          76,
+          80
+        ],
+        "weight_kg": 1400.9147070173672,
+        "volume_m3": 36.342633913260485,
+        "distance_km": 170.526,
+        "fuel_litres": 35.6206304568
+      },
+      {
+        "vehicle": "caddy-4",
+        "customers": [
+          34,
+          43,
+          41,
+          38,
+          44,
+          40,
+          35,
+          42,
+          39,
+          36,
+          37
+        ],
+        "weight_kg": 161.15259022400454,
+        "volume_m3": 2.5490097025372704,
+        "distance_km": 245.596,
+        "fuel_litres": 13.0391091532
+      },
+      {
+        "vehicle": "caddy-4",
+        "customers": [
+          84,
+          88,
+          89,
+          90,
+          91,
+          86,
+          83,
+          85
+        ],
+        "weight_kg": 130.83384541002138,
+        "volume_m3": 2.659455013729729,
+        "distance_km": 139.629,
+        "fuel_litres": 7.413140979299999
+      },
+      {
+        "vehicle": "caddy-4",
+        "customers": [
+          87
+        ],
+        "weight_kg": 24.124180585517145,
+        "volume_m3": 0.24296747026019416,
+        "distance_km": 22.272,
+        "fuel_litres": 1.1824583424
+      },
+      {
+        "vehicle": "sprinter-5",
+        "customers": [
+          47,
+          55,
+          46,
+          52,
+          50,
+          53,
+          54,
+          48,
+          56,
+          49,
+          51,
+          45
+        ],
+        "weight_kg": 331.7754453354819,
+        "volume_m3": 8.096594724461191,
+        "distance_km": 252.009,
+        "fuel_litres": 22.799556640799995
+      },
+      {
+        "vehicle": "sprinter-5",
+        "customers": [
+          94,
+          101,
+          95,
+          93,
+          98,
+          92,
+          99,
+          97,
+          100,
+          96,
+          102
+        ],
+        "weight_kg": 307.9891632217447,
+        "volume_m3": 7.931975514553751,
+        "distance_km": 218.654,
+        "fuel_litres": 19.7818897648
+      }
+    ],
+    "cost": {
+      "fuel_eur": 308.015,
+      "wage_eur": 1254.1403,
+      "overtime_hours": 32.2558,
+      "maintenance_eur": 217.9406,
+      "total_eur": 1780.096,
+      "trips_below_min": 4,
+      "trips_above_max": 0
+    }
+  },
+  "validation": {
+    "feasible": true,
+    "distance_km": 855.8910000000002,
+    "fuel_litres": 85.92377036699999,
+    "trips": 10,
+    "fleet_type_ids": [
+      "caddy",
+      "sprinter",
+      "man",
+      "caddy",
+      "sprinter"
+    ],
+    "vehicles_used": 5,
+    "finish_minutes_by_vehicle": [
+      475.969,
+      463.1147142857143,
+      528.165,
+      413.0908571428571,
+      576.1061428571428
+    ],
+    "trip_details": [
+      {
+        "vehicle": "caddy-1",
+        "customers": [
+          63,
+          58,
+          60,
+          64,
+          11,
+          62,
+          61,
+          2,
+          3
+        ],
+        "weight_kg": 104.76046974073678,
+        "volume_m3": 2.450955439871509,
+        "distance_km": 135.602,
+        "fuel_litres": 7.199340703400001
+      },
+      {
+        "vehicle": "caddy-1",
+        "customers": [
+          9,
+          10,
+          8,
+          6,
+          7,
+          4,
+          57,
+          83
+        ],
+        "weight_kg": 95.69283088335325,
+        "volume_m3": 1.7120490975188083,
+        "distance_km": 43.794,
+        "fuel_litres": 2.3250979097999998
+      },
+      {
+        "vehicle": "sprinter-2",
+        "customers": [
+          13,
+          16,
+          67,
+          15,
+          19,
+          65,
+          69,
+          70
+        ],
+        "weight_kg": 404.3244398663194,
+        "volume_m3": 9.219558983517757,
+        "distance_km": 92.541,
+        "fuel_litres": 8.3722953192
+      },
+      {
+        "vehicle": "sprinter-2",
+        "customers": [
+          17,
+          68,
+          72,
+          71,
+          20,
+          14,
+          66,
+          18,
+          21,
+          37
+        ],
+        "weight_kg": 460.52151982324847,
+        "volume_m3": 8.384118206744889,
+        "distance_km": 78.421,
+        "fuel_litres": 7.0948419752000005
+      },
+      {
+        "vehicle": "man-3",
+        "customers": [
+          24,
+          59,
+          80,
+          12,
+          77,
+          73,
+          27,
+          28,
+          31,
+          75,
+          81,
+          33,
+          30
+        ],
+        "weight_kg": 1501.5914985513486,
+        "volume_m3": 38.35583709147824,
+        "distance_km": 101.266,
+        "fuel_litres": 21.1531306888
+      },
+      {
+        "vehicle": "man-3",
+        "customers": [
+          25,
+          74,
+          78,
+          26,
+          79,
+          76,
+          29,
+          82,
+          32,
+          22,
+          55,
+          23
+        ],
+        "weight_kg": 1318.288799217352,
+        "volume_m3": 35.5642390011379,
+        "distance_km": 69.422,
+        "fuel_litres": 14.5013394296
+      },
+      {
+        "vehicle": "caddy-4",
+        "customers": [
+          5,
+          40,
+          36,
+          89,
+          41,
+          85,
+          42,
+          84,
+          90
+        ],
+        "weight_kg": 146.6051454393322,
+        "volume_m3": 2.6006127542892616,
+        "distance_km": 83.571,
+        "fuel_litres": 4.4369264607
+      },
+      {
+        "vehicle": "caddy-4",
+        "customers": [
+          91,
+          38,
+          39,
+          44,
+          88,
+          43,
+          35,
+          87,
+          86
+        ],
+        "weight_kg": 144.59658432762302,
+        "volume_m3": 2.4345449528007106,
+        "distance_km": 50.623,
+        "fuel_litres": 2.6876611291
+      },
+      {
+        "vehicle": "sprinter-5",
+        "customers": [
+          53,
+          49,
+          34,
+          98,
+          93,
+          48,
+          45,
+          96,
+          94,
+          1,
+          51,
+          99,
+          102,
+          92
+        ],
+        "weight_kg": 320.6207441538516,
+        "volume_m3": 8.450482259361262,
+        "distance_km": 113.292,
+        "fuel_litres": 10.2496631904
+      },
+      {
+        "vehicle": "sprinter-5",
+        "customers": [
+          47,
+          97,
+          95,
+          100,
+          50,
+          46,
+          54,
+          56,
+          101,
+          52
+        ],
+        "weight_kg": 328.3990162306687,
+        "volume_m3": 7.707056364743348,
+        "distance_km": 87.359,
+        "fuel_litres": 7.903473560799999
+      }
+    ],
+    "cost": {
+      "fuel_eur": 137.478,
+      "wage_eur": 520.1434,
+      "overtime_hours": 2.4045,
+      "maintenance_eur": 96.6885,
+      "total_eur": 754.3099,
+      "trips_below_min": 5,
+      "trips_above_max": 0
+    }
+  },
+  "history": [
+    {
+      "generation": 0,
+      "objective": 1480.107
+    },
+    {
+      "generation": 1,
+      "objective": 1319.7865
+    },
+    {
+      "generation": 2,
+      "objective": 1319.7865
+    },
+    {
+      "generation": 3,
+      "objective": 1319.7865
+    },
+    {
+      "generation": 4,
+      "objective": 1211.5309
+    },
+    {
+      "generation": 5,
+      "objective": 1157.3076
+    },
+    {
+      "generation": 6,
+      "objective": 1124.3229
+    },
+    {
+      "generation": 7,
+      "objective": 1053.9033
+    },
+    {
+      "generation": 8,
+      "objective": 1017.2446
+    },
+    {
+      "generation": 9,
+      "objective": 994.519
+    },
+    {
+      "generation": 10,
+      "objective": 973.636
+    },
+    {
+      "generation": 11,
+      "objective": 954.8856
+    },
+    {
+      "generation": 12,
+      "objective": 947.5501
+    },
+    {
+      "generation": 13,
+      "objective": 930.6598
+    },
+    {
+      "generation": 14,
+      "objective": 921.5075
+    },
+    {
+      "generation": 15,
+      "objective": 900.3458
+    },
+    {
+      "generation": 16,
+      "objective": 895.5265
+    },
+    {
+      "generation": 17,
+      "objective": 867.6616
+    },
+    {
+      "generation": 18,
+      "objective": 867.6616
+    },
+    {
+      "generation": 19,
+      "objective": 867.6616
+    },
+    {
+      "generation": 20,
+      "objective": 852.3544
+    },
+    {
+      "generation": 21,
+      "objective": 836.6588
+    },
+    {
+      "generation": 22,
+      "objective": 836.6588
+    },
+    {
+      "generation": 23,
+      "objective": 836.6588
+    },
+    {
+      "generation": 24,
+      "objective": 828.5636
+    },
+    {
+      "generation": 25,
+      "objective": 827.6924
+    },
+    {
+      "generation": 26,
+      "objective": 825.1352
+    },
+    {
+      "generation": 27,
+      "objective": 823.5377
+    },
+    {
+      "generation": 28,
+      "objective": 815.101
+    },
+    {
+      "generation": 29,
+      "objective": 815.101
+    },
+    {
+      "generation": 30,
+      "objective": 811.5992
+    },
+    {
+      "generation": 31,
+      "objective": 811.5992
+    },
+    {
+      "generation": 32,
+      "objective": 811.5992
+    },
+    {
+      "generation": 33,
+      "objective": 811.5992
+    },
+    {
+      "generation": 34,
+      "objective": 808.9094
+    },
+    {
+      "generation": 35,
+      "objective": 800.4608
+    },
+    {
+      "generation": 36,
+      "objective": 799.8152
+    },
+    {
+      "generation": 37,
+      "objective": 793.155
+    },
+    {
+      "generation": 38,
+      "objective": 792.4617
+    },
+    {
+      "generation": 39,
+      "objective": 792.4617
+    },
+    {
+      "generation": 40,
+      "objective": 790.4548
+    },
+    {
+      "generation": 41,
+      "objective": 787.3498
+    },
+    {
+      "generation": 42,
+      "objective": 785.0645
+    },
+    {
+      "generation": 43,
+      "objective": 785.0645
+    },
+    {
+      "generation": 44,
+      "objective": 785.0645
+    },
+    {
+      "generation": 45,
+      "objective": 785.0645
+    },
+    {
+      "generation": 46,
+      "objective": 785.0645
+    },
+    {
+      "generation": 47,
+      "objective": 785.0645
+    },
+    {
+      "generation": 48,
+      "objective": 785.0645
+    },
+    {
+      "generation": 49,
+      "objective": 785.0645
+    },
+    {
+      "generation": 50,
+      "objective": 778.5301
+    },
+    {
+      "generation": 51,
+      "objective": 774.9994
+    },
+    {
+      "generation": 52,
+      "objective": 774.9994
+    },
+    {
+      "generation": 53,
+      "objective": 774.4168
+    },
+    {
+      "generation": 54,
+      "objective": 771.8835
+    },
+    {
+      "generation": 55,
+      "objective": 768.5908
+    },
+    {
+      "generation": 56,
+      "objective": 760.2061
+    },
+    {
+      "generation": 57,
+      "objective": 759.7584
+    },
+    {
+      "generation": 58,
+      "objective": 759.7584
+    },
+    {
+      "generation": 59,
+      "objective": 757.4124
+    },
+    {
+      "generation": 60,
+      "objective": 757.4124
+    },
+    {
+      "generation": 61,
+      "objective": 757.4124
+    },
+    {
+      "generation": 62,
+      "objective": 757.4124
+    },
+    {
+      "generation": 63,
+      "objective": 757.4124
+    },
+    {
+      "generation": 64,
+      "objective": 757.1815
+    },
+    {
+      "generation": 65,
+      "objective": 757.1815
+    },
+    {
+      "generation": 66,
+      "objective": 757.1815
+    },
+    {
+      "generation": 67,
+      "objective": 757.1815
+    },
+    {
+      "generation": 68,
+      "objective": 757.1815
+    },
+    {
+      "generation": 69,
+      "objective": 757.1815
+    },
+    {
+      "generation": 70,
+      "objective": 757.1815
+    },
+    {
+      "generation": 71,
+      "objective": 757.1815
+    },
+    {
+      "generation": 72,
+      "objective": 757.0024
+    },
+    {
+      "generation": 73,
+      "objective": 757.0024
+    },
+    {
+      "generation": 74,
+      "objective": 757.0024
+    },
+    {
+      "generation": 75,
+      "objective": 757.0024
+    },
+    {
+      "generation": 76,
+      "objective": 757.0024
+    },
+    {
+      "generation": 77,
+      "objective": 757.0024
+    },
+    {
+      "generation": 78,
+      "objective": 757.0024
+    },
+    {
+      "generation": 79,
+      "objective": 757.0024
+    },
+    {
+      "generation": 80,
+      "objective": 754.3099
+    }
+  ],
+  "optimality_gap": null,
+  "warning": "No certified optimum. Five available vehicles; idle slots are allowed. Overtime is charged at the configured multiplier. No 3D loading."
+}

@@ -133,4 +133,29 @@ class Tests(unittest.TestCase):
         c=evaluate_costs(trips,vehicles,x)
         self.assertEqual(c['trips_below_min'],1);self.assertEqual(c['trips_above_max'],0)
 
+    def test_fixed_fleet_benchmark_cannot_change_the_vehicle_mix(self):
+        x=json.loads((ROOT/'data/benchmark_250.json').read_text())
+        self.assertFalse(x['model']['fleet_mix_is_decision'])
+        self.assertTrue(validate_solution(x,x['reference_transports'])['feasible'])
+        out=solve(x,seed=0,population=8,generations=2,objective='cost')
+        self.assertEqual(out['best']['fleet'],x['vehicles'])
+        self.assertEqual(out['validation']['fleet_type_ids'],
+                         ['caddy','sprinter','sprinter','man','man'])
+        bad_types=out['best']['genome'][2][:];bad_types[0]=2
+        with self.assertRaisesRegex(ValueError,'fixed fleet'):
+            decode([out['best']['genome'][0],out['best']['genome'][1],bad_types],x)
+        with self.assertRaisesRegex(ValueError,'fixed fleet'):
+            validate_solution(x,out['best']['transports'],make_fleet(x,bad_types))
+
+    def test_schedule_and_validator_use_each_vehicle_speed(self):
+        x=ready();x['vehicles'][0]['speed_kmh']=15
+        trips=schedule([[[1,2],[3,4]],[],[],[],[]],x)
+        self.assertTrue(validate_solution(x,trips)['feasible'])
+        self.assertAlmostEqual(trips[0]['finish_minutes'],
+            route_m([1,2],x['distance_matrix_m'])/1000/15*60)
+        wrong=copy.deepcopy(trips);wrong[0]['finish_minutes']+=1
+        with self.assertRaisesRegex(ValueError,'Wrong trip duration'):
+            validate_solution(x,wrong)
+
 if __name__=='__main__':unittest.main()
+
