@@ -6,7 +6,7 @@
   "population": 32,
   "generations": 80,
   "evaluations": 2432,
-  "runtime_seconds": 0.5688186659990606,
+  "runtime_seconds": 0.5821477019999293,
   "best": {
     "genome": [
       [
