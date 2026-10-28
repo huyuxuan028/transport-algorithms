@@ -1,6 +1,6 @@
 import copy,itertools,json,math,unittest
 from pathlib import Path
-from solver import decode,make_fleet,route_m,schedule,solve,split_vehicle,validate_instance,validate_solution
+from solver import decode,evaluate_costs,make_fleet,route_m,schedule,solve,split_vehicle,validate_instance,validate_solution
 
 ROOT=Path(__file__).parent
 
@@ -73,5 +73,64 @@ class Tests(unittest.TestCase):
         self.assertEqual(len(out['best']['fleet']),5)
         self.assertIn('large',out['validation']['fleet_type_ids'])
         self.assertTrue(out['validation']['feasible'])
+
+    def test_wage_without_overtime_and_with_overtime(self):
+        x=ready();vehicles=x['vehicles']
+        trips_regular=[{'vehicle':0,'customers':[1,2],'start_minutes':0,'finish_minutes':360,'distance_km':100,'fuel_litres':10}]
+        c_reg=evaluate_costs(trips_regular,vehicles,x)
+        self.assertAlmostEqual(c_reg['wage_eur'],120.0);self.assertAlmostEqual(c_reg['overtime_hours'],0.0)
+        trips_ot=[{'vehicle':0,'customers':[1,2],'start_minutes':0,'finish_minutes':600,'distance_km':100,'fuel_litres':10}]
+        c_ot=evaluate_costs(trips_ot,vehicles,x)
+        self.assertAlmostEqual(c_ot['wage_eur'],240.0);self.assertAlmostEqual(c_ot['overtime_hours'],2.0)
+    def test_maintenance_cost_scaling(self):
+        x=ready();vehicles=x['vehicles']
+        trips=[{'vehicle':0,'customers':[1],'start_minutes':0,'finish_minutes':60,'distance_km':1000,'fuel_litres':10}]
+        c=evaluate_costs(trips,vehicles,x)
+        self.assertAlmostEqual(c['maintenance_eur'],80.0)
+    def test_solver_repair_respects_instance_volume_buffer(self):
+        x=ready();x['model']['volume_buffer']=0.10
+        x['customers'][1]['volume_m3']=4.6
+        x['vehicles']=make_fleet(x,[2,2,2,2,2])
+        x['reference_transports']=schedule([[[1],[2],[3],[4]],[],[],[],[]],x)
+        allowed=validate_instance(x)
+        self.assertNotIn(0,allowed[1])
+        out=solve(x,seed=3,population=8,generations=2)
+        self.assertTrue(out['validation']['feasible'])
+        self.assertGreaterEqual(out['best']['fleet'][out['best']['genome'][1][0]]['volume_m3'],4.6/0.9)
+
+    def test_schema_v3_repair_respects_buffer_for_near_capacity_order(self):
+        # The fixture uses benchmark order 29, which exceeds the buffered Caddy capacity.
+        x=json.loads((ROOT/'data/schema_v3_buffer_case.json').read_text())
+        self.assertEqual(x['schema_version'],3)
+        allowed=validate_instance(x)
+        self.assertNotIn(0,allowed[1]);self.assertIn(1,allowed[1])
+        out=solve(x,seed=0,population=8,generations=0)
+        self.assertTrue(out['validation']['feasible'])
+
+    def test_instance_cost_parameters_and_explicit_overrides(self):
+        x=ready();x['model'].update({'fuel_price_eur_per_l':1.60,'overtime_multiplier':3.0,
+            'shift_hours':6.0,'min_stops_per_trip':3,'max_stops_per_trip':1})
+        trips=[{'vehicle':0,'customers':[1,2],'start_minutes':0,'finish_minutes':600,'distance_km':100,'fuel_litres':10}]
+        cost=evaluate_costs(trips,x['vehicles'],x)
+        self.assertAlmostEqual(cost['fuel_eur'],16.0)
+        self.assertAlmostEqual(cost['wage_eur'],360.0)
+        self.assertAlmostEqual(cost['overtime_hours'],4.0)
+        self.assertEqual(cost['trips_below_min'],1);self.assertEqual(cost['trips_above_max'],1)
+        overridden=evaluate_costs(trips,x['vehicles'],x,{'fuel_price':2.0,'overtime_mult':4.0,
+            'shift_h':8.0,'min_stops':1,'max_stops':3})
+        self.assertAlmostEqual(overridden['fuel_eur'],20.0)
+        self.assertAlmostEqual(overridden['wage_eur'],320.0)
+        self.assertEqual(overridden['trips_below_min'],0);self.assertEqual(overridden['trips_above_max'],0)
+
+    def test_volume_buffer_reduces_usable_capacity(self):
+        x=ready();v={'payload_kg':10,'volume_m3':10,'fuel_l_per_100km':5}
+        x['customers'][1]['volume_m3']=9.5;x['customers'][2]['volume_m3']=0.1
+        self.assertEqual(len(split_vehicle([1],v,x,volume_buffer=0.0)),1)
+        with self.assertRaises(ValueError):split_vehicle([1],v,x,volume_buffer=0.10)
+    def test_trip_size_audit_counts(self):
+        x=ready();vehicles=x['vehicles']
+        trips=[{'vehicle':0,'customers':[1,2],'start_minutes':0,'finish_minutes':60,'distance_km':10,'fuel_litres':1}]
+        c=evaluate_costs(trips,vehicles,x)
+        self.assertEqual(c['trips_below_min'],1);self.assertEqual(c['trips_above_max'],0)
 
 if __name__=='__main__':unittest.main()

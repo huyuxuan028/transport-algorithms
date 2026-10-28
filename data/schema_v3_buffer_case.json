@@ -1,0 +1,34 @@
+{
+  "schema_version": 3,
+  "name": "schema-v3-buffer-regression",
+  "fleet_size": 5,
+  "vehicle_types": [
+    {"id": "caddy", "payload_kg": 680.0, "volume_m3": 3.1, "fuel_l_per_100km": 5.30917, "wage_eur_per_h": 12.0, "maintenance_eur_per_1000km": 80.0},
+    {"id": "sprinter", "payload_kg": 1231.0, "volume_m3": 10.5, "fuel_l_per_100km": 9.04712, "wage_eur_per_h": 12.0, "maintenance_eur_per_1000km": 110.0},
+    {"id": "man", "payload_kg": 5480.0, "volume_m3": 42.7, "fuel_l_per_100km": 20.88868, "wage_eur_per_h": 12.0, "maintenance_eur_per_1000km": 180.0}
+  ],
+  "vehicles": [
+    {"id": "caddy-1", "type_id": "caddy", "payload_kg": 680.0, "volume_m3": 3.1, "fuel_l_per_100km": 5.30917, "wage_eur_per_h": 12.0, "maintenance_eur_per_1000km": 80.0},
+    {"id": "sprinter-2", "type_id": "sprinter", "payload_kg": 1231.0, "volume_m3": 10.5, "fuel_l_per_100km": 9.04712, "wage_eur_per_h": 12.0, "maintenance_eur_per_1000km": 110.0},
+    {"id": "man-3", "type_id": "man", "payload_kg": 5480.0, "volume_m3": 42.7, "fuel_l_per_100km": 20.88868, "wage_eur_per_h": 12.0, "maintenance_eur_per_1000km": 180.0},
+    {"id": "caddy-4", "type_id": "caddy", "payload_kg": 680.0, "volume_m3": 3.1, "fuel_l_per_100km": 5.30917, "wage_eur_per_h": 12.0, "maintenance_eur_per_1000km": 80.0},
+    {"id": "sprinter-5", "type_id": "sprinter", "payload_kg": 1231.0, "volume_m3": 10.5, "fuel_l_per_100km": 9.04712, "wage_eur_per_h": 12.0, "maintenance_eur_per_1000km": 110.0}
+  ],
+  "customers": [
+    {"id": 0, "weight_kg": 0.0, "volume_m3": 0.0, "service_minutes": 0.0, "items": []},
+    {"id": 1, "weight_kg": 78.98784490703211, "volume_m3": 3.0394482960144793, "service_minutes": 10.0, "items": []}
+  ],
+  "distance_matrix_m": [[0.0, 1000.0], [1000.0, 0.0]],
+  "model": {
+    "schedule_average_speed_kmh": 35.0,
+    "volume_buffer": 0.1,
+    "shift_hours": 8.0,
+    "overtime_multiplier": 2.0,
+    "fuel_price_eur_per_l": 1.6,
+    "min_stops_per_trip": 10,
+    "max_stops_per_trip": 50
+  },
+  "reference_transports": [
+    {"vehicle": 1, "customers": [1], "start_minutes": 0.0, "finish_minutes": 13.428571428571429, "distance_km": 2.0, "fuel_litres": 0.1809424}
+  ]
+}

@@ -101,3 +101,12 @@ include Prins (2009) on memetic heterogeneous-fleet routing, Vidal (2022) on HGS
 Zhao et al. (2024) on multi-trip splitting, and Hvattum (2025) on split starts.
 Our explicit three-array representation is a simpler design choice, not a claim that
 those papers implement exactly this chromosome or this prototype.
+
+
+## Cost and Evaluation Engine Calibration Notes
+
+Cost inputs are assumptions pending supervisor-approved values:
+- Driver wage: €20.00/h is a generic fallback, not a measured driver wage; per-vehicle wage values in an instance take precedence. Overtime is paid at double rate after 8 hours per the project brief.
+- Fuel price: €1.65/L diesel (European Commission DG ENER Weekly Oil Bulletin EU weighted pump average).
+- Maintenance: €50 (Caddy), €80 (Sprinter), €120 (MAN) per 1,000 km based on commercial fleet servicing and wear benchmarks; instance values take precedence.
+- Volume buffer: configurable (default 0.10) to support Course Option 1 reserve loading.

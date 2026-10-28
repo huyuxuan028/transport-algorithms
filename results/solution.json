@@ -6,7 +6,7 @@
   "population": 32,
   "generations": 80,
   "evaluations": 2432,
-  "runtime_seconds": 0.8861779740000202,
+  "runtime_seconds": 0.5821477019999293,
   "best": {
     "genome": [
       [
@@ -692,7 +692,17 @@
       }
     ],
     "distance_km": 1243.354,
-    "fuel_litres": 76.3371542263
+    "fuel_litres": 76.3371542263,
+    "cost": {
+      "fuel_eur": 125.9563,
+      "wage_eur": 1339.3975,
+      "overtime_hours": 14.9587,
+      "maintenance_eur": 70.4546,
+      "total_eur": 1535.8084,
+      "trips_below_min": 30,
+      "trips_above_max": 0
+    },
+    "total_eur": 1535.8084
   },
   "baseline_decoded": {
     "genome": [
@@ -1226,7 +1236,17 @@
       }
     ],
     "distance_km": 1643.699,
-    "fuel_litres": 160.8982568838
+    "fuel_litres": 160.8982568838,
+    "cost": {
+      "fuel_eur": 265.4821,
+      "wage_eur": 1737.9825,
+      "overtime_hours": 23.4496,
+      "maintenance_eur": 124.1033,
+      "total_eur": 2127.5679,
+      "trips_below_min": 6,
+      "trips_above_max": 0
+    },
+    "total_eur": 2127.5679
   },
   "generated_witness": {
     "feasible": true,
@@ -1441,7 +1461,16 @@
         "distance_km": 218.654,
         "fuel_litres": 19.7818897648
       }
-    ]
+    ],
+    "cost": {
+      "fuel_eur": 317.5566,
+      "wage_eur": 2089.1402,
+      "overtime_hours": 32.2285,
+      "maintenance_eur": 147.8984,
+      "total_eur": 2554.5953,
+      "trips_below_min": 3,
+      "trips_above_max": 0
+    }
   },
   "validation": {
     "feasible": true,
@@ -1836,7 +1865,16 @@
         "distance_km": 16.724,
         "fuel_litres": 0.8879055908
       }
-    ]
+    ],
+    "cost": {
+      "fuel_eur": 125.9563,
+      "wage_eur": 1339.3975,
+      "overtime_hours": 14.9587,
+      "maintenance_eur": 70.4546,
+      "total_eur": 1535.8084,
+      "trips_below_min": 30,
+      "trips_above_max": 0
+    }
   },
   "history": [
     {
@@ -2165,5 +2203,5 @@
     }
   ],
   "optimality_gap": null,
-  "warning": "No certified optimum or uniquely justified fleet mix. Five available vehicles; idle slots are allowed. No shift limits, fixed fleet costs or 3D loading."
+  "warning": "No certified optimum or uniquely justified fleet mix. Five available vehicles; idle slots are allowed. shift limits: overtime is double wage, fixed fleet costs: maintenance cost per vehicle type after every 100 KM-s. No 3D loading."
 }
