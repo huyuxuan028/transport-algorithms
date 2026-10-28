@@ -98,6 +98,15 @@ class Tests(unittest.TestCase):
         self.assertTrue(out['validation']['feasible'])
         self.assertGreaterEqual(out['best']['fleet'][out['best']['genome'][1][0]]['volume_m3'],4.6/0.9)
 
+    def test_schema_v3_repair_respects_buffer_for_near_capacity_order(self):
+        # The fixture uses benchmark order 29, which exceeds the buffered Caddy capacity.
+        x=json.loads((ROOT/'data/schema_v3_buffer_case.json').read_text())
+        self.assertEqual(x['schema_version'],3)
+        allowed=validate_instance(x)
+        self.assertNotIn(0,allowed[1]);self.assertIn(1,allowed[1])
+        out=solve(x,seed=0,population=8,generations=0)
+        self.assertTrue(out['validation']['feasible'])
+
     def test_instance_cost_parameters_and_explicit_overrides(self):
         x=ready();x['model'].update({'fuel_price_eur_per_l':1.60,'overtime_multiplier':3.0,
             'shift_hours':6.0,'min_stops_per_trip':3,'max_stops_per_trip':1})

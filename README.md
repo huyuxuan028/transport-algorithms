@@ -105,8 +105,8 @@ those papers implement exactly this chromosome or this prototype.
 
 ## Cost and Evaluation Engine Calibration Notes
 
-Driver wages and fuel price defaults are calibrated from official EU statistical benchmarks as baseline assumptions until supervisor values are provided:
-- Driver wage: €20.00/h base (Eurostat dataset `lc_lci_lev`, NACE Rev. 2 Section H Division 49 Land Transport average labour cost), with double wage (€40.00/h) for shift duration exceeding 8 hours per project brief.
+Cost inputs are assumptions pending supervisor-approved values:
+- Driver wage: €20.00/h is a generic fallback, not a measured driver wage; per-vehicle wage values in an instance take precedence. Overtime is paid at double rate after 8 hours per the project brief.
 - Fuel price: €1.65/L diesel (European Commission DG ENER Weekly Oil Bulletin EU weighted pump average).
-- Maintenance: €50 (Caddy), €80 (Sprinter), €120 (MAN) per 1,000 km based on commercial fleet servicing and wear benchmarks.
-- Volume buffer: Configurable (default 0.10) to support Course Option 1 reserve loading.
+- Maintenance: €50 (Caddy), €80 (Sprinter), €120 (MAN) per 1,000 km based on commercial fleet servicing and wear benchmarks; instance values take precedence.
+- Volume buffer: configurable (default 0.10) to support Course Option 1 reserve loading.
