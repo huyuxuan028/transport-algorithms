@@ -18,12 +18,13 @@ def make_fleet(inst,type_indices):
         raise ValueError('Expected exactly fleet_size vehicle type choices')
     return [dict(types[t],id=f'{types[t]["id"]}-{k+1}',type_id=types[t]['id']) for k,t in enumerate(type_indices)]
 
-def feasible_types(inst):
+def feasible_types(inst,volume_buffer=None):
+    buf=inst.get('model',{}).get('volume_buffer',0.0) if volume_buffer is None else volume_buffer
     return [[t for t,v in enumerate(inst['vehicle_types'])
-             if c['weight_kg']<=v['payload_kg']+EPS and c['volume_m3']<=v['volume_m3']+EPS]
+             if c['weight_kg']<=v['payload_kg']+EPS and c['volume_m3']<=v['volume_m3']*(1.0-buf)+EPS]
             for c in inst['customers']]
 
-def validate_instance(inst):
+def validate_instance(inst,volume_buffer=None):
     customers=inst['customers'];vehicles=inst['vehicles'];d=inst['distance_matrix_m'];n=len(customers)
     if not vehicles or n<2 or len(d)!=n or any(len(row)!=n for row in d):raise ValueError('Invalid input dimensions')
     if inst.get('fleet_size')!=5 or len(vehicles)!=5 or len(inst.get('vehicle_types',[]))!=3:
@@ -41,17 +42,17 @@ def validate_instance(inst):
             if not math.isfinite(d[i][j]) or d[i][j]<0 or abs(d[i][j]-d[j][i])>EPS:raise ValueError('Require finite symmetric nonnegative costs')
         if d[i][i]:raise ValueError('Distance diagonal must be zero')
     if not math.isfinite(inst['model']['schedule_average_speed_kmh']) or inst['model']['schedule_average_speed_kmh']<=0:raise ValueError('Invalid assumed average speed')
-    return feasible_types(inst)
+    return feasible_types(inst,volume_buffer)
 
 DEFAULT_COST={'fuel_price':1.65,'wage':20.0,'overtime_mult':2.0,'shift_h':8.0,'maint':{'caddy':50.0,'sprinter':80.0,'man':120.0,'default':80.0},'volume_buffer':0.10,'min_stops':10,'max_stops':50}
 def evaluate_costs(trips,vehicles,inst,overrides=None):
     """Compute financial costs, driver overtime, maintenance, and soft stop audits."""
-    m=inst.get('model',{});cfg=dict(DEFAULT_COST,**(overrides or {}))
-    fuel_price=cfg.get('fuel_price',m.get('fuel_price_eur_per_l',DEFAULT_COST['fuel_price']))
-    mult=cfg.get('overtime_mult',m.get('overtime_multiplier',DEFAULT_COST['overtime_mult']))
-    shift_h=cfg.get('shift_h',m.get('shift_hours',DEFAULT_COST['shift_h']))
-    min_s=cfg.get('min_stops',m.get('min_stops_per_trip',DEFAULT_COST['min_stops']))
-    max_s=cfg.get('max_stops',m.get('max_stops_per_trip',DEFAULT_COST['max_stops']))
+    m=inst.get('model',{});overrides=overrides or {};cfg=dict(DEFAULT_COST,**overrides)
+    fuel_price=overrides.get('fuel_price',m.get('fuel_price_eur_per_l',DEFAULT_COST['fuel_price']))
+    mult=overrides.get('overtime_mult',m.get('overtime_multiplier',DEFAULT_COST['overtime_mult']))
+    shift_h=overrides.get('shift_h',m.get('shift_hours',DEFAULT_COST['shift_h']))
+    min_s=overrides.get('min_stops',m.get('min_stops_per_trip',DEFAULT_COST['min_stops']))
+    max_s=overrides.get('max_stops',m.get('max_stops_per_trip',DEFAULT_COST['max_stops']))
     by_v={k:[t for t in trips if t['vehicle']==k] for k in range(len(vehicles))}
     fuel_eur=sum(t['fuel_litres'] for t in trips)*fuel_price;wage_eur=maint_eur=ot_hours=0.0
     for k,v in enumerate(vehicles):
@@ -171,7 +172,7 @@ def ox(a,b,rng):
     return out
 
 def solve(inst,seed=0,population=40,generations=100,objective='fuel_litres',method='ga',volume_buffer=None,cost_overrides=None):
-    allowed=validate_instance(inst);n=len(inst['customers'])-1
+    allowed=validate_instance(inst,volume_buffer);n=len(inst['customers'])-1
     if any(not allowed[i] for i in range(1,n+1)):raise ValueError('An indivisible order fits no vehicle type')
     if objective not in ['fuel_litres','distance','cost'] or method not in ['ga','random'] or population<4 or generations<0:raise ValueError('Invalid search configuration')
     key='distance_km' if objective=='distance' else ('total_eur' if objective=='cost' else 'fuel_litres')

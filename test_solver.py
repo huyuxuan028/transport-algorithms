@@ -87,6 +87,32 @@ class Tests(unittest.TestCase):
         trips=[{'vehicle':0,'customers':[1],'start_minutes':0,'finish_minutes':60,'distance_km':1000,'fuel_litres':10}]
         c=evaluate_costs(trips,vehicles,x)
         self.assertAlmostEqual(c['maintenance_eur'],80.0)
+    def test_solver_repair_respects_instance_volume_buffer(self):
+        x=ready();x['model']['volume_buffer']=0.10
+        x['customers'][1]['volume_m3']=4.6
+        x['vehicles']=make_fleet(x,[2,2,2,2,2])
+        x['reference_transports']=schedule([[[1],[2],[3],[4]],[],[],[],[]],x)
+        allowed=validate_instance(x)
+        self.assertNotIn(0,allowed[1])
+        out=solve(x,seed=3,population=8,generations=2)
+        self.assertTrue(out['validation']['feasible'])
+        self.assertGreaterEqual(out['best']['fleet'][out['best']['genome'][1][0]]['volume_m3'],4.6/0.9)
+
+    def test_instance_cost_parameters_and_explicit_overrides(self):
+        x=ready();x['model'].update({'fuel_price_eur_per_l':1.60,'overtime_multiplier':3.0,
+            'shift_hours':6.0,'min_stops_per_trip':3,'max_stops_per_trip':1})
+        trips=[{'vehicle':0,'customers':[1,2],'start_minutes':0,'finish_minutes':600,'distance_km':100,'fuel_litres':10}]
+        cost=evaluate_costs(trips,x['vehicles'],x)
+        self.assertAlmostEqual(cost['fuel_eur'],16.0)
+        self.assertAlmostEqual(cost['wage_eur'],360.0)
+        self.assertAlmostEqual(cost['overtime_hours'],4.0)
+        self.assertEqual(cost['trips_below_min'],1);self.assertEqual(cost['trips_above_max'],1)
+        overridden=evaluate_costs(trips,x['vehicles'],x,{'fuel_price':2.0,'overtime_mult':4.0,
+            'shift_h':8.0,'min_stops':1,'max_stops':3})
+        self.assertAlmostEqual(overridden['fuel_eur'],20.0)
+        self.assertAlmostEqual(overridden['wage_eur'],320.0)
+        self.assertEqual(overridden['trips_below_min'],0);self.assertEqual(overridden['trips_above_max'],0)
+
     def test_volume_buffer_reduces_usable_capacity(self):
         x=ready();v={'payload_kg':10,'volume_m3':10,'fuel_l_per_100km':5}
         x['customers'][1]['volume_m3']=9.5;x['customers'][2]['volume_m3']=0.1
