@@ -18,6 +18,11 @@ def make_fleet(inst,type_indices):
         raise ValueError('Expected exactly fleet_size vehicle type choices')
     return [dict(types[t],id=f'{types[t]["id"]}-{k+1}',type_id=types[t]['id']) for k,t in enumerate(type_indices)]
 
+def fixed_type_indices(inst):
+    if inst.get('model',{}).get('fleet_mix_is_decision',True):return None
+    by_id={v['id']:i for i,v in enumerate(inst['vehicle_types'])}
+    return [by_id[v['type_id']] for v in inst['vehicles']]
+
 def feasible_types(inst,volume_buffer=None):
     buf=inst.get('model',{}).get('volume_buffer',0.0) if volume_buffer is None else volume_buffer
     return [[t for t,v in enumerate(inst['vehicle_types'])
@@ -37,6 +42,10 @@ def validate_instance(inst,volume_buffer=None):
         if any(not math.isfinite(v[k]) or v[k]<=0 for k in ['payload_kg','volume_m3','fuel_l_per_100km']):raise ValueError('Invalid vehicle')
     indices=[next((t for t,v in enumerate(inst['vehicle_types']) if v['id']==vehicle['type_id']),None) for vehicle in vehicles]
     if None in indices or vehicles!=make_fleet(inst,indices):raise ValueError('Invalid reference fleet')
+    if fixed_type_indices(inst) is not None and any(
+        not any(t in feasible_types(inst,volume_buffer)[i] for t in indices)
+        for i in range(1,n)):
+        raise ValueError('An order fits no physical vehicle in the fixed fleet')
     for i in range(n):
         for j in range(n):
             if not math.isfinite(d[i][j]) or d[i][j]<0 or abs(d[i][j]-d[j][i])>EPS:raise ValueError('Require finite symmetric nonnegative costs')
@@ -101,10 +110,10 @@ def two_opt(route,d,passes=1):
     return r
 
 def schedule(route_groups,inst,vehicles=None):
-    customers=inst['customers'];d=inst['distance_matrix_m'];speed=inst['model']['schedule_average_speed_kmh'];result=[]
+    customers=inst['customers'];d=inst['distance_matrix_m'];result=[]
     vehicles=inst['vehicles'] if vehicles is None else vehicles
     for k,trips in enumerate(route_groups):
-        clock=0.;v=vehicles[k]
+        clock=0.;v=vehicles[k];speed=v.get('speed_kmh',inst['model']['schedule_average_speed_kmh'])
         for order in trips:
             km=route_m(order,d)/1000;duration=km/speed*60+sum(customers[i]['service_minutes'] for i in order)
             result.append({'vehicle':k,'customers':order,'start_minutes':clock,'finish_minutes':clock+duration,
@@ -116,14 +125,16 @@ def validate_solution(inst,trips,vehicles=None,volume_buffer=None,cost_overrides
     """Recompute capacity, coverage, distance, fuel, and nonoverlapping schedules."""
     vehicles=inst['vehicles'] if vehicles is None else vehicles
     if len(vehicles)!=inst['fleet_size']:raise ValueError('Wrong fleet size')
+    if fixed_type_indices(inst) is not None and vehicles!=inst['vehicles']:
+        raise ValueError('Solution changes the given fixed fleet')
     buf=inst.get('model',{}).get('volume_buffer',0.0) if volume_buffer is None else volume_buffer
     n=len(inst['customers'])-1;visits=[];distance=fuel=0.;clocks=[0.]*len(vehicles);details=[]
-    d=inst['distance_matrix_m'];c=inst['customers'];speed=inst['model']['schedule_average_speed_kmh']
+    d=inst['distance_matrix_m'];c=inst['customers']
     for trip in sorted(trips,key=lambda t:(t['vehicle'],t['start_minutes'])):
         if any(not math.isfinite(trip[field]) for field in ['start_minutes','finish_minutes','distance_km','fuel_litres']):raise ValueError('Nonfinite trip metric')
         k=trip['vehicle']
         if not isinstance(k,int) or not 0<=k<len(vehicles):raise ValueError('Invalid physical vehicle ID')
-        v=vehicles[k];route=trip['customers']
+        v=vehicles[k];route=trip['customers'];speed=v.get('speed_kmh',inst['model']['schedule_average_speed_kmh'])
         if not route or any(not isinstance(i,int) or not 1<=i<=n for i in route):raise ValueError('Invalid visit')
         visits.extend(route);w=sum(c[i]['weight_kg'] for i in route);vol=sum(c[i]['volume_m3'] for i in route)
         if w>v['payload_kg']+EPS or vol>(v['volume_m3']*(1.0-buf))+EPS:raise ValueError('Overloaded trip')
@@ -145,7 +156,9 @@ def validate_solution(inst,trips,vehicles=None,volume_buffer=None,cost_overrides
 def decode(genome,inst,local_search=True,volume_buffer=None,cost_overrides=None):
     order,assignment,type_indices=genome;n=len(inst['customers'])-1
     if sorted(order)!=list(range(1,n+1)) or len(assignment)!=n:raise ValueError('Invalid chromosome')
-    vehicles=make_fleet(inst,type_indices)
+    fixed=fixed_type_indices(inst)
+    if fixed is not None and type_indices!=fixed:raise ValueError('Chromosome changes the given fixed fleet')
+    vehicles=inst['vehicles'] if fixed is not None else make_fleet(inst,type_indices)
     buf=inst.get('model',{}).get('volume_buffer',0.0) if volume_buffer is None else volume_buffer
     if any(not isinstance(k,int) or not 0<=k<len(vehicles) or
            inst['customers'][i]['weight_kg']>vehicles[k]['payload_kg']+EPS or
@@ -173,6 +186,7 @@ def ox(a,b,rng):
 
 def solve(inst,seed=0,population=40,generations=100,objective='fuel_litres',method='ga',volume_buffer=None,cost_overrides=None):
     allowed=validate_instance(inst,volume_buffer);n=len(inst['customers'])-1
+    fixed=fixed_type_indices(inst)
     if any(not allowed[i] for i in range(1,n+1)):raise ValueError('An indivisible order fits no vehicle type')
     if objective not in ['fuel_litres','distance','cost'] or method not in ['ga','random'] or population<4 or generations<0:raise ValueError('Invalid search configuration')
     key='distance_km' if objective=='distance' else ('total_eur' if objective=='cost' else 'fuel_litres')
@@ -195,13 +209,14 @@ def solve(inst,seed=0,population=40,generations=100,objective='fuel_litres',meth
             if 0<=k<len(types) and types[k] in allowed[i]:continue
             slots=[j for j,t in enumerate(types) if t in allowed[i]]
             if not slots:
+                if fixed is not None:raise ValueError('An order fits no physical vehicle in the fixed fleet')
                 k=rng.randrange(len(types));types[k]=rng.choice(allowed[i]);slots=[k]
             assignment[i-1]=rng.choice(slots)
         return g
     def random_genome():
-        types=[rng.randrange(len(inst['vehicle_types'])) for _ in range(inst['fleet_size'])]
+        types=fixed[:] if fixed is not None else [rng.randrange(len(inst['vehicle_types'])) for _ in range(inst['fleet_size'])]
         # At least one slot must carry every indivisible order.
-        if any(not any(t in allowed[i] for t in types) for i in range(1,n+1)):
+        if fixed is None and any(not any(t in allowed[i] for t in types) for i in range(1,n+1)):
             hard=max(range(1,n+1),key=lambda i:-len(allowed[i]));types[rng.randrange(len(types))]=rng.choice(allowed[hard])
         return repair([rng.sample(range(1,n+1),n),[rng.randrange(len(types)) for _ in range(n)],types])
     for _ in range(population-1):pool.append(evaluate(random_genome()))
@@ -219,9 +234,11 @@ def solve(inst,seed=0,population=40,generations=100,objective='fuel_litres',meth
                     if rng.random()<.5:order[i],order[j]=order[j],order[i]
                     else:order[i:j+1]=reversed(order[i:j+1])
                 if rng.random()<.3:
-                    i=rng.randrange(n);assignment[i]=rng.choice(allowed[i+1])
-                types=[aa if rng.random()<.5 else bb for aa,bb in zip(a[2],b[2])]
-                if rng.random()<.3:
+                    i=rng.randrange(n)
+                    slots=[j for j,t in enumerate(a[2]) if t in allowed[i+1]]
+                    if slots:assignment[i]=rng.choice(slots)
+                types=fixed[:] if fixed is not None else [aa if rng.random()<.5 else bb for aa,bb in zip(a[2],b[2])]
+                if fixed is None and rng.random()<.3:
                     j=rng.randrange(len(types));types[j]=rng.randrange(len(inst['vehicle_types']))
                 g=repair([order,assignment,types])
             child=evaluate(g);next_pool.append(child)
@@ -232,7 +249,7 @@ def solve(inst,seed=0,population=40,generations=100,objective='fuel_litres',meth
         'generations':generations,'evaluations':evaluations,'runtime_seconds':elapsed,
         'best':best,'baseline_decoded':base,'generated_witness':validate_solution(inst,inst['reference_transports'],volume_buffer=volume_buffer,cost_overrides=cost_overrides),
         'validation':validate_solution(inst,best['transports'],best['fleet'],volume_buffer=volume_buffer,cost_overrides=cost_overrides),'history':history,
-        'optimality_gap':None,'warning':'No certified optimum or uniquely justified fleet mix. Five available vehicles; idle slots are allowed. shift limits: overtime is double wage, fixed fleet costs: maintenance cost per vehicle type after every 100 KM-s. No 3D loading.'}
+        'optimality_gap':None,'warning':'No certified optimum. Five available vehicles; idle slots are allowed. Overtime is charged at the configured multiplier. No 3D loading.'}
 
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--instance',type=Path,default=ROOT/'data/example.json')
@@ -251,3 +268,4 @@ def main():
     print(json.dumps({k:v for k,v in result['validation'].items() if k!='trip_details'},indent=2))
 
 if __name__=='__main__':main()
+
