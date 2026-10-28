@@ -23,7 +23,7 @@ Optional figures and benchmark table:
 ```powershell
 python -m pip install matplotlib
 python plot_results.py
-python plot_results.py --results results/solution.json --pilot results/pilot.json --instance data/example.json --out figures --shift-hours 8
+python plot_results.py --results results/solution.json --pilot results/pilot.json --instance data/benchmark_250.json --out figures --shift-hours 8
 python -m unittest -v test_plot_results
 ```
 

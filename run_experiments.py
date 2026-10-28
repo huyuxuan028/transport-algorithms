@@ -1,11 +1,12 @@
 """Matched evaluation-count pilot; no claim of a shared final benchmark."""
-import json,statistics,platform,sys
+import argparse,json,statistics,platform,sys
 from pathlib import Path
 from solver import solve
 ROOT=Path(__file__).resolve().parent
 
 def main():
-    inst=json.loads((ROOT/'data/example.json').read_text());runs=[];summary=[]
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--instance',type=Path,default=ROOT/'data/benchmark_250.json');a=p.parse_args()
+    inst=json.loads(a.instance.read_text());runs=[];summary=[]
     for objective in ['fuel_litres','distance','cost']:
         for method in ['random','ga']:
             group=[]
@@ -22,7 +23,7 @@ def main():
                 'best_cost_eur':min(r['validation']['cost']['total_eur'] for r in group),
                 'feasible_runs':sum(r['validation']['feasible'] for r in group)})
     folder=ROOT/'results';folder.mkdir(exist_ok=True)
-    out={'instance':inst['name'],'protocol':'18 runs, seeds 0..2, population 32, generations 80, 2432 candidate evaluations per run. GA and random search share the same decoder and bounded 2-opt. Not equal wall-clock budgets.',
+    out={'instance':inst['name'],'protocol':f'{len(runs)} runs on {inst["name"]}, seeds 0..2, population 32, generations 80, 2432 candidate evaluations per run. GA and random search share the same decoder and bounded 2-opt. Not equal wall-clock budgets.',
         'environment':{'python':sys.version,'platform':platform.platform()},'summary':summary,'runs':runs}
     (folder/'pilot.json').write_text(json.dumps(out,indent=2,allow_nan=False))
     best=min((r for r in runs if r['method']=='ga' and r['objective']=='cost'),key=lambda r:r['validation']['cost']['total_eur'])

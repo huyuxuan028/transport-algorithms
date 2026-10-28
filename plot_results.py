@@ -3,7 +3,7 @@
 Usage:
     python plot_results.py
     python plot_results.py --results results/solution.json --pilot results/pilot.json \
-        --instance data/example.json --out figures --shift-hours 8
+        --instance data/benchmark_250.json --out figures --shift-hours 8
 
 Produces in --out:
     dataset.png      customer map, order weight / volume / service-time histograms
@@ -152,7 +152,7 @@ def write_benchmark(pilot,out):
 def main():
     p=argparse.ArgumentParser(description=__doc__,formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument('--results',type=Path,default=ROOT/'results/solution.json');p.add_argument('--pilot',type=Path,default=ROOT/'results/pilot.json')
-    p.add_argument('--instance',type=Path,default=ROOT/'data/example.json');p.add_argument('--out',type=Path,default=ROOT/'figures')
+    p.add_argument('--instance',type=Path,default=ROOT/'data/benchmark_250.json');p.add_argument('--out',type=Path,default=ROOT/'figures')
     p.add_argument('--shift-hours',type=float,default=None,help='shift length for the Gantt line; default from instance model.shift_hours or 8')
     p.add_argument('--volume-buffer',type=float,default=None,help='fraction of volume kept free; default from instance model.volume_buffer')
     a=p.parse_args();style();a.out.mkdir(parents=True,exist_ok=True)
