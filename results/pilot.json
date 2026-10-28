@@ -2,8 +2,8 @@
   "instance": "Heterogeneous-102-five-vehicle-seed42",
   "protocol": "18 runs, seeds 0..2, population 32, generations 80, 2432 candidate evaluations per run. GA and random search share the same decoder and bounded 2-opt. Not equal wall-clock budgets.",
   "environment": {
-    "python": "3.13.5 (main, Aug 10 2026, 12:06:59) [GCC 14.2.0]",
-    "platform": "Linux-6.12.113+deb13-amd64-x86_64-with-glibc2.41"
+    "python": "3.14.7 (main, Aug  5 2026, 10:29:49) [Clang 21.0.0 (clang-2100.1.1.101)]",
+    "platform": "macOS-26.4.1-arm64-arm-64bit-Mach-O"
   },
   "summary": [
     {
@@ -13,7 +13,7 @@
       "mean_distance_km": 1711.5576666666668,
       "mean_fuel_litres": 105.79946408353332,
       "mean_cost_eur": 2090.9607666666666,
-      "mean_runtime_seconds": 0.8001734936666859,
+      "mean_runtime_seconds": 1.0250121526963387,
       "best_distance_km": 1662.3400000000001,
       "best_fuel_litres": 103.68727487049999,
       "best_cost_eur": 2025.8719,
@@ -26,7 +26,7 @@
       "mean_distance_km": 1311.6636666666668,
       "mean_fuel_litres": 80.02646613823335,
       "mean_cost_eur": 1616.5508,
-      "mean_runtime_seconds": 0.5784670439999596,
+      "mean_runtime_seconds": 0.7310661253286526,
       "best_distance_km": 1243.354,
       "best_fuel_litres": 76.3371542263,
       "best_cost_eur": 1535.8084,
@@ -39,7 +39,7 @@
       "mean_distance_km": 1464.013,
       "mean_fuel_litres": 161.07717876889998,
       "mean_cost_eur": 1925.3575,
-      "mean_runtime_seconds": 0.8011727236666957,
+      "mean_runtime_seconds": 1.0816402637089293,
       "best_distance_km": 1441.8039999999999,
       "best_fuel_litres": 130.44173804480002,
       "best_cost_eur": 1837.8185,
@@ -52,7 +52,7 @@
       "mean_distance_km": 729.285,
       "mean_fuel_litres": 152.338009938,
       "mean_cost_eur": 1111.9209666666666,
-      "mean_runtime_seconds": 0.8828396436666329,
+      "mean_runtime_seconds": 1.14963416599979,
       "best_distance_km": 725.2789999999999,
       "best_fuel_litres": 151.5012094172,
       "best_cost_eur": 1104.4573,
@@ -65,7 +65,7 @@
       "mean_distance_km": 1474.737,
       "mean_fuel_litres": 146.49840721476667,
       "mean_cost_eur": 1905.2446333333335,
-      "mean_runtime_seconds": 0.8076247006666412,
+      "mean_runtime_seconds": 1.0533848056802526,
       "best_distance_km": 1441.8039999999999,
       "best_fuel_litres": 130.44173804480002,
       "best_cost_eur": 1837.8185,
@@ -78,7 +78,7 @@
       "mean_distance_km": 837.911,
       "mean_fuel_litres": 93.98664759693334,
       "mean_cost_eur": 1079.7342666666666,
-      "mean_runtime_seconds": 0.7516875896666685,
+      "mean_runtime_seconds": 0.9965757082682103,
       "best_distance_km": 828.325,
       "best_fuel_litres": 92.30425215599999,
       "best_cost_eur": 1044.579,
@@ -94,7 +94,7 @@
       "population": 32,
       "generations": 80,
       "evaluations": 2432,
-      "runtime_seconds": 0.7969467359998816,
+      "runtime_seconds": 0.9912958330241963,
       "best": {
         "genome": [
           [
@@ -2355,7 +2355,7 @@
       "population": 32,
       "generations": 80,
       "evaluations": 2432,
-      "runtime_seconds": 0.8002609010000015,
+      "runtime_seconds": 1.0091901670675725,
       "best": {
         "genome": [
           [
@@ -4670,7 +4670,7 @@
       "population": 32,
       "generations": 80,
       "evaluations": 2432,
-      "runtime_seconds": 0.8033128440001747,
+      "runtime_seconds": 1.0745504579972476,
       "best": {
         "genome": [
           [
@@ -6931,7 +6931,7 @@
       "population": 32,
       "generations": 80,
       "evaluations": 2432,
-      "runtime_seconds": 0.5660479699999996,
+      "runtime_seconds": 0.7155235420214012,
       "best": {
         "genome": [
           [
@@ -9210,7 +9210,7 @@
       "population": 32,
       "generations": 80,
       "evaluations": 2432,
-      "runtime_seconds": 0.5872054599999501,
+      "runtime_seconds": 0.7394090839661658,
       "best": {
         "genome": [
           [
@@ -11453,7 +11453,7 @@
       "population": 32,
       "generations": 80,
       "evaluations": 2432,
-      "runtime_seconds": 0.5821477019999293,
+      "runtime_seconds": 0.7382657499983907,
       "best": {
         "genome": [
           [
@@ -13660,7 +13660,7 @@
       "population": 32,
       "generations": 80,
       "evaluations": 2432,
-      "runtime_seconds": 0.7977107780000097,
+      "runtime_seconds": 1.1294885000679642,
       "best": {
         "genome": [
           [
@@ -15543,7 +15543,7 @@
       "population": 32,
       "generations": 80,
       "evaluations": 2432,
-      "runtime_seconds": 0.8044850650001081,
+      "runtime_seconds": 1.0525578330270946,
       "best": {
         "genome": [
           [
@@ -17480,7 +17480,7 @@
       "population": 32,
       "generations": 80,
       "evaluations": 2432,
-      "runtime_seconds": 0.8013223279999693,
+      "runtime_seconds": 1.0628744580317289,
       "best": {
         "genome": [
           [
@@ -19435,7 +19435,7 @@
       "population": 32,
       "generations": 80,
       "evaluations": 2432,
-      "runtime_seconds": 0.8730225540000447,
+      "runtime_seconds": 1.1442066660383716,
       "best": {
         "genome": [
           [
@@ -21192,7 +21192,7 @@
       "population": 32,
       "generations": 80,
       "evaluations": 2432,
-      "runtime_seconds": 0.8884322139999767,
+      "runtime_seconds": 1.1702965409494936,
       "best": {
         "genome": [
           [
@@ -22949,7 +22949,7 @@
       "population": 32,
       "generations": 80,
       "evaluations": 2432,
-      "runtime_seconds": 0.8870641629998772,
+      "runtime_seconds": 1.1343992910115048,
       "best": {
         "genome": [
           [
@@ -24706,7 +24706,7 @@
       "population": 32,
       "generations": 80,
       "evaluations": 2432,
-      "runtime_seconds": 0.8084369480000078,
+      "runtime_seconds": 1.107156291953288,
       "best": {
         "genome": [
           [
@@ -26589,7 +26589,7 @@
       "population": 32,
       "generations": 80,
       "evaluations": 2432,
-      "runtime_seconds": 0.8092692149998584,
+      "runtime_seconds": 1.052246458013542,
       "best": {
         "genome": [
           [
@@ -28616,7 +28616,7 @@
       "population": 32,
       "generations": 80,
       "evaluations": 2432,
-      "runtime_seconds": 0.8051679390000572,
+      "runtime_seconds": 1.0007516670739278,
       "best": {
         "genome": [
           [
@@ -30571,7 +30571,7 @@
       "population": 32,
       "generations": 80,
       "evaluations": 2432,
-      "runtime_seconds": 0.7845182439998553,
+      "runtime_seconds": 0.9846981669543311,
       "best": {
         "genome": [
           [
@@ -32400,7 +32400,7 @@
       "population": 32,
       "generations": 80,
       "evaluations": 2432,
-      "runtime_seconds": 0.7529579320000721,
+      "runtime_seconds": 1.0608768749516457,
       "best": {
         "genome": [
           [
@@ -34247,7 +34247,7 @@
       "population": 32,
       "generations": 80,
       "evaluations": 2432,
-      "runtime_seconds": 0.7175865930000782,
+      "runtime_seconds": 0.944152082898654,
       "best": {
         "genome": [
           [

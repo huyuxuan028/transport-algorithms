@@ -25,7 +25,7 @@ def main():
     out={'instance':inst['name'],'protocol':'18 runs, seeds 0..2, population 32, generations 80, 2432 candidate evaluations per run. GA and random search share the same decoder and bounded 2-opt. Not equal wall-clock budgets.',
         'environment':{'python':sys.version,'platform':platform.platform()},'summary':summary,'runs':runs}
     (folder/'pilot.json').write_text(json.dumps(out,indent=2,allow_nan=False))
-    best=min((r for r in runs if r['method']=='ga' and r['objective']=='fuel_litres'),key=lambda r:r['validation']['fuel_litres'])
+    best=min((r for r in runs if r['method']=='ga' and r['objective']=='cost'),key=lambda r:r['validation']['cost']['total_eur'])
     (folder/'solution.json').write_text(json.dumps(best,indent=2,allow_nan=False))
     print(json.dumps(summary,indent=2))
 
