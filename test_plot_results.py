@@ -14,7 +14,7 @@ ROOT=Path(__file__).parent
 @unittest.skipIf(plot_results is None,'matplotlib not installed')
 class PlotTests(unittest.TestCase):
     def test_all_figures_and_benchmark_are_written_from_repository_results(self):
-        inst=json.loads((ROOT/'data/example.json').read_text());result=json.loads((ROOT/'results/solution.json').read_text())
+        inst=json.loads((ROOT/'data/benchmark_250.json').read_text());result=json.loads((ROOT/'results/solution.json').read_text())
         pilot=json.loads((ROOT/'results/pilot.json').read_text())
         with tempfile.TemporaryDirectory() as tmp:
             out=Path(tmp);plot_results.style()

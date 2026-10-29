@@ -187,6 +187,9 @@ def solve(inst,seed=0,population=40,generations=100,objective='fuel_litres',meth
     validate_solution(inst,inst['reference_transports'],volume_buffer=volume_buffer,cost_overrides=cost_overrides)
     type_by_id={v['id']:i for i,v in enumerate(inst['vehicle_types'])}
     base_types=[type_by_id[v['type_id']] for v in inst['vehicles']]
+    fixed_fleet=not inst['model'].get('fleet_mix_is_decision',True)
+    if fixed_fleet and any(not any(t in allowed[i] for t in base_types) for i in range(1,n+1)):
+        raise ValueError('Fixed fleet cannot carry every indivisible order')
     base=evaluate([base_order,base_assign,base_types]);pool=[base]
     def repair(g):
         order,assignment,types=g
@@ -199,9 +202,9 @@ def solve(inst,seed=0,population=40,generations=100,objective='fuel_litres',meth
             assignment[i-1]=rng.choice(slots)
         return g
     def random_genome():
-        types=[rng.randrange(len(inst['vehicle_types'])) for _ in range(inst['fleet_size'])]
+        types=base_types[:] if fixed_fleet else [rng.randrange(len(inst['vehicle_types'])) for _ in range(inst['fleet_size'])]
         # At least one slot must carry every indivisible order.
-        if any(not any(t in allowed[i] for t in types) for i in range(1,n+1)):
+        if not fixed_fleet and any(not any(t in allowed[i] for t in types) for i in range(1,n+1)):
             hard=max(range(1,n+1),key=lambda i:-len(allowed[i]));types[rng.randrange(len(types))]=rng.choice(allowed[hard])
         return repair([rng.sample(range(1,n+1),n),[rng.randrange(len(types)) for _ in range(n)],types])
     for _ in range(population-1):pool.append(evaluate(random_genome()))
@@ -220,8 +223,8 @@ def solve(inst,seed=0,population=40,generations=100,objective='fuel_litres',meth
                     else:order[i:j+1]=reversed(order[i:j+1])
                 if rng.random()<.3:
                     i=rng.randrange(n);assignment[i]=rng.choice(allowed[i+1])
-                types=[aa if rng.random()<.5 else bb for aa,bb in zip(a[2],b[2])]
-                if rng.random()<.3:
+                types=base_types[:] if fixed_fleet else [aa if rng.random()<.5 else bb for aa,bb in zip(a[2],b[2])]
+                if not fixed_fleet and rng.random()<.3:
                     j=rng.randrange(len(types));types[j]=rng.randrange(len(inst['vehicle_types']))
                 g=repair([order,assignment,types])
             child=evaluate(g);next_pool.append(child)
@@ -232,7 +235,7 @@ def solve(inst,seed=0,population=40,generations=100,objective='fuel_litres',meth
         'generations':generations,'evaluations':evaluations,'runtime_seconds':elapsed,
         'best':best,'baseline_decoded':base,'generated_witness':validate_solution(inst,inst['reference_transports'],volume_buffer=volume_buffer,cost_overrides=cost_overrides),
         'validation':validate_solution(inst,best['transports'],best['fleet'],volume_buffer=volume_buffer,cost_overrides=cost_overrides),'history':history,
-        'optimality_gap':None,'warning':'No certified optimum or uniquely justified fleet mix. Five available vehicles; idle slots are allowed. shift limits: overtime is double wage, fixed fleet costs: maintenance cost per vehicle type after every 100 KM-s. No 3D loading.'}
+        'optimality_gap':None,'warning':'No certified optimum or uniquely justified fleet mix. Five available vehicles; idle slots are allowed. shift limits: overtime is double wage, fixed fleet costs: maintenance cost per vehicle type per 1,000 km. No 3D loading.'}
 
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--instance',type=Path,default=ROOT/'data/example.json')
