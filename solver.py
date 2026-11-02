@@ -201,6 +201,9 @@ def solve(inst,seed=0,population=40,generations=100,objective='fuel_litres',meth
     validate_solution(inst,inst['reference_transports'],volume_buffer=volume_buffer,cost_overrides=cost_overrides)
     type_by_id={v['id']:i for i,v in enumerate(inst['vehicle_types'])}
     base_types=[type_by_id[v['type_id']] for v in inst['vehicles']]
+    fixed_fleet=not inst['model'].get('fleet_mix_is_decision',True)
+    if fixed_fleet and any(not any(t in allowed[i] for t in base_types) for i in range(1,n+1)):
+        raise ValueError('Fixed fleet cannot carry every indivisible order')
     base=evaluate([base_order,base_assign,base_types]);pool=[base]
     def repair(g):
         order,assignment,types=g
@@ -268,4 +271,3 @@ def main():
     print(json.dumps({k:v for k,v in result['validation'].items() if k!='trip_details'},indent=2))
 
 if __name__=='__main__':main()
-

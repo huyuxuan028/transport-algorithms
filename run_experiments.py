@@ -6,13 +6,13 @@ ROOT=Path(__file__).resolve().parent
 
 def main():
     p=argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--instance',type=Path,default=ROOT/'data/example.json')
+    p.add_argument('--instance',type=Path,default=ROOT/'data/benchmark_250.json')
     p.add_argument('--pilot-output',type=Path,default=ROOT/'results/pilot.json')
     p.add_argument('--solution-output',type=Path,default=ROOT/'results/solution.json')
     p.add_argument('--population',type=int,default=32)
     p.add_argument('--generations',type=int,default=80)
     p.add_argument('--seeds',type=int,default=3)
-    p.add_argument('--best-objective',choices=['fuel_litres','distance','cost'],default='fuel_litres')
+    p.add_argument('--best-objective',choices=['fuel_litres','distance','cost'],default='cost')
     a=p.parse_args()
     if a.seeds<1:raise ValueError('At least one seed is required')
     inst=json.loads(a.instance.read_text());runs=[];summary=[]

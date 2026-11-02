@@ -156,6 +156,14 @@ class Tests(unittest.TestCase):
         wrong=copy.deepcopy(trips);wrong[0]['finish_minutes']+=1
         with self.assertRaisesRegex(ValueError,'Wrong trip duration'):
             validate_solution(x,wrong)
+    def test_fixed_fleet_flag_freezes_vehicle_types(self):
+        x=ready();x['reference_transports']=schedule([[[1,2],[3,4]],[],[],[],[]],x)
+        x['model']['fleet_mix_is_decision']=False
+        out=solve(x,0,12,6)
+        self.assertEqual(out['validation']['fleet_type_ids'],[v['type_id'] for v in x['vehicles']])
+        x['model']['fleet_mix_is_decision']=True
+        self.assertTrue(solve(x,0,12,6)['validation']['feasible'])
 
 if __name__=='__main__':unittest.main()
+
 
