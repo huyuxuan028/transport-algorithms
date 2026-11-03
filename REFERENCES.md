@@ -71,3 +71,24 @@ MAN TGL 12.190 box (Mascus/operator values). The exact values are reproduced in
 `vehicles.json` as adopted course inputs; original specification URLs were not
 provided and no independent manufacturer-source verification is claimed.
 
+
+## Shared benchmark and routing sources
+
+**[D3]** PSO team: https://github.com/xsilentkiller/industrial-transport
+The common source is imported as `data/shared_pso_250.json`. Its CSV distances
+are haversine times 1.3, NOT road-network distances. Source vehicle/cost/service
+parameters are preserved. The importer snapshot reviewed here is blob
+`106b9cd54b4c7e33cf6b29f4754380e7c1c7581b`; instance blob
+`83cf5c206c297ee97e312c5f694cd98b794c4746`.
+
+**[D4]** OpenStreetMap contributors. https://www.openstreetmap.org/copyright
+Road data are ODbL. Public raw-data query guidance:
+https://dev.overpass-api.de/overpass-doc/en/preface/commons.html
+
+**[D5]** HeiGIT / GIScience. Openrouteservice Matrix Endpoint.
+https://giscience.github.io/openrouteservice/api-reference/endpoints/matrix/
+A matrix gives distances/times; detailed route geometry needs a separate directions
+request or the same local graph. The measured results here use local OSM, not ORS.
+
+The existing literature list is retained. Subhan's proposed supplemental list
+has not yet been received and must be reconciled before final documentation approval.

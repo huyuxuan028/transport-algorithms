@@ -1,25 +1,28 @@
-# Suggested presentation: five minutes, algorithm first
+# Short presentation
 
-## 1. Problem and agreed scope
-We study a fixed heterogeneous five-vehicle, multi-trip routing scenario. Orders are indivisible, each customer is visited once, and every trip must respect weight and buffered volume capacity. Cost includes fuel, maintenance and cumulative regular/overtime wages. Show the shared contract and distinguish agreed constraints from pending decisions. Do not say every operational constraint is modeled.
+We now use the other team's shared dataset: 250 Budapest customer addresses and
+five fixed vehicles. We preserve their orders, capacities and cost parameters.
+We replaced approximate straight-line distances with directed paths on a cached
+OpenStreetMap road graph covering all shared locations. Distance and travel time
+are measured along the same path, and address-to-road offsets are recorded.
 
-## 2. Mechanism
-Show the four-customer permutation/allocation example, then point to the real decode, Split and OX functions. Explain the DP recurrence and that its objective is distance for a fixed sequence, not global financial optimality. Show tournament selection, elites and mutation. Explain why hard minimum stops required group reassignment instead of one-customer moves.
+Our chromosome stores customer order and physical vehicle allocation. A dynamic
+program splits each vehicle's sequence into capacity-feasible depot trips.
+The selected experiment also enforces ten to fifty customers per trip. Tournament
+selection, order crossover, mutation and bounded directed 2-opt improve candidates.
+Fitness includes fuel, maintenance and wages, with double pay beyond eight hours.
 
-## 3. Research and deliberate choices
-Show Prins (2009) for heterogeneous fleet splitting/assignment and Vidal (2022) for HGS as reference methods, with the exact implementation differences. Mention the multi-trip decoder literature. State which full papers each person actually read; do not turn a bibliography into a reading claim. Explain why this implementation is simpler and which weaknesses that creates.
+We ran five seeds for five algorithm variants. The main GA's mean cost was about
+1,944 euros, compared with 2,102 for seeded random search. All runs passed the
+implemented constraints. Removing local search worsened performance; the NN and
+crossover ablations do not establish a benefit from those mechanisms on this case.
 
-## 4. Evidence and iteration
-Show the one-pass nearest-neighbor baseline and the seeded/unseeded comparison before showing the best map. The initial GA was weaker than the simple baseline; we added it as a seed. Show convergence range bands and report five-seed variation. The no-OX variant is not worse here, so the crossover's value is still an open question. Explain possible stagnation and next experiments.
+Important limitations remain. The graph omits turn restrictions and truck clearance,
+and the solver permits very long work spans. The best main-GA plan has a vehicle
+working about fifty-one hours, so we do not present it as a realistic single-day
+schedule. Our next steps are to agree the planning horizon, improve allocation
+and cost-aware splitting, and compare both teams on the identical road matrices.
 
-## 5. Actual Budapest map and next steps
-Open Budapest_Road_Map.html. These are actual OSM street paths near Keleti with simulated delivery locations and unchanged furniture demands. The software respects basic one-way/access tags; time uses assumed speeds. It is not ORS, not HGV navigation, and not observed shipment data. The ORS adapter uses the current service endpoint and still needs a local key for live execution.
-
-End with actual shared decisions, PRs and remaining work. Each member answers a question on someone else's component.
-
-## Short English oral version
-Our main work is now the algorithm and its design evidence. A candidate contains the customer order and allocation to physical vehicles. A dynamic programming split creates capacity-feasible trips, and the genetic search combines and modifies candidates while retaining the best solutions.
-
-We found that the original GA was worse than a simple nearest-neighbor baseline on our Budapest scenario. We therefore added nearest-neighbor initialization and compared seeded and unseeded versions. We also changed reassignment to group moves when a hard minimum number of stops applies. These changes respond to observed weaknesses rather than being arbitrary GA components.
-
-The map now uses actual OpenStreetMap road geometry and directed path distances near Keleti. Deliveries remain simulated. Our experiments show preliminary improvement, but not optimality or universal convergence. We still need shared-model agreement, broader comparisons, and further work on any required scheduling or truck-access constraints.
+Show: shared input and provenance; chromosome/decode code; convergence and ablations;
+constraint audit; new street-map route overlay. Explain one customer allocation and
+one split decision from memory. Do not present the old PSO cost as a road benchmark.

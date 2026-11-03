@@ -1,29 +1,22 @@
-# Supervisor requirements and evidence
+# Supervisor requirements and current evidence
 
-This package is a local candidate for review, not an approved milestone or a merged release. A grade is determined by the supervisor; no grade is promised. The written requirement for a complete solution supersedes treating known constraint gaps as finished work.
-
-| Requirement | Evidence supplied | Remaining acceptance work |
+| Requirement | Evidence | Remaining work |
 |---|---|---|
-| All repositories visible | Three repository-specific folders and change notes; current GitHub main files audited | Reconcile open PR #4, currently not automatically mergeable; review/merge changes and provide all repo links |
-| Collaboration within and between teams | Shared benchmark contract and proposed responsibilities | Both teams must actually agree and record the chosen data, constraints and budget. A document alone is not collaboration |
-| Complete agreed model | Coverage, capacity, buffered volume, fixed fleet, repeated nonoverlapping trips, overtime cost; optional hard stop decoder and validator | Decide which constraints are binding. Geometric packing, rest rules and truck-specific road access are not implemented and cannot be described as satisfied |
-| Intended scale | Real Budapest OSM graph scenario with 250 orders and five available physical vehicles | Jointly confirm that this is the required scale; repeat on other shared instances |
-| Stable convergence | Five-seed traces, range bands, costs, runtimes, feasibility and diversity diagnostics | Small exploratory experiments do not establish robust convergence across unseen instances |
-| Research and deliberate design | Literature map, source links, decision log and nearest-neighbor initialization experiment | Each person must read/understand the sources and defend decisions independently |
-| Acceptable presentation | English narrative, Q&A and figure checklist | Rehearse and use the approved shared run, not stale plots or mixed policies |
+| Repositories and review | Separate code PR #5 and research PR #6 in transport-algorithms; generator and findings repositories retained | Teammates review changes; keep final findings synchronized after merge |
+| Collaboration | Adopt PSO team's customers, vehicle fleet and parameters; reuse Subhan's updated importer | Agree checksum, stop policy, snapping and evaluation budget with PSO; do not build a second independent dataset |
+| Road distances at intended scale | 251x251 directed road distance/time matrices for the unchanged shared coordinates across Budapest; all pairs reachable | Local graph is simplified; ORS adapter exists but no ORS key/live run was available |
+| Complete constraints | Exact coverage, fixed available fleet, repeated depot trips, capacities, reserve, service time and overtime; hard 10–50 test scenario | Obtain agreement on exclusions; no realistic working-day/rest feasibility claim |
+| Convergence | 25 fresh shared-road runs: five seeds per variant, histories and diversity diagnostics; all valid under implemented model | One instance does not establish broad reliability or good final quality |
+| Research/design | Explain permutation/allocation, distance-optimal contiguous Split, directed 2-opt, seeding and ablations | Each member must read sources and explain mechanism; integrate Subhan's forthcoming references |
+| Presentation | New results and clear limitations, shared-city route map and reproducible commands | Team rehearsal and each member's understanding remain human tasks |
 
-## Current repository inconsistencies
-- Algorithms main solver blob d17f583360f976510e74ef88373f245a7aa3a79d still requires symmetric distances and schedules with one shared speed. Its README discusses optimizing the fleet mix even though the fixed benchmark freezes it.
-- Generator main README blob b59c3fdec95aff225d256fdad369f5bcab20968a explains aggregate capacities and soft stop audits; it does not supply real road distances.
-- Findings main README blob dfe513e2da0f4bcde1d1bbacdbbad1c23d647d24 still describes fuel as a proposed default and no wage coefficients; this conflicts with the cost objective already implemented elsewhere.
-- PR #4 is open and mergeable=false as returned by GitHub during this audit. Do not delete main files or overwrite a teammate's branch to resolve it.
+The old 1km² Keleti scenario is an early prototype, not the shared benchmark.
+Old Keleti figures and costs are not relabeled as shared-data experiments.
+PR #4 has already merged; its old conflict warning is obsolete. No grade is promised.
 
-## What is real in the Budapest scenario?
-Raw street geometry and connectivity come from the official OSM API around Keleti (19.075,47.495,19.085,47.505 west/south/east/north). The raw XML and converted node/way snapshot are included. The graph has 561 nodes with permitted supported highway classes; the depot's mutually reachable component has 474 nodes. One-way and basic motor access tags are applied. The depot and 250 delivery points are simulated road nodes; furniture demands are copied unchanged from the existing benchmark. These are not observed customer addresses or actual shipments. Map availability does not establish parking or unloading access.
-
-Travel times are explicit road-class speed assumptions, optionally capped by numeric maxspeed tags. Dijkstra minimizes estimated time and records distance along that same path. Thus durations and distances describe the same route. These are not measured traffic times. Turn relations, signals, HGV constraints and routes outside the downloaded graph are missing. A finite local graph can overestimate or distort routing.
-
-The road map in this package has actually been generated from downloaded data and actual solver routes. ORS integration is a separate implementation and has not been live-tested without an account key. Do not call local OSM routing an ORS result.
-
-## Minimum presentation gate
-Do not say 'all constraints are incorporated' until the shared contract identifies which requirements are hard, soft, excluded or pending, with explicit team/supervisor agreement. The optional hard 10–50 scenario can still have long driver schedules under the unlimited-horizon model. Paying overtime is not equivalent to modeling realistic rest/day constraints. The strongest honest status is: working expanded prototype with traceable evidence and explicit remaining scope decisions.
+The strongest unresolved modeling issue exposed by the current run is unbounded
+work duration: the best main-GA solution's longest vehicle span is 51.17 hours.
+Paying overtime makes that schedule costed, not a credible single working day.
+Before claiming a realistic complete solution, agree whether the planning horizon
+is multiple days and implement the corresponding day/rest constraints, or agree
+a finite shift horizon. The instructor's overtime allowance alone specifies neither.

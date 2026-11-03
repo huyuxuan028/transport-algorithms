@@ -1,26 +1,29 @@
-# Design decisions and observed revisions
+# Intentional design and evidence
 
-| Decision | Rationale | Alternative / limitation | Evidence |
-|---|---|---|---|
-| Explicit permutation + physical-vehicle assignment | Directly exposes order and allocation to heterogeneous capacities | Redundant search space; joint vehicle-allocation Split may be stronger | Read solver decode and Prins (2009) comparison |
-| Fixed fleet when instance flag says false | Search may rearrange jobs but must not invent vehicle types | Whether inventory should be selectable is a scenario decision | Fixed-fleet rejection tests |
-| DP contiguous Split | Avoids encoding trip delimiters; finds distance-minimum partition for the fixed sequence | Not global optimality or wage-optimal partition | Exhaustive small-partition test |
-| Directed graph distances and durations | Real road paths include one-way streets | Local graph omits turns and truck rules | Actual OSM snapshot and directed 2-opt tests |
-| Cost acceptance guard around distance 2-opt | A shorter path may take longer and increase overtime cost | Rejecting a whole vehicle's improved batch may miss beneficial subsets; not a fully cost-aware neighborhood | Cost-regression test |
-| Elites + tournament selection + OX | Preserve incumbent and combine route-order information | Elitism makes the curve monotone but can mask stagnation; no proof of convergence to optimum | Multi-seed histories and unique decoded-plan count |
-| Add nearest-neighbor initial candidate | The actual Budapest one-pass baseline cost was 625.66 EUR, better than the original unseeded GA's approximately 660 EUR | A strong initial seed can hide weak evolutionary operators, so retain a GA-unseeded ablation and share seed with random search | Original OSM experiments vs seeded experiments; independent baseline JSON |
-| Hard-stop group reassignment | A single-customer move cannot activate an empty vehicle needing at least 10 customers | Larger moves may destroy useful structure; needs finer neighborhoods and diversity research | Initial hard-mode test stagnated with one used vehicle; group mode activates additional vehicles in the recorded runs |
-| Keep hard/soft stop scenarios separate | Stop policy changes feasibility and the objective distribution | Must not cherry-pick the cheaper soft solution when hard bounds are required | Separate manifests and result directories |
-| Local OSM fallback plus ORS adapter | Real roads can be demonstrated without an account key | Local routing is not ORS and is not truck navigation | Downloaded OSM API raw source; ORS integration offline tests |
+| Decision | Reason | Limit / evidence |
+|---|---|---|
+| Reuse the PSO team's shared input | Avoid redundant data generation; compare identical demands, fleet and costs | Import once; maintain source IDs and checksums |
+| Original lon/lat preserved | Geocoded customer locations must drive routing, rather than sampling road vertices | Nearest-vertex offsets are audited separately |
+| City-wide cached OSM graph | Connect all shared addresses using one-way-aware road paths without an API key | 229,754 graph vertices; 222,862 in depot's strongly connected component; omitted turn/HGV constraints |
+| Matched distance/time paths | Travel cost and wages must describe the same path | Dijkstra minimizes assumed static travel time and records its distance; not shortest-distance optimality |
+| Explicit component resnap option | Two nearest vertices are disconnected from depot | Default errors; explicit opt-in records IDs 109/237 and offsets. Addresses remain unchanged |
+| Permutation + customer-indexed allocation | Exposes visit order and physical-vehicle choice in a heterogeneous fleet | Fixed types are enforced; no fleet-mix search in this instance |
+| Contiguous DP Split | Avoid trip separators in chromosome; obtain best distance partition for a fixed order/allocation | Not a wage/overtime-optimal decoder or global routing optimum |
+| OX, tournament, two elites | Preserve feasible incumbents and combine order information | No measured evidence here that OX improves mean performance |
+| Directed 2-opt with cost guard | Reversal changes internal directed arcs; shorter distance can increase time/wages | One bounded pass; cost acceptance at vehicle-batch level can miss improvements |
+| NN seed and unseeded ablation | Test how much apparent improvement comes from initialization | No NN benefit established on the new hard-stop instance; unseeded mean slightly lower |
+| Hard-stop group mutation | Single-customer moves cannot populate an empty vehicle requiring ten stops | Random groups have weak spatial/load structure; long work spans expose poor balancing |
+| Keep generated artifacts outside code PR | Keep review focused and reproducible | Cache/raw extracts, generated matrices, maps and experiment runs are ignored; distribute one checksum-identified benchmark separately |
 
-## Research relationship
-Prins (2004): permutation+Split/local-search concept. Prins (2009): directly relevant heterogeneous-fleet memetic methods. Vidal (2022): reference HGS implementation and richer local search; our code is NOT HGS. Zhao et al. (2024): multi-trip time-dependent Split is evidence that richer scheduling needs a tailored decoder; our time matrices are static. Hvattum (2025): Split start choices are a candidate future experiment, not an implemented performance claim. See RESEARCH_AND_ALGORITHM.md for links and reading-status qualifications.
+Research connections: Prins (2009) motivates heterogeneous memetic routing;
+Vidal (2022) motivates combining population search and route neighborhoods;
+Zhao et al. (2024) shows why multi-trip scheduling needs a tailored Split.
+This prototype implements neither full HGS nor these papers' full methods.
+References and reading-status qualifications are in REFERENCES.md and
+RESEARCH_AND_ALGORITHM.md. AI assistance is disclosed; code execution is not
+evidence of each member's understanding.
 
-The original prototype was AI-assisted. This audit and these experiments are a basis for understanding and revising it, not evidence that every team member has already mastered the field. No novelty claim is established.
-
-## Next iterations, in order
-1. Freeze the common constraint model and data with PSO; check cost assumptions and actual merge state.
-2. Finish live ORS ingestion with agreed coordinates/profile if required, or explicitly approve the documented local graph approximation.
-3. Improve hard-policy load balancing, cost/time-aware Split and local neighborhoods. Long schedules remain a limitation even when overtime is paid.
-4. Compare seeded and unseeded runs, diversity counts, relocation/swap moves and restarts over multiple held-out instances. Only keep changes supported by experiments.
-5. Compare PSO and compatible external methods under the same evaluator and budget; present limitations and future research directions.
+Next algorithm iterations: cost/time-aware splitting, a constructive hard-feasible
+load-balanced seed, spatial relocation/swap neighborhoods, and diversity/restarts.
+Evaluate each against the same frozen matrix and seeds, keeping only supported
+improvements. Horizon/rest modeling depends on the agreed problem definition.

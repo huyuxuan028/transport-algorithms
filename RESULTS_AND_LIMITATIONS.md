@@ -1,35 +1,65 @@
-# Measured results and limitations
+# Initial algorithm experiments
 
-## Soft-stop scenario: five seeds per variant
-Same actual Budapest OSM graph, existing 250 orders, fixed five-vehicle inventory, scenario cost coefficients, population 32, 80 generations and 2432 evaluations per run. Distances are along directed graph paths; times use estimated road-class speeds. Stop counts are audited, not enforced, in THIS table. Both seeded random search and seeded GA receive the nearest-neighbor candidate. See runs.json for all seeds and runtime.
+Shared Budapest addresses / local OSM graph. 5 seeds, population 32, 80 generations. Actual candidate evaluations are recorded per run; hard-mode fallback construction can add evaluations. Common decoder and initial witness. Random search also uses local search. Ablations change one mechanism, but RNG trajectories also change; no statistical significance claim. Feasible means only the explicitly implemented constraints. Stop-count mode: hard
 
-| Variant | Mean cost EUR | Sample SD | Best | Worst |
-|---|---:|---:|---:|---:|
-| random_search | 625.66 | 0.00 | 625.66 | 625.66 |
-| ga | 620.29 | 1.12 | 618.34 | 621.03 |
-| ga_unseeded | 660.08 | 3.93 | 656.11 | 666.53 |
-| ga_no_local_search | 625.88 | 0.40 | 625.39 | 626.41 |
-| ga_no_order_crossover | 619.62 | 1.36 | 618.52 | 621.48 |
+| Variant | Mean cost EUR | SD | Best | Mean seconds | Feasible |
+|---|---:|---:|---:|---:|---:|
+| random_search | 2101.73 | 0.00 | 2101.73 | 0.58 | 5/5 |
+| ga | 1944.07 | 10.79 | 1926.69 | 6.56 | 5/5 |
+| ga_unseeded | 1941.61 | 19.86 | 1911.61 | 6.32 | 5/5 |
+| ga_no_local_search | 2144.79 | 8.70 | 2132.62 | 3.86 | 5/5 |
+| ga_no_order_crossover | 1939.14 | 22.51 | 1916.23 | 6.08 | 5/5 |
 
-One-pass nearest-neighbor baseline (reference vehicle assignments, same decoder/local search): 625.66 EUR. This is a separate one-construction reference, not a budget-matched competitor.
+## Interpretation
 
-Interpretation: nearest-neighbor seeding accounts for much of the improvement over the original unseeded GA. The complete seeded GA achieves a small additional improvement over its seed. Removing OX does not hurt the measured mean; in this small experiment its mean is slightly better. This is not evidence that OX is beneficial or globally unnecessary. No p-values, optimality gap, state-of-the-art claim or general convergence guarantee is asserted. Identical seeded random results mean it retained the initial seed, not that random search is universally deterministic.
+One shared instance only; no certified optimum, optimality gap or significance
+claim. All configurations used 2,433 candidate evaluations, including one extra
+hard-feasible initialization attempt. This is evaluation-count matching, not
+equal runtime. Random search and seeded GA share the same decoder, local search
+and initialization; random search retained the initial feasible seed in all runs.
 
-The GA mean and SD describe this ONE small geographic scenario. They do not establish robustness across cities, order sets or operating constraints. Evolutionary behavior still needs study on multiple held-out instances. Unique decoded-plan counts in each history can expose diversity loss even when a best-so-far curve is flat.
+The main GA improves over the random reference by approximately 7.50% in mean cost.
+Removing local search worsens mean cost. Neither NN seeding nor OX has a demonstrated
+mean benefit on this hard-stop instance: their ablations are slightly cheaper.
+A large portion of initialization is infeasible under hard stop counts, so the
+conservative single-large-vehicle fallback dominates the starting point. That is
+a design weakness to address, not a successful justification of every operator.
 
-## Hard 10–50 stop scenario: distinct model
-Five additional seeds enforce both bounds in Split and the independent validator. All five recorded plans have zero below/above-bound trips. Mean cost is 870.09 EUR; sample SD is 22.45. Extra initialization evaluations are recorded (typically 2433). Do NOT compare this cost to the soft table as an algorithm improvement: the feasible sets differ.
+Best main GA: seed 1, EUR 1,926.692, distance 582.737km, seven trips, three used
+vehicles out of five available, zero below/above stop-bound trips. Overtime is
+43.1685 vehicle-hours. The longest vehicle work span is 51.17 hours. This is valid
+only in the explicitly unbounded-horizon model, NOT a practical single-day plan.
+Hard 10–50 bounds are the selected experimental policy, pending joint confirmation.
 
-Hard-policy plans can contain very long single-driver work spans. Eight hours is currently a wage threshold, not a maximum shift. These plans are not claimed to be realistic working-day schedules. Further scheduling and balancing may be needed depending on the agreed course constraints.
+## Data and road audit
 
-## Actual changes versus still pending
-Implemented: directed graph matrices, source-linked actual geometry, per-vehicle speed fallback, road-duration scheduling, fixed-fleet checks, hard-stop option, group reassignment, cost acceptance guard, nearest-neighbor seeding and reproducible ablations.
+All 250 customer demands, item records, original lon/lat, vehicles and cost/service
+parameters match Subhan's shared input. The graph covers all shared Budapest
+locations; no delivery points were randomly resampled. There are 229,754 road
+vertices and 222,862 in the depot's mutually reachable component. Every pair
+in the 251x251 matrices is finite; 30,902 unordered distance pairs differ by
+more than one metre between directions. Five full matrix rows were recomputed
+against the graph and matched in distance and duration.
 
-Pending: PSO data/evaluator agreement, PR conflict resolution and review, live ORS if required, model agreement for geometric packing/rest/truck restrictions, broader experiments, and each member's demonstrated understanding. A file package cannot complete real collaboration or guarantee a grade.
+Road-file SHA256: `4560322db5a3ca30c5778bc4cf97e161c1daafa31f24b3d49cde3ddc2512b6e4`.
+Raw-extract SHA256: `302481dc96268e15871692862a3d274921c1cf1ae81dcb0446b3fa51b0828376`.
+Extract bbox (west,south,east,north): 18.91,47.36,19.26,47.64.
+Two explicit reachable-component resnaps: IDs 109/237, offsets 78.63m / 81.18m.
+Maximum vertex-snap offset:114.47m. These offsets are not billed as road legs.
 
-## Reproduction pointers
-- Source hash and input hash: experiment runs JSON and package MANIFEST.json.
-- Original unseeded road pilot: budapest_experiments/; reproduce with heuristic_seed=False for all variants. Earlier experiment scripts lacked the extra unseeded-GA row; retain the explicit archive distinction.
-- Current revised study: research_experiments.py --instance data/budapest_road.json.
-- Hard scenario: hard_policy_experiments.py.
-- Static real-road map: plot_road_map.py. Online street map / offline graph map: map_budapest.py.
+Times are static road-class assumptions, optionally capped by numeric maxspeed
+tags. One-way and basic motor access are modeled; turn relations, truck-specific
+clearance, parking/unloading access and traffic are not. Finite boundaries may
+exclude better routes; connectivity alone does not prove global shortest paths.
+These results are local OSM calculations, not an executed ORS experiment.
+
+## Shared comparison and reproducibility
+
+The imported `data/shared_pso_250.json` contains the original approximate distance
+matrix; `data/shared_pso_250_road.json` is the frozen road extension. The PSO team's
+old published cost belongs to the approximate matrix, so it is NOT included as
+a competitor here. Both teams need to run the same road extension first.
+
+Raw extracts, road matrices, generated maps and full runs are distributed as
+generated benchmark artifacts, outside code PR #5. Commands live in
+SHARED_ROAD_WORKFLOW.md. Do not mix old Keleti figures into this results section.
