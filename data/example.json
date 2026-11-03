@@ -19452,6 +19452,7 @@
     "time_horizon_minutes": null,
     "objective": "fuel_litres",
     "schedule_average_speed_kmh": 35,
+    "min_stops_penalty_eur_per_customer": 2000.0,
     "not_implemented": [
       "3D packing",
       "time windows",

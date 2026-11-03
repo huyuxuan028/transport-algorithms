@@ -12,7 +12,7 @@ def tiny():
                          {'id':'large','payload_kg':10,'volume_m3':10,'fuel_l_per_100km':12}],
         'fleet_size':5,
         'customers':[{'id':i,'weight_kg':w,'volume_m3':v,'service_minutes':0,'items':[]} for i,(w,v) in enumerate([(0,0),(2,1),(3,3),(1,3),(4,2)])],
-        'model':{'schedule_average_speed_kmh':30},'reference_transports':[]}
+        'model':{'schedule_average_speed_kmh':30,'min_stops_penalty_eur_per_customer':2000.0},'reference_transports':[]}
 
 def ready():
     x=tiny();x['vehicles']=make_fleet(x,[0,1,2,0,1]);return x
@@ -133,6 +133,17 @@ class Tests(unittest.TestCase):
         c=evaluate_costs(trips,vehicles,x)
         self.assertEqual(c['trips_below_min'],1);self.assertEqual(c['trips_above_max'],0)
 
+    def test_min_stop_penalty_is_configured_and_included_in_total(self):
+        x=ready();x['model'].update({'min_stops_per_trip':10,'min_stops_penalty_eur_per_customer':2000.0})
+        trips=[{'vehicle':0,'customers':[1,2,3,4,5,6,7,8],'start_minutes':0,'finish_minutes':120,'distance_km':40,'fuel_litres':2},
+               {'vehicle':0,'customers':list(range(1,11)),'start_minutes':120,'finish_minutes':300,'distance_km':60,'fuel_litres':3},
+               {'vehicle':0,'customers':[1,2,3,4,5,6,7],'start_minutes':300,'finish_minutes':420,'distance_km':35,'fuel_litres':2}]
+        c=evaluate_costs(trips,x['vehicles'],x)
+        self.assertEqual(c['trips_below_min'],2)
+        self.assertAlmostEqual(c['penalty_eur'],10000.0)
+        self.assertAlmostEqual(c['total_eur'],c['real_cost_eur']+c['penalty_eur'])
+        self.assertEqual(evaluate_costs(trips[:1],x['vehicles'],x)['penalty_eur'],4000.0)
+
     def test_fixed_fleet_benchmark_cannot_change_the_vehicle_mix(self):
         x=json.loads((ROOT/'data/benchmark_250.json').read_text())
         self.assertFalse(x['model']['fleet_mix_is_decision'])
@@ -165,5 +176,3 @@ class Tests(unittest.TestCase):
         self.assertTrue(solve(x,0,12,6)['validation']['feasible'])
 
 if __name__=='__main__':unittest.main()
-
-

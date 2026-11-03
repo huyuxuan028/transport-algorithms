@@ -26,7 +26,8 @@
     "overtime_multiplier": 2.0,
     "fuel_price_eur_per_l": 1.6,
     "min_stops_per_trip": 10,
-    "max_stops_per_trip": 50
+    "max_stops_per_trip": 50,
+    "min_stops_penalty_eur_per_customer": 2000.0
   },
   "reference_transports": [
     {"vehicle": 1, "customers": [1], "start_minutes": 0.0, "finish_minutes": 13.428571428571429, "distance_km": 2.0, "fuel_litres": 0.1809424}
