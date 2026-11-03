@@ -3,7 +3,6 @@ from pathlib import Path
 from solver import InfeasiblePartition,decode,make_fleet,schedule,solve,split_vehicle,validate_instance,validate_solution,two_opt
 from test_solver import ready
 from budapest_osm import component,graph_from_osm,shortest
-from map_budapest import render
 class UpgradeTests(unittest.TestCase):
     def strict(self):
         x=ready();x['model'].update(stop_count_mode='hard',min_stops_per_trip=2,max_stops_per_trip=2)

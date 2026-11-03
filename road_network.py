@@ -27,8 +27,6 @@ def build_matrices(coords,key,cache,profile='driving-car',block=25,request=None)
             if file.exists():answer=json.loads(file.read_text())
             else:
                 answer=(request or live)(payload)
-                file.write_text(json.dumps(answer,allow_nan=False))
-                if request is None:time.sleep(1.5)
             for field,target in [('distances',distances),('durations',durations)]:
                 values=answer.get(field)
                 if not isinstance(values,list) or len(values)!=len(src) or any(not isinstance(row,list) or len(row)!=len(dst) for row in values):raise ValueError('Unexpected matrix shape')
@@ -37,16 +35,20 @@ def build_matrices(coords,key,cache,profile='driving-car',block=25,request=None)
                         value=values[i][j]
                         if not isinstance(value,(int,float)) or not math.isfinite(value) or value<0:raise ValueError(f'Unreachable/invalid road pair {u}->{v}; no straight-line fallback')
                         target[u][v]=value
+            if not file.exists():
+                temp=file.with_suffix('.tmp');temp.write_text(json.dumps(answer,allow_nan=False));temp.replace(file)
+                if request is None:time.sleep(1.5)
     return distances,durations
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--instance',type=Path,required=True);p.add_argument('--coordinates',type=Path,required=True,help='JSON list of [lon,lat], depot first, customer ID order')
+    p=argparse.ArgumentParser();p.add_argument('--instance',type=Path,required=True);p.add_argument('--coordinates',type=Path,help='JSON list of [lon,lat], depot first, customer ID order')
     p.add_argument('--output',type=Path,required=True);p.add_argument('--cache',type=Path,default=Path('road_cache'));p.add_argument('--profile',choices=['driving-car','driving-hgv'],default='driving-car');a=p.parse_args()
-    x=json.loads(a.instance.read_text());coords=json.loads(a.coordinates.read_text())
+    x=json.loads(a.instance.read_text());coords=json.loads(a.coordinates.read_text()) if a.coordinates else x.get('coordinates_lonlat')
+    if coords is None:raise ValueError('Shared instance must include coordinates_lonlat')
     if len(coords)!=len(x['customers']):raise ValueError('One coordinate per customer including depot is required')
     d,t=build_matrices(coords,os.environ.get('ORS_API_KEY'),a.cache,a.profile)
     x['coordinates_lonlat']=coords;x['distance_matrix_m']=d;x['duration_matrix_s']=t
-    x['road_network']={'provider':'openrouteservice','map':'OpenStreetMap contributors','profile':a.profile,'coordinates_source':a.coordinates.name,'note':'Common profile for all vehicles; vehicle dimensions and truck restrictions are not enforced.'}
+    x['road_network']={'provider':'openrouteservice','map':'OpenStreetMap contributors','profile':a.profile,'coordinates_source':a.coordinates.name if a.coordinates else 'instance coordinates_lonlat','note':'Common profile for all vehicles; vehicle dimensions and truck restrictions are not enforced.'}
     groups=[[] for _ in x['vehicles']]
     for trip in sorted(x['reference_transports'],key=lambda z:(z['vehicle'],z['start_minutes'])):groups[trip['vehicle']].append(trip['customers'])
     x['reference_transports']=schedule(groups,x)

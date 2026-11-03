@@ -6,7 +6,7 @@ from pathlib import Path
 from solver import decode,validate_instance,validate_solution
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--instance',type=Path,default=Path('data/budapest_road.json'));p.add_argument('--output',type=Path,default=Path('results/budapest_nearest_neighbor.json'));a=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('--instance',type=Path,default=Path('data/shared_pso_250_road.json'));p.add_argument('--output',type=Path,default=Path('generated/nearest_neighbor.json'));a=p.parse_args()
     x=json.loads(a.instance.read_text());validate_instance(x);start=time.perf_counter();n=len(x['customers'])-1;assignment=[None]*n
     for trip in x['reference_transports']:
         for i in trip['customers']:assignment[i-1]=trip['vehicle']
