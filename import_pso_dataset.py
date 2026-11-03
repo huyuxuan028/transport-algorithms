@@ -133,7 +133,7 @@ def convert(source,solver_dir=ROOT,name='Shared-PSO-250-Budapest'):
     if any(not allowed[i] for i in range(1,n+1)):raise ValueError('an order fits no vehicle under the volume buffer')
     check=solver.validate_solution(inst,inst['reference_transports'])
     pso_check=solver.validate_solution(inst,inst['pso_reference_solution']['transports'])
-    inst['pso_reference_solution']['true_cost_eur_ours']=pso_check['cost']['total_eur']
+    inst['pso_reference_solution']['true_cost_eur_ours']=pso_check['cost']['real_cost_eur']
     return inst,check,pso_check
 
 def main():
@@ -144,8 +144,8 @@ def main():
     inst,check,pso_check=convert(a.source,a.solver_dir)
     a.output.parent.mkdir(parents=True,exist_ok=True);a.output.write_text(json.dumps(inst,indent=1,allow_nan=False),encoding='utf-8')
     print(json.dumps({'instance':inst['name'],'customers':len(inst['customers'])-1,'vehicles':[v['id'] for v in inst['vehicles']],
-                      'neutral_witness':{'trips':check['trips'],'cost_eur':check['cost']['total_eur'],'below_min':check['cost']['trips_below_min']},
-                      'pso_plan_check':{'reported':inst['pso_reference_solution']['true_cost_eur_reported'],'ours':pso_check['cost']['total_eur']},
+                      'neutral_witness':{'trips':check['trips'],'real_cost_eur':check['cost']['real_cost_eur'],'penalty_eur':check['cost']['penalty_eur'],'total_eur':check['cost']['total_eur'],'below_min':check['cost']['trips_below_min']},
+                      'pso_plan_check':{'reported_true_cost_eur':inst['pso_reference_solution']['true_cost_eur_reported'],'ours_real_cost_eur':pso_check['cost']['real_cost_eur'],'ours_penalty_eur':pso_check['cost']['penalty_eur'],'ours_total_eur':pso_check['cost']['total_eur']},
                       'output':str(a.output)},indent=1))
 
 if __name__=='__main__':main()
