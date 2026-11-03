@@ -3,7 +3,7 @@
 Usage:
     python plot_results.py
     python plot_results.py --results results/solution.json --pilot results/pilot.json \
-        --instance data/benchmark_250.json --out figures --shift-hours 8
+        --instance data/example.json --out figures --shift-hours 8
 
 Produces in --out:
     dataset.png      customer map, order weight / volume / service-time histograms
@@ -85,17 +85,19 @@ def draw_gantt(ax,trips,vehicles,shift_minutes,title):
         k=trip['vehicle'];start=trip['start_minutes'];dur=trip['finish_minutes']-start
         ax.barh(k,dur,left=start,height=.6,color=VEHICLE_COLOURS[k%len(VEHICLE_COLOURS)],edgecolor='white',alpha=.9)
         if dur>25:ax.text(start+dur/2,k,str(len(trip['customers'])),ha='center',va='center',fontsize=7,color='white')
-    ax.axvline(shift_minutes,color='red',ls='--',lw=1.2,label=f'{shift_minutes/60:.0f} h shift')
+    ax.axvline(shift_minutes,color='red',ls='--',lw=1.2,label=f'{shift_minutes/60:.0f} h regular pay')
     finish=max((t['finish_minutes'] for t in trips),default=0)
     if finish>shift_minutes:ax.axvspan(shift_minutes,finish,color='red',alpha=.06,label='overtime')
     ax.set_yticks(range(n));ax.set_yticklabels([vehicle_label(vehicles,k) for k in range(n)],fontsize=8)
-    ax.invert_yaxis();ax.set(xlabel='minutes since start of day',title=title);ax.legend(fontsize=8,loc='lower right');ax.grid(axis='x',alpha=.15)
+    ax.set_xlim(0,max(finish,shift_minutes)*1.03);ax.tick_params(axis='x',labelbottom=True);ax.xaxis.set_major_locator(__import__('matplotlib').ticker.MaxNLocator(nbins=8,integer=True));ax.invert_yaxis();ax.set(xlabel='Elapsed minutes from operation start (t = 0; no clock start assumed)',title=title);ax.legend(fontsize=8,loc='upper left',bbox_to_anchor=(1.005,1));ax.grid(axis='x',alpha=.15)
 
 def plot_gantt(inst,result,shift_hours,out):
     shift=shift_hours*60;best=result['best']
     fig,axes=plt.subplots(2,1,figsize=(11,5.6),layout='constrained',sharex=True)
     draw_gantt(axes[0],inst['reference_transports'],inst['vehicles'],shift,'Generated witness plan (number = stops in trip)')
     draw_gantt(axes[1],best['transports'],best['fleet'],shift,f"GA plan ({result['objective']})")
+    endpoint=max([shift]+[t['finish_minutes'] for t in inst['reference_transports']+best['transports']])
+    axes[0].set_xlim(0,endpoint*1.03)
     fig.suptitle('Trip schedule per physical vehicle; sequential trips, no reload delay'+cost_caption(result),fontsize=10)
     fig.savefig(out/'gantt.png',dpi=180);plt.close(fig)
 
@@ -152,7 +154,7 @@ def write_benchmark(pilot,out):
 def main():
     p=argparse.ArgumentParser(description=__doc__,formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument('--results',type=Path,default=ROOT/'results/solution.json');p.add_argument('--pilot',type=Path,default=ROOT/'results/pilot.json')
-    p.add_argument('--instance',type=Path,default=ROOT/'data/benchmark_250.json');p.add_argument('--out',type=Path,default=ROOT/'figures')
+    p.add_argument('--instance',type=Path,default=ROOT/'data/example.json');p.add_argument('--out',type=Path,default=ROOT/'figures')
     p.add_argument('--shift-hours',type=float,default=None,help='shift length for the Gantt line; default from instance model.shift_hours or 8')
     p.add_argument('--volume-buffer',type=float,default=None,help='fraction of volume kept free; default from instance model.volume_buffer')
     a=p.parse_args();style();a.out.mkdir(parents=True,exist_ok=True)
@@ -166,3 +168,4 @@ def main():
     print('Saved figures in',a.out)
 
 if __name__=='__main__':main()
+
