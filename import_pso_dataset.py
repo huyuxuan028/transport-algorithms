@@ -1,20 +1,22 @@
 """Convert the PSO team's CSV dataset (xsilentkiller/industrial-transport) into
 our schema-v3 instance JSON so both teams optimise the same benchmark.
 
-    python import_pso_dataset.py --source <path to their repo> --output data/shared_pso_250.json
+    python import_pso_dataset.py --source <clone of the PSO team repo> --output data/shared_pso_250.json
 
-Mapping (their field -> ours):
+Mapping (PSO team field -> ours):
   orders.csv      total_weight_kg->weight_kg, total_volume_m3->volume_m3,
                   packing_time_min + loading_time_min -> service_minutes
                   (params.loading_counts_as_work_time is true), item_ids -> items[]
   locations.csv   lat/lon -> coordinates_km (equirectangular, depot at origin)
-  distances.csv   km -> distance_matrix_m (their haversine x 1.3 winding factor)
+  distances.csv   km -> distance_matrix_m (PSO team haversine x 1.3 winding factor)
   vehicles.csv    max_weight_kg->payload_kg, max_volume_m3->volume_m3,
                   fuel_l_per_km*100->fuel_l_per_100km, avg_speed_kmh->speed_kmh,
                   wage_per_h->wage_eur_per_h, maintenance_per_1000km->maintenance_eur_per_1000km
   params.json     shift_hours, overtime_multiplier, fuel_price_per_l->fuel_price_eur_per_l,
                   required_free_volume_ratio->volume_buffer, min/max_customers_per_trip
-  best_solution   their published PSO plan -> reference_transports (re-scheduled with our solver)
+  best_solution   PSO team published plan -> pso_reference_solution (evaluator cross-check ONLY)
+reference_transports (the solver's neutral starting plan) is a nearest-neighbour
+tour cut greedily by capacity, so neither team starts from the other's result.
 Standard library only.
 """
 import argparse,csv,json,math,sys
@@ -53,13 +55,14 @@ def convert(source,solver_dir=ROOT,name='Shared-PSO-250-Budapest'):
     # coordinates: equirectangular projection in km, depot at origin
     lat0,lon0=float(locations[0]['lat']),float(locations[0]['lon']);kx=111.32*math.cos(math.radians(lat0));ky=110.57
     coords=[[round((float(locations[i]['lon'])-lon0)*kx,4),round((float(locations[i]['lat'])-lat0)*ky,4)] for i in range(n+1)]
+    lonlat=[[float(locations[i]['lon']),float(locations[i]['lat'])] for i in range(n+1)]
 
     # distance matrix: km -> integer metres
     rows=read_csv(ds/'distances.csv')
     if len(rows)!=n+1:raise ValueError('distance matrix size mismatch')
     d=[[int(round(float(rows[i][str(j)])*1000)) for j in range(n+1)] for i in range(n+1)]
 
-    # vehicle types and the fixed fleet (same order as their vehicle_id)
+    # vehicle types and the fixed fleet (same order as the PSO team vehicle_id)
     types=[];type_index={}
     for r in vrows:
         t=r['type_id']
@@ -77,7 +80,7 @@ def convert(source,solver_dir=ROOT,name='Shared-PSO-250-Budapest'):
     fleet_speed=sum(v['speed_kmh'] for v in vehicles)/len(vehicles)
 
     inst={'schema_version':3,'name':name,'seed':42,'cycles_per_vehicle':None,'fleet_size':len(vehicles),
-          'vehicle_types':types,'vehicles':vehicles,'customers':customers,'coordinates_km':coords,'distance_matrix_m':d,
+          'vehicle_types':types,'vehicles':vehicles,'customers':customers,'coordinates_km':coords,'coordinates_lonlat':lonlat,'distance_matrix_m':d,
           'reference_transports':[],
           'provenance':{'source':'https://github.com/xsilentkiller/industrial-transport dataset/ (PSO team), seed 42',
                         'locations':'real Budapest addresses from OpenStreetMap Overpass; depot 47.405N 19.11E (district 23)',
@@ -97,26 +100,52 @@ def convert(source,solver_dir=ROOT,name='Shared-PSO-250-Budapest'):
                    'not_implemented':['3D packing','time windows','release times','road network','load-dependent fuel'],
                    'cost_parameters_are_assumptions':True}}
 
-    # reference plan: their published best PSO solution, re-scheduled with our solver so the validator accepts it
+    # neutral starting plan: nearest-neighbour tour, cut greedily by payload / buffered volume / max stops,
+    # trips handed to the fixed fleet in turn (a vehicle that gets several trips drives them one after another)
     sys.path.insert(0,str(solver_dir));import solver
-    best=json.loads((src/'output/best_solution.json').read_text())['best_solution']
-    groups=[[] for _ in vehicles]
-    for t in best['trips']:groups[t['vehicle_index']].append([int(c) for c in t['customers']])
+    buf=inst['model']['volume_buffer'];max_stops=inst['model']['max_stops_per_trip']
+    unvisited=set(range(1,n+1));cur=0;order=[]
+    while unvisited:
+        cur=min(unvisited,key=lambda j:d[cur][j]);order.append(cur);unvisited.remove(cur)
+    groups=[[] for _ in vehicles];i=k=0;empties=0
+    while i<n:
+        v=vehicles[k%len(vehicles)];w=vol=0.;trip=[]
+        while i<n and len(trip)<max_stops:
+            c=customers[order[i]]
+            if w+c['weight_kg']>v['payload_kg'] or vol+c['volume_m3']>v['volume_m3']*(1-buf):break
+            trip.append(order[i]);w+=c['weight_kg'];vol+=c['volume_m3'];i+=1
+        k+=1
+        if not trip:
+            empties+=1
+            if empties>=len(vehicles):raise ValueError(f'customer {order[i]} fits no vehicle under the volume buffer')
+            continue
+        empties=0;groups[(k-1)%len(vehicles)].append(trip)
     inst['reference_transports']=solver.schedule(groups,inst,vehicles)
-    inst['provenance']['reference_transports']=f"PSO team best_solution.json: {best['method']}, true_cost_eur {best['true_cost_eur']:.2f}, {best['n_trips']} trips"
+    inst['provenance']['reference_transports']='nearest-neighbour tour, greedy capacity split, round-robin fleet; neutral start for both teams'
+
+    # PSO team published plan, kept only to cross-check that both evaluators agree
+    best=json.loads((src/'output/best_solution.json').read_text())['best_solution']
+    pso_groups=[[] for _ in vehicles]
+    for t in best['trips']:pso_groups[t['vehicle_index']].append([int(c) for c in t['customers']])
+    inst['pso_reference_solution']={'method':best['method'],'true_cost_eur_reported':best['true_cost_eur'],'n_trips':best['n_trips'],
+        'transports':solver.schedule(pso_groups,inst,vehicles),'note':'PSO team result for evaluator cross-check only; never used for initialisation'}
     allowed=solver.validate_instance(inst)
     if any(not allowed[i] for i in range(1,n+1)):raise ValueError('an order fits no vehicle under the volume buffer')
     check=solver.validate_solution(inst,inst['reference_transports'])
-    return inst,check
+    pso_check=solver.validate_solution(inst,inst['pso_reference_solution']['transports'])
+    inst['pso_reference_solution']['true_cost_eur_ours']=pso_check['cost']['total_eur']
+    return inst,check,pso_check
 
 def main():
     p=argparse.ArgumentParser(description=__doc__,formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument('--source',type=Path,required=True,help='clone of xsilentkiller/industrial-transport')
     p.add_argument('--output',type=Path,default=ROOT/'data/shared_pso_250.json')
     p.add_argument('--solver-dir',type=Path,default=ROOT);a=p.parse_args()
-    inst,check=convert(a.source,a.solver_dir)
+    inst,check,pso_check=convert(a.source,a.solver_dir)
     a.output.parent.mkdir(parents=True,exist_ok=True);a.output.write_text(json.dumps(inst,indent=1,allow_nan=False),encoding='utf-8')
     print(json.dumps({'instance':inst['name'],'customers':len(inst['customers'])-1,'vehicles':[v['id'] for v in inst['vehicles']],
-                      'reference_trips':check['trips'],'reference_cost_ours':check['cost'],'output':str(a.output)},indent=1))
+                      'neutral_witness':{'trips':check['trips'],'cost_eur':check['cost']['total_eur'],'below_min':check['cost']['trips_below_min']},
+                      'pso_plan_check':{'reported':inst['pso_reference_solution']['true_cost_eur_reported'],'ours':pso_check['cost']['total_eur']},
+                      'output':str(a.output)},indent=1))
 
 if __name__=='__main__':main()
