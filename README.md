@@ -14,6 +14,10 @@ python run_experiments.py
 
 `data/example.json` is a frozen copy of the generator's development case. Keep
 its checksum with experiments. No relative sibling-repository import is needed.
+It is retained as a schema-v2 baseline. The shared schema-v3 development and
+fixed-fleet benchmark copies are `data/development.json` and
+`data/benchmark_250.json` from `transport-generator` (seed 42). The latter has
+exactly five given physical vehicles: one Caddy, two Sprinters, two MAN trucks.
 The generated-witness routes are used for a feasible initial candidate, never
 as a purported optimum. Output contains all transports, physical vehicle IDs,
 trip schedules, chromosome, distance, fuel estimate, settings and validation.
@@ -37,18 +41,46 @@ brief), `convergence.png` (GA vs random per objective) and `BENCHMARK.md`
 default to `model.shift_hours` / `model.volume_buffer` in the instance when
 present; the optional `cost` block of a solution is shown when present.
 
+To run the shared schema-v3 development case and regenerate comparable figures:
+
+```powershell
+python -m unittest -v test_solver test_plot_results
+python run_experiments.py --instance data/development.json --pilot-output results/pilot_v3.json --solution-output results/solution_v3.json --best-objective cost
+python plot_results.py --instance data/development.json --pilot results/pilot_v3.json --results results/solution_v3.json --out figures/schema_v3
+```
+
+The generated `results/pilot_v3.json` records three seeds, 32 individuals and
+80 generations for each method and objective. `figures/schema_v3/BENCHMARK.md`
+has the matched-evaluation GA versus random baseline. Runtimes are not matched.
+For a fixed-fleet 250-customer demonstration, use:
+
+```powershell
+python solver.py --instance data/benchmark_250.json --objective cost --population 32 --generations 80 --output results/benchmark_250_cost.json
+python plot_results.py --instance data/benchmark_250.json --results results/benchmark_250_cost.json --pilot results/no_pilot_for_250.json --out figures/benchmark_250
+```
+
+The latter produces dataset, route, Gantt and utilisation figures, but no
+convergence comparison or multi-seed benchmark until a separate 250-customer
+pilot is run. `results/benchmark_250_cost.json` is one GA seed, not a certified
+optimum or a gap measurement.
+
 ## Problem variant
 
-Five physical vehicles, each chosen by the GA from VW Caddy, Sprinter and MAN, with repeated
+Five physical vehicles, chosen by the GA from VW Caddy, Sprinter and MAN when
+`model.fleet_mix_is_decision=true`, with repeated
 sequential depot tours. Each customer order is indivisible and served once.
 Each trip has both a weight and aggregate-volume limit of its assigned vehicle.
 All customers are available at time zero. There is no daily time horizon.
-The generator's two-Caddy, two-Sprinter, one-MAN mix is only a feasible witness,
-not a constraint on the optimized fleet.
+The generator's two-Caddy, two-Sprinter, one-MAN development mix is only a
+feasible witness. With `fleet_mix_is_decision=false`, as in the 250-customer
+case, the given five vehicles are fixed: crossover, mutation, repair and
+validation preserve their types and physical identities. The solver uses
+`vehicles[].speed_kmh` when present, falling back to the legacy model speed.
 
 The default objective is **estimated fuel litres**, proposed because the brief
 supplies different fuel-consumption rates. It is a constant-rate distance proxy,
-not a physical fuel model. Pure total distance is also implemented. Agree the
+not a physical fuel model. Pure total distance and financial cost (fuel,
+driver wage including overtime, maintenance) are also implemented. Agree the
 final objective and time-horizon rules with the supervisor before a competition.
 With unrestricted reuse and distance alone, the largest vehicle can simulate
 smaller vehicles' routes, so smaller vehicles have no distance advantage.
@@ -81,18 +113,20 @@ release-time, refuelling or shift-limit assumptions requires a different decoder
 
 ## Evidence
 
-Eight algorithm tests cover independent exhaustive Split comparison, correct
+Seventeen algorithm tests cover independent exhaustive Split comparison, correct
 customer-indexed allocation, coverage and overload rejection, multi-trip overlap,
-parcel aggregation, type-dependent capacity/fuel and elitism. Four complementary generator tests are in the
-generator repository. The pilot has 12 runs: two objectives, two search methods,
+parcel aggregation, type-dependent capacity/fuel, financial cost, fixed fleet,
+per-vehicle speed and elitism. The generator repository has six complementary
+tests. The schema-v3 pilot has 18 runs: three objectives, two search methods,
 three seeds, population 32 and 80 generations. Both methods use 2,432 candidate
 evaluations and the same decoder/2-opt; runtimes are not budget-matched. This is
 development evidence, not a held-out comparison with the swarm team. Exact gaps
 are unavailable because there is no certified optimum for this new instance.
 
-The generator's proxy-data warning is inherited. No 3D packing, time windows,
-road network or driver-shift feasibility is established. Long schedules are
-allowed under the initial unrestricted-horizon simplification.
+The generator's proxy-data warning is inherited. No 3D packing, time windows
+or road network is established. Long schedules are allowed; overtime beyond
+eight hours is priced rather than treated as infeasible. The 10–50 stops per
+trip range is audited, not enforced as a hard constraint.
 
 ## Research basis
 
@@ -110,3 +144,4 @@ Cost inputs are assumptions pending supervisor-approved values:
 - Fuel price: €1.65/L diesel (European Commission DG ENER Weekly Oil Bulletin EU weighted pump average).
 - Maintenance: €50 (Caddy), €80 (Sprinter), €120 (MAN) per 1,000 km based on commercial fleet servicing and wear benchmarks; instance values take precedence.
 - Volume buffer: configurable (default 0.10) to support Course Option 1 reserve loading.
+
