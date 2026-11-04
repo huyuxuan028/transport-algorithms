@@ -35,7 +35,8 @@ def cost_caption(result):
     c=result.get('cost') or result.get('best',{}).get('cost')
     if not c:return ''
     return (f"  |  cost {c.get('total_eur',float('nan')):.0f} EUR"
-            f" (fuel {c.get('fuel_eur',0):.0f}, wage {c.get('wage_eur',0):.0f}, maint {c.get('maintenance_eur',0):.0f};"
+            f" (real {c.get('real_cost_eur',float('nan')):.0f}, penalty {c.get('penalty_eur',0):.0f};"
+            f" fuel {c.get('fuel_eur',0):.0f}, wage {c.get('wage_eur',0):.0f}, maint {c.get('maintenance_eur',0):.0f};"
             f" overtime {c.get('overtime_hours',0):.1f} h)")
 
 # ---------------------------------------------------------------- dataset
@@ -135,13 +136,14 @@ def plot_convergence(pilot,out):
 # -------------------------------------------------------------- benchmark
 def write_benchmark(pilot,out):
     rows=['# Benchmark (development pilot)','',f"Instance: `{pilot['instance']}`  ",f"Protocol: {pilot.get('protocol','')}",'',
-          '| objective | method | seed | distance km | fuel L | trips | vehicles used | max finish (h) | overtime h | cost EUR | evaluations | runtime s |',
-          '|---|---|---|---|---|---|---|---|---|---|---|---|']
+          '| objective | method | seed | distance km | fuel L | trips | vehicles used | max finish (h) | overtime h | real cost EUR | penalty EUR | total cost EUR | evaluations | runtime s |',
+          '|---|---|---|---|---|---|---|---|---|---|---|---|---|---|']
     for r in sorted(pilot['runs'],key=lambda r:(r['objective'],r['method'],r['seed'])):
         val=r['validation'];cost=r.get('cost') or r['best'].get('cost') or {}
         finish=max(val['finish_minutes_by_vehicle'])/60
         rows.append(f"| {r['objective']} | {r['method']} | {r['seed']} | {val['distance_km']:.1f} | {val['fuel_litres']:.2f} | {val['trips']} | "
                     f"{val['vehicles_used']} | {finish:.1f} | {cost.get('overtime_hours','-') if cost else '-'} | "
+                    f"{cost.get('real_cost_eur','-') if cost else '-'} | {cost.get('penalty_eur','-') if cost else '-'} | "
                     f"{cost.get('total_eur','-') if cost else '-'} | {r['evaluations']} | {r['runtime_seconds']:.2f} |")
     rows+=['','## Means per configuration','','| objective | method | runs | mean distance km | mean fuel L | best fuel L | mean runtime s |','|---|---|---|---|---|---|---|']
     for s in pilot['summary']:

@@ -89296,6 +89296,7 @@
     "volume_buffer": 0.1,
     "min_stops_per_trip": 10,
     "max_stops_per_trip": 50,
+    "min_stops_penalty_eur_per_customer": 2000.0,
     "not_implemented": [
       "3D packing",
       "time windows",
