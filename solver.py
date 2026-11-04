@@ -53,7 +53,7 @@ def validate_instance(inst,volume_buffer=None):
     if not math.isfinite(inst['model']['schedule_average_speed_kmh']) or inst['model']['schedule_average_speed_kmh']<=0:raise ValueError('Invalid assumed average speed')
     return feasible_types(inst,volume_buffer)
 
-DEFAULT_COST={'fuel_price':1.65,'wage':20.0,'overtime_mult':2.0,'shift_h':8.0,'maint':{'caddy':50.0,'sprinter':80.0,'man':120.0,'default':80.0},'volume_buffer':0.10,'min_stops':10,'max_stops':50}
+DEFAULT_COST={'fuel_price':1.65,'wage':20.0,'overtime_mult':2.0,'shift_h':8.0,'maint':{'caddy':50.0,'sprinter':80.0,'man':120.0,'default':80.0},'volume_buffer':0.10,'min_stops':10,'max_stops':50,'min_stops_penalty_eur_per_customer':0.0}
 def evaluate_costs(trips,vehicles,inst,overrides=None):
     """Compute real cost, stop penalties, and total optimization cost."""
     m=inst.get('model',{});overrides=overrides or {};cfg=dict(DEFAULT_COST,**overrides)
@@ -62,7 +62,7 @@ def evaluate_costs(trips,vehicles,inst,overrides=None):
     shift_h=overrides.get('shift_h',m.get('shift_hours',DEFAULT_COST['shift_h']))
     min_s=overrides.get('min_stops',m.get('min_stops_per_trip',DEFAULT_COST['min_stops']))
     max_s=overrides.get('max_stops',m.get('max_stops_per_trip',DEFAULT_COST['max_stops']))
-    penalty_per_customer=overrides['min_stops_penalty_eur_per_customer'] if 'min_stops_penalty_eur_per_customer' in overrides else m['min_stops_penalty_eur_per_customer']
+    penalty_per_customer=overrides.get('min_stops_penalty_eur_per_customer',m.get('min_stops_penalty_eur_per_customer',DEFAULT_COST['min_stops_penalty_eur_per_customer']))
     by_v={k:[t for t in trips if t['vehicle']==k] for k in range(len(vehicles))}
     fuel_eur=sum(t['fuel_litres'] for t in trips)*fuel_price;wage_eur=maint_eur=ot_hours=0.0
     penalty_eur=sum(max(0, min_s - len(t["customers"])) * penalty_per_customer for t in trips)

@@ -144,6 +144,13 @@ class Tests(unittest.TestCase):
         self.assertAlmostEqual(c['total_eur'],c['real_cost_eur']+c['penalty_eur'])
         self.assertEqual(evaluate_costs(trips[:1],x['vehicles'],x)['penalty_eur'],4000.0)
 
+    def test_missing_min_stop_penalty_defaults_to_zero(self):
+        x=ready();x['model'].pop('min_stops_penalty_eur_per_customer')
+        trips=[{'vehicle':0,'customers':[1,2],'start_minutes':0,'finish_minutes':60,'distance_km':10,'fuel_litres':1}]
+        c=evaluate_costs(trips,x['vehicles'],x)
+        self.assertEqual(c['penalty_eur'],0.0)
+        self.assertEqual(c['total_eur'],c['real_cost_eur'])
+
     def test_fixed_fleet_benchmark_cannot_change_the_vehicle_mix(self):
         x=json.loads((ROOT/'data/benchmark_250.json').read_text())
         self.assertFalse(x['model']['fleet_mix_is_decision'])
