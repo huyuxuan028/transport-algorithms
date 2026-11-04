@@ -1,3 +1,18 @@
+# Shared road benchmark update
+
+The active collaboration target is the PSO-team input `data/shared_pso_250.json`,
+with 250 Budapest customers and the fixed 2 Caddy / 2 Sprinter / 1 MAN fleet.
+Generate directed road distances/times as `data/shared_pso_250_road.json`.
+See [SHARED_ROAD_WORKFLOW.md](SHARED_ROAD_WORKFLOW.md) for source dependencies,
+commands, tests, map generation and explicit limitations. Generated data are
+shared separately from this code PR and ignored by git.
+
+The legacy instructions below refer to earlier synthetic fixtures and pilots,
+not the new shared-road performance study. Cost, overtime and capacities come
+from the selected instance; do not reuse old pilot costs for a new matrix.
+
+---
+
 # Heterogeneous Multi-Trip Genetic Algorithm
 
 Initial implementation for a simplified furniture routing problem. Python 3.10+
