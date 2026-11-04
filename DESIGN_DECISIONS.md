@@ -1,5 +1,28 @@
 # Intentional design and evidence
 
+## Current shared stop policy and cost semantics (PR #8)
+
+Minimum 10 is soft: EUR 2,000 per missing customer in each nonempty trip.
+Maximum 50 is hard: no decoded or validated trip may exceed it. Idle vehicles
+do not incur a missing-stop penalty. In the shared instance, set
+`model.min_stops_penalty_eur_per_customer = 2000`. This policy replaces the
+earlier assumption that both bounds must be hard for the shared benchmark.
+
+`real_cost_eur = fuel_eur + wage_eur + maintenance_eur` is estimated operational
+cost, with overtime included. `penalty_eur` is the algorithmic minimum-stop
+penalty, not an operational bill. `total_eur = real_cost_eur + penalty_eur` is
+the optimization score. Report real cost and penalty separately;
+`true_cost_eur_ours` must refer only to `real_cost_eur`.
+
+This section records the shared rule requested with PR #8, not evidence that
+the old solver already implements it. During integration, verify both Split
+and validation enforce max 50 even when the minimum is soft, and verify cost
+evaluation and selection use the same penalty-inclusive score. The current
+distance-based Split is not claimed to minimize wage/overtime/penalty cost
+exactly; richer cost-aware decoding remains an improvement target.
+
+## Decisions and implementation evidence
+
 | Decision | Reason | Limit / evidence |
 |---|---|---|
 | Reuse the PSO team's shared input | Avoid redundant data generation; compare identical demands, fleet and costs | Import once; maintain source IDs and checksums |
@@ -8,11 +31,13 @@
 | Matched distance/time paths | Travel cost and wages must describe the same path | Dijkstra minimizes assumed static travel time and records its distance; not shortest-distance optimality |
 | Explicit component resnap option | Two nearest vertices are disconnected from depot | Default errors; explicit opt-in records IDs 109/237 and offsets. Addresses remain unchanged |
 | Permutation + customer-indexed allocation | Exposes visit order and physical-vehicle choice in a heterogeneous fleet | Fixed types are enforced; no fleet-mix search in this instance |
+| Soft minimum 10 / hard maximum 50 | Match the shared PR #8 rule: penalize short trips without allowing oversized trips | Enforce max 50 in Split and validation; charge EUR 2,000 per missing stop and include it in total_eur |
+| Separate monetary cost and score | Keep operational estimates distinct from search penalties | Report real_cost_eur, penalty_eur and total_eur separately; true_cost_eur_ours is money only |
 | Contiguous DP Split | Avoid trip separators in chromosome; obtain best distance partition for a fixed order/allocation | Not a wage/overtime-optimal decoder or global routing optimum |
 | OX, tournament, two elites | Preserve feasible incumbents and combine order information | No measured evidence here that OX improves mean performance |
 | Directed 2-opt with cost guard | Reversal changes internal directed arcs; shorter distance can increase time/wages | One bounded pass; cost acceptance at vehicle-batch level can miss improvements |
-| NN seed and unseeded ablation | Test how much apparent improvement comes from initialization | No NN benefit established on the new hard-stop instance; unseeded mean slightly lower |
-| Hard-stop group mutation | Single-customer moves cannot populate an empty vehicle requiring ten stops | Random groups have weak spatial/load structure; long work spans expose poor balancing |
+| NN seed and unseeded ablation | Test how much apparent improvement comes from initialization | No NN benefit established in the historical hard-10–50 experiments; unseeded mean slightly lower. New shared-policy runs remain required |
+| Group mutation in the earlier hard-minimum experiment | Single-customer moves cannot activate an empty vehicle when ten stops are mandatory | Historical design rationale only: under the current soft minimum such moves are feasible but penalized. Re-evaluate the neighborhood rather than claiming this barrier still applies |
 | Keep generated artifacts outside code PR | Keep review focused and reproducible | Cache/raw extracts, generated matrices, maps and experiment runs are ignored; distribute one checksum-identified benchmark separately |
 
 Research connections: Prins (2009) motivates heterogeneous memetic routing;
@@ -23,7 +48,15 @@ References and reading-status qualifications are in REFERENCES.md and
 RESEARCH_AND_ALGORITHM.md. AI assistance is disclosed; code execution is not
 evidence of each member's understanding.
 
-Next algorithm iterations: cost/time-aware splitting, a constructive hard-feasible
-load-balanced seed, spatial relocation/swap neighborhoods, and diversity/restarts.
+## Historical evidence and next iterations
+
+The recorded five-seed ablations used hard 10–50 bounds. They do not establish
+performance or operator benefits for the PR #8 soft-minimum/hard-maximum rule.
+Keep those runs labeled as historical and rerun after integration with the same
+shared road file, explicit penalty setting and separate cost/score fields.
+
+Next algorithm iterations: cost/time-aware splitting, a constructive capacity-
+and maximum-stop-feasible load-balanced seed, spatial relocation/swap neighborhoods,
+and diversity/restarts.
 Evaluate each against the same frozen matrix and seeds, keeping only supported
 improvements. Horizon/rest modeling depends on the agreed problem definition.
