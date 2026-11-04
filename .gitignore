@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.env
+.venv/
+cache/
+generated/
+road_cache/
+data/shared_pso_250_road.json
