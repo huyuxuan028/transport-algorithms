@@ -1,6 +1,6 @@
 import copy,itertools,json,math,unittest
 from pathlib import Path
-from solver import decode,evaluate_costs,make_fleet,route_m,schedule,solve,split_vehicle,validate_instance,validate_solution
+from solver import decode,evaluate_costs,make_fleet,repair_short_trips,route_m,schedule,solve,split_vehicle,stop_limits,validate_instance,validate_solution
 
 ROOT=Path(__file__).parent
 
@@ -150,6 +150,30 @@ class Tests(unittest.TestCase):
         c=evaluate_costs(trips,x['vehicles'],x)
         self.assertEqual(c['penalty_eur'],0.0)
         self.assertEqual(c['total_eur'],c['real_cost_eur'])
+
+    def test_soft_mode_keeps_the_maximum_hard(self):
+        x=ready();x['model'].update({'min_stops_per_trip':1,'max_stops_per_trip':2})
+        self.assertEqual(stop_limits(x),(1,2))
+        self.assertTrue(all(len(t)<=2 for t in split_vehicle([1,2,3,4],x['vehicles'][2],x)))
+        with self.assertRaises(ValueError):validate_solution(x,schedule([[[1,2,3]],[],[],[],[]],x))
+
+    def test_soft_split_prefers_fewer_customers_below_minimum_over_metres(self):
+        x=ready();x['model'].update({'min_stops_per_trip':2,'max_stops_per_trip':50})
+        x['distance_matrix_m'][3][4]=x['distance_matrix_m'][4][3]=6
+        trips=split_vehicle([1,2,3,4],x['vehicles'][1],x)   # medium: [1,2,3]+[4] is 21 m, [1,2]+[3,4] is 23 m
+        self.assertEqual(trips,[[1,2],[3,4]])
+        x['model']['stop_count_mode']='hard';x['model']['min_stops_per_trip']=1
+        self.assertEqual(split_vehicle([1,2,3,4],x['vehicles'][1],x),[[1,2,3],[4]])
+
+    def test_repair_moves_a_short_trip_into_a_trip_with_room_or_leaves_it(self):
+        x=ready();x['model'].update({'min_stops_per_trip':2,'max_stops_per_trip':3})
+        groups=repair_short_trips([[[1]],[],[[2,3]],[],[]],x,x['vehicles'],0.0)
+        self.assertEqual(groups,[[],[],[[1,2,3]],[],[]])
+        x['model']['max_stops_per_trip']=2
+        self.assertEqual(repair_short_trips([[[1]],[],[[2,3]],[],[]],x,x['vehicles'],0.0),[[[1]],[],[[2,3]],[],[]])
+        out=decode([[1,2,3,4],[0,2,2,1,0][:4],[0,1,2,0,1]],x)
+        self.assertTrue(validate_solution(x,out['transports'])['feasible'])
+        self.assertEqual(out['genome'][1],[t['vehicle'] for i in range(1,5) for t in out['transports'] if i in t['customers']])
 
     def test_fixed_fleet_benchmark_cannot_change_the_vehicle_mix(self):
         x=json.loads((ROOT/'data/benchmark_250.json').read_text())

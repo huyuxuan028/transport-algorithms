@@ -31,7 +31,38 @@ def stop_limits(inst):
     if mode not in ('soft','hard'):raise ValueError('stop_count_mode must be soft or hard')
     lo=m.get('min_stops_per_trip',10);hi=m.get('max_stops_per_trip',50)
     if not isinstance(lo,int) or not isinstance(hi,int) or not 1<=lo<=hi:raise ValueError('Invalid stop bounds')
-    return (lo,hi) if mode=='hard' else (1,math.inf)
+    # Soft mode: the minimum is priced by evaluate_costs, the maximum stays a hard limit.
+    return (lo,hi) if mode=='hard' else (1,hi)
+
+def soft_min_stops(inst):
+    """Minimum stops per trip that evaluate_costs prices; 1 (no preference) in hard mode, where it is enforced."""
+    m=inst.get('model',{})
+    return 1 if m.get('stop_count_mode','soft')=='hard' else m.get('min_stops_per_trip',10)
+
+def repair_short_trips(groups,inst,vehicles,volume_buffer):
+    """Soft mode: dissolve each trip below the priced minimum by cheapest-insertion of all its
+    customers into other trips with capacity and stop room; all-or-nothing per short trip."""
+    lo=soft_min_stops(inst);_,hi=stop_limits(inst);d=inst['distance_matrix_m'];c=inst['customers']
+    for k in range(len(groups)):
+        for t in range(len(groups[k])):
+            if not 0<len(groups[k][t])<lo:continue
+            sim=[[r[:] for r in g] for g in groups];moved=True
+            for i in groups[k][t]:
+                best=None
+                for k2,g2 in enumerate(sim):
+                    v=vehicles[k2];max_vol=v['volume_m3']*(1.0-volume_buffer)
+                    for t2,r in enumerate(g2):
+                        if (k2,t2)==(k,t) or len(r)>=hi:continue
+                        if sum(c[x]['weight_kg'] for x in r)+c[i]['weight_kg']>v['payload_kg']+EPS:continue
+                        if sum(c[x]['volume_m3'] for x in r)+c[i]['volume_m3']>max_vol+EPS:continue
+                        p=[0]+r+[0]
+                        for pos in range(len(r)+1):
+                            delta=d[p[pos]][i]+d[i][p[pos+1]]-d[p[pos]][p[pos+1]]
+                            if best is None or delta<best[0]:best=(delta,k2,t2,pos)
+                if best is None:moved=False;break
+                sim[best[1]][best[2]].insert(best[3],i)
+            if moved:sim[k][t]=[];groups=sim
+    return [[r for r in g if r] for g in groups]
 
 def feasible_types(inst,volume_buffer=None):
     buf=inst.get('model',{}).get('volume_buffer',0.0) if volume_buffer is None else volume_buffer
@@ -101,10 +132,11 @@ def split_vehicle(order,v,inst,volume_buffer=None):
     n=len(order)
     if not n:return []
     buf=inst.get('model',{}).get('volume_buffer',0.0) if volume_buffer is None else volume_buffer;max_vol=v['volume_m3']*(1.0-buf)
-    min_stops,max_stops=stop_limits(inst)
-    d=inst['distance_matrix_m'];customers=inst['customers'];dp=[math.inf]*(n+1);prev=[None]*(n+1);dp[0]=0
+    min_stops,max_stops=stop_limits(inst);soft_min=soft_min_stops(inst)
+    # Lexicographic DP: fewest customers short of the soft minimum first, then metres.
+    d=inst['distance_matrix_m'];customers=inst['customers'];dp=[(math.inf,math.inf)]*(n+1);prev=[None]*(n+1);dp[0]=(0,0.)
     for i in range(n):
-        if not math.isfinite(dp[i]):continue
+        if not math.isfinite(dp[i][1]):continue
         w=vol=path=0.;last=0
         for j in range(i,n):
             if j-i+1>max_stops:break
@@ -112,8 +144,8 @@ def split_vehicle(order,v,inst,volume_buffer=None):
             if w>v['payload_kg']+EPS or vol>max_vol+EPS:break
             path+=d[last][node];last=node
             if j-i+1<min_stops:continue
-            cost=dp[i]+path+d[node][0]
-            if cost<dp[j+1]-EPS:dp[j+1]=cost;prev[j+1]=i
+            short=dp[i][0]+max(0,soft_min-(j-i+1));cost=dp[i][1]+path+d[node][0]
+            if short<dp[j+1][0] or (short==dp[j+1][0] and cost<dp[j+1][1]-EPS):dp[j+1]=(short,cost);prev[j+1]=i
     if prev[n] is None:raise InfeasiblePartition('No capacity- and stop-feasible partition for this vehicle sequence')
     trips=[];j=n
     while j:
@@ -213,7 +245,13 @@ def decode(genome,inst,local_search=True,volume_buffer=None,cost_overrides=None,
                     return evaluate_costs(schedule(rg,inst,vehicles),vehicles,inst,cost_overrides)['total_eur']
                 if vehicle_cost(improved)<=vehicle_cost(trips)+EPS:trips=improved
             else:trips=improved
-        groups.append(trips);new_order.extend(i for r in trips for i in r)
+        groups.append(trips)
+    if inst.get('model',{}).get('stop_count_mode','soft')!='hard':groups=repair_short_trips(groups,inst,vehicles,buf)
+    assignment=assignment[:]
+    for k,g in enumerate(groups):
+        for r in g:
+            new_order.extend(r)
+            for i in r:assignment[i-1]=k
     if len(new_order)!=n:raise ValueError('Unknown vehicle allocation')
     trips=schedule(groups,inst,vehicles)
     km=sum(t['distance_km'] for t in trips);fuel=sum(t['fuel_litres'] for t in trips)
@@ -235,6 +273,7 @@ def solve(inst,seed=0,population=40,generations=100,objective='fuel_litres',meth
     if objective not in ['fuel_litres','distance','cost'] or method not in ['ga','random'] or population<4 or generations<0:raise ValueError('Invalid search configuration')
     key='distance_km' if objective=='distance' else ('total_eur' if objective=='cost' else 'fuel_litres')
     rng=random.Random(seed);start=time.perf_counter();evaluations=0
+    buf=inst.get('model',{}).get('volume_buffer',0.0) if volume_buffer is None else volume_buffer
     def evaluate(g):
         nonlocal evaluations
         evaluations+=1
@@ -307,7 +346,22 @@ def solve(inst,seed=0,population=40,generations=100,objective='fuel_litres',meth
                     else:order[i:j+1]=reversed(order[i:j+1])
                 if rng.random()<.3:
                     i=rng.randrange(n)
-                    if inst['model'].get('stop_count_mode','soft')=='hard':
+                    if inst['model'].get('stop_count_mode','soft')!='hard' and rng.random()<.5:
+                        # Under the priced minimum the repair dissolves single-customer trips, so
+                        # half of the soft-mode moves relocate a minimum-size block: the customers
+                        # nearest to customer i+1 on its vehicle that fit the target's capacity.
+                        lo=soft_min_stops(inst);source=assignment[i];slots=[j for j in range(len(a[2])) if j!=source]
+                        if slots:
+                            target=rng.choice(slots);vt=inst['vehicle_types'][a[2][target]];vcap=vt['volume_m3']*(1.0-buf)
+                            block=[];w=vol=0.
+                            for j in sorted((j for j in order if assignment[j-1]==source),key=lambda j:inst['distance_matrix_m'][i+1][j]):
+                                cj=inst['customers'][j]
+                                if a[2][target] not in allowed[j] or w+cj['weight_kg']>vt['payload_kg']+EPS or vol+cj['volume_m3']>vcap+EPS:continue
+                                block.append(j);w+=cj['weight_kg'];vol+=cj['volume_m3']
+                                if len(block)==lo:break
+                            if len(block)==lo:
+                                for c in block:assignment[c-1]=target
+                    elif inst['model'].get('stop_count_mode','soft')=='hard':
                         # Single-customer moves cannot activate an empty vehicle with
                         # a hard minimum. Move a minimum-size group instead.
                         lo,_=stop_limits(inst);source=assignment[i]
