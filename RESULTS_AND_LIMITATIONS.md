@@ -1,65 +1,118 @@
-# Initial algorithm experiments
+# Shared-road results and limitations
 
-Shared Budapest addresses / local OSM graph. 5 seeds, population 32, 80 generations. Actual candidate evaluations are recorded per run; hard-mode fallback construction can add evaluations. Common decoder and initial witness. Random search also uses local search. Ablations change one mechanism, but RNG trajectories also change; no statistical significance claim. Feasible means only the explicitly implemented constraints. Stop-count mode: hard
+## Current study: soft minimum, hard maximum
 
-| Variant | Mean cost EUR | SD | Best | Mean seconds | Feasible |
-|---|---:|---:|---:|---:|---:|
-| random_search | 2101.73 | 0.00 | 2101.73 | 0.58 | 5/5 |
-| ga | 1944.07 | 10.79 | 1926.69 | 6.56 | 5/5 |
-| ga_unseeded | 1941.61 | 19.86 | 1911.61 | 6.32 | 5/5 |
-| ga_no_local_search | 2144.79 | 8.70 | 2132.62 | 3.86 | 5/5 |
-| ga_no_order_crossover | 1939.14 | 22.51 | 1916.23 | 6.08 | 5/5 |
+Subhan ran the experiments on branch `feature/Subhan/soft-stop-repair`, frozen
+at commit `48f3367693ea36c53a0964fad47f90f9ec3af1f4`. HU checked the reported plans with that commit's
+validator and independently rescheduled the fixed PSO-team reference plan.
+These checks re-evaluate existing results; they are not fresh GA or PSO searches.
 
-## Interpretation
+Input: `data/shared_pso_250_road.json`, 250 customers and five fixed physical
+vehicles. The experiment input was the original road file with SHA-256
+`4560322db5a3ca30c5778bc4cf97e161c1daafa31f24b3d49cde3ddc2512b6e4`. Seeds 0–4, population 32, 200 generations, 6,032 candidate evaluations
+per run, `stop_count_mode=soft`. Minimum 10 is soft at EUR 2,000 per missing
+customer; maximum 50 is hard. The pilot has 30 runs: three objectives, two
+methods and five seeds. The table below is ONLY the five cost-objective GA runs.
 
-One shared instance only; no certified optimum, optimality gap or significance
-claim. All configurations used 2,433 candidate evaluations, including one extra
-hard-feasible initialization attempt. This is evaluation-count matching, not
-equal runtime. Random search and seeded GA share the same decoder, local search
-and initialization; random search retained the initial feasible seed in all runs.
+`real_cost_eur = fuel_eur + wage_eur + maintenance_eur`;
+`total_eur = real_cost_eur + penalty_eur`. Penalty is a search score component,
+not money charged for operating the vehicles. All five final cost-GA plans
+have zero minimum-stop penalty and no trip exceeding 50.
 
-The main GA improves over the random reference by approximately 7.50% in mean cost.
-Removing local search worsens mean cost. Neither NN seeding nor OX has a demonstrated
-mean benefit on this hard-stop instance: their ablations are slightly cheaper.
-A large portion of initialization is infeasible under hard stop counts, so the
-conservative single-large-vehicle fallback dominates the starting point. That is
-a design weakness to address, not a successful justification of every operator.
+| Seed | Real cost EUR | Penalty EUR | Total score EUR | Overtime h |
+|---|---:|---:|---:|---:|
+| 0 | 1480.1810 | 0.0000 | 1480.1810 | 24.9487 |
+| 1 | 1461.0733 | 0.0000 | 1461.0733 | 24.7383 |
+| 2 | 1478.2660 | 0.0000 | 1478.2660 | 25.9463 |
+| 3 | 1473.6202 | 0.0000 | 1473.6202 | 25.2847 |
+| 4 | 1473.8275 | 0.0000 | 1473.8275 | 24.7334 |
 
-Best main GA: seed 1, EUR 1,926.692, distance 582.737km, seven trips, three used
-vehicles out of five available, zero below/above stop-bound trips. Overtime is
-43.1685 vehicle-hours. The longest vehicle work span is 51.17 hours. This is valid
-only in the explicitly unbounded-horizon model, NOT a practical single-day plan.
-Hard 10–50 bounds are the selected experimental policy, pending joint confirmation.
+Mean real cost and mean total score: **EUR 1,473.3936**. Best: **EUR 1,461.0733**
+(seed 1). Sample standard deviation: **EUR 7.4471**. Reported rounded values are
+EUR 1,473.39, EUR 1,461.07 and EUR 7.45. Mean recorded runtime is 18.4126seconds
+on Subhan's reported machine, not a cross-machine timing comparison.
 
-## Data and road audit
+Best cost-GA plan: 15 trips, all five vehicles used, 733.4073km, overtime 24.7383
+vehicle-hours, maximum vehicle work span 18.6939hours. This remains an
+unrestricted-horizon schedule, not a validated realistic single-day plan.
 
-All 250 customer demands, item records, original lon/lat, vehicles and cost/service
-parameters match Subhan's shared input. The graph covers all shared Budapest
-locations; no delivery points were randomly resampled. There are 229,754 road
-vertices and 222,862 in the depot's mutually reachable component. Every pair
-in the 251x251 matrices is finite; 30,902 unordered distance pairs differ by
-more than one metre between directions. Five full matrix rows were recomputed
-against the graph and matched in distance and duration.
+The same pilot's cost-objective random-search mean is EUR 1,662.5519. Both methods
+receive the same decoder, repair/local search and candidate-evaluation budget;
+wall-clock budgets differ. This is a stronger constructive/repair baseline,
+not pure random routing. No isolated ablation of the new repair mechanisms has
+been performed, so do not attribute all improvement to one operator.
 
-Road-file SHA256: `4560322db5a3ca30c5778bc4cf97e161c1daafa31f24b3d49cde3ddc2512b6e4`.
-Raw-extract SHA256: `302481dc96268e15871692862a3d274921c1cf1ae81dcb0446b3fa51b0828376`.
-Extract bbox (west,south,east,north): 18.91,47.36,19.26,47.64.
-Two explicit reachable-component resnaps: IDs 109/237, offsets 78.63m / 81.18m.
-Maximum vertex-snap offset:114.47m. These offsets are not billed as road legs.
+## Fixed PSO-team reference plan re-evaluated on road matrices
 
-Times are static road-class assumptions, optionally capped by numeric maxspeed
-tags. One-way and basic motor access are modeled; turn relations, truck-specific
-clearance, parking/unloading access and traffic are not. Finite boundaries may
-exclude better routes; connectivity alone does not prove global shortest paths.
-These results are local OSM calculations, not an executed ORS experiment.
+The original embedded reference plan still contained approximate-matrix trip
+metrics. Its vehicle assignments and within-trip customer orders are now unchanged
+but passed through `solver.schedule` on the road matrices, then through validation.
+The resulting values are:
 
-## Shared comparison and reproducibility
+| Metric | Value |
+|---|---:|
+| Real operating cost EUR |1472.0597|
+| Penalty EUR |0.0000|
+| Total score EUR |1472.0597|
+| Overtime vehicle-hours |28.4723|
+| Distance km |859.8231|
+| Trips |15|
+| Maximum customers in a trip |36|
 
-The imported `data/shared_pso_250.json` contains the original approximate distance
-matrix; `data/shared_pso_250_road.json` is the frozen road extension. The PSO team's
-old published cost belongs to the approximate matrix, so it is NOT included as
-a competitor here. Both teams need to run the same road extension first.
+This is a **re-evaluation of a fixed published plan**, not a new PSO optimization
+on the road data and not a multi-seed PSO benchmark. The best GA plan is
+EUR 10.9864 (about EUR 10.99) cheaper than this fixed reference. No optimality gap
+or general superiority over PSO is established. The original reported
+EUR 1,177.2974 approximate-matrix cost is retained ONLY as historical provenance;
+`pso_reference_solution.true_cost_eur_ours` now means road real cost EUR 1,472.0597.
 
-Raw extracts, road matrices, generated maps and full runs are distributed as
-generated benchmark artifacts, outside code PR #5. Commands live in
-SHARED_ROAD_WORKFLOW.md. Do not mix old Keleti figures into this results section.
+## File revision, hashes and provenance
+
+The reference-audit-only revised road file has SHA-256
+`6d794dff4a03cebb1f9127796209fa1f263450a780ce76ade9c26244b6a2676c`. Only the top-level `pso_reference_solution` block changes: its
+trip metrics, road costs and explanatory provenance are refreshed. Orders,
+vehicles, original coordinates, neutral GA `reference_transports`, models,
+distance matrix, duration matrix and road geometry are unchanged.
+
+Keep **both** hashes: `4560322db5a3ca30c5778bc4cf97e161c1daafa31f24b3d49cde3ddc2512b6e4` identifies Subhan's actual experiment input;
+`6d794dff4a03cebb1f9127796209fa1f263450a780ce76ade9c26244b6a2676c` identifies the corrected attachment. These are different whole-file
+hashes even though their optimization inputs are identical. Do not retroactively
+replace the recorded experiment-input hash. Audit evidence records canonical
+matrix hashes and the unchanged routing inputs.
+
+Source artifacts (immutable commit links):
+- [Pilot JSON](https://github.com/huyuxuan028/transport-algorithms/blob/48f3367693ea36c53a0964fad47f90f9ec3af1f4/results/shared_pso_250_road_pilot.json)
+- [Selected solution](https://github.com/huyuxuan028/transport-algorithms/blob/48f3367693ea36c53a0964fad47f90f9ec3af1f4/results/solution.json)
+- [Figures and benchmark table](https://github.com/huyuxuan028/transport-algorithms/blob/48f3367693ea36c53a0964fad47f90f9ec3af1f4/figures/shared_pso_250_road)
+- [Solver implementation](https://github.com/huyuxuan028/transport-algorithms/blob/48f3367693ea36c53a0964fad47f90f9ec3af1f4/solver.py)
+
+Pilot SHA-256: `b5f48a1c346e26ee1327ca575ca1dc93d1bb522cde0260cc7e53c69582e10bb8`.
+All 30 pilot plans were revalidated against the original road matrices; their
+reported costs match the evaluator. Histories are best-so-far nonincreasing.
+This verifies saved artifacts, not an independent reproduction of the searches.
+
+## Historical hard-10–50 study
+
+The earlier study used five algorithm variants, five seeds, 32 individuals,
+80 generations and typically 2,433 evaluations per run. Main-GA mean cost was
+EUR 1,944.07; best EUR 1,926.69; best plan's longest vehicle span 51.17hours.
+Those results remain historical under a different constraint/search configuration.
+The new budget is larger and the decoder/repair changed, so this is not a
+controlled estimate of the effect of relaxing the minimum alone.
+
+## Remaining model and research limits
+
+The OSM graph covers all shared coordinates, applies one-way/basic access tags,
+and chooses estimated-time paths with matched distance/time. It omits turn
+restriction relations and HGV-specific clearance; times are static assumptions,
+not traffic measurements. Two addresses require audited reachable-component
+resnapping (IDs 109/237, 78.63m/81.18m); maximum vertex offset 114.47m.
+Offsets are not billed as drivable road legs. Finite boundaries may omit better
+routes. All locations were retained; furniture orders are simulated shared inputs.
+
+No geometric 3D packing, working-day/rest horizon, time windows or live traffic.
+Do not claim the complete real-world problem is solved. The updated branch's
+Split minimizes missing-customer count first and distance second, not the exact
+finite monetary objective. Broader benchmarks, separate mechanism ablations,
+load balancing and cost-aware decoding remain needed. The soft-repair algorithm
+branch requires its own review/merge; documenting its results does not merge it.

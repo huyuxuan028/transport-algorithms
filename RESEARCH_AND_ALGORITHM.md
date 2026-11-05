@@ -50,3 +50,25 @@ The current measured study uses the shared Budapest road extension, five seeds p
 
 ## What each teammate must be able to demonstrate
 Trace the four-customer example through assignment, one Split recurrence, OX, mutation, repair and cost. Explain exactly why two elites preserve incumbent quality, why local-search ablation is informative, and why cost Split, rest constraints, diversity and truck restrictions remain limitations. Do not replace this understanding with reading a prepared script.
+
+
+## Revised soft-stop implementation (Subhan's experiment branch)
+
+The current measured revision is commit `48f3367693ea36c53a0964fad47f90f9ec3af1f4` on
+`feature/Subhan/soft-stop-repair`. Minimum10 is soft (EUR 2,000 per missing
+customer), maximum 50 remains hard, and cost fitness uses real cost plus penalty.
+`stop_limits` returns(1,50) in soft mode. `split_vehicle` minimizes a lexicographic
+pair: missing-customer count first, metres second. This is intentionally stronger
+than an arbitrary finite penalty trade-off and is not an exact wage-aware decoder.
+`repair_short_trips` attempts an all-or-nothing dissolution of a short trip using
+capacity-feasible cheapest insertion into other trips with room. Group mutation
+selects nearby compatible customers for the target vehicle.
+
+The new pilot has200 generations and five seeds per configuration, rather than
+80 generations in the historical hard-stop ablations above. Its 30 runs cover
+three objectives and two search methods, not the earlier five algorithm variants.
+The cost-GA mean is EUR 1,473.3936 and best EUR 1,461.0733, with all five penalties 0.
+Read RESULTS_AND_LIMITATIONS.md for immutable artifact links and reproducibility.
+These combined changes do not isolate the contribution of any single mechanism.
+The existing graph and simplified wage model still omit realistic daily/rest
+scheduling and truck-specific road rules. Source branch review remains separate.

@@ -57,9 +57,10 @@ scheduling, live traffic, turn-restriction relations or HGV-specific clearance
 is implemented. These exclusions require team/supervisor agreement; this document
 is a proposal and evidence record, not proof of that agreement.
 
-Neutral initialization is independent of the PSO published best plan. The published
-PSO result is evaluator-audit data only and its old cost must not be compared to
-a road-based GA cost. Run PSO again on the identical road matrices.
+Neutral initialization is independent of the PSO published best plan. The original published approximate-matrix PSO cost is historical only.
+The fixed reference plan has now been rescheduled and re-evaluated on the road
+matrices; see the current audit section below. A multi-seed algorithm-level PSO
+comparison still requires fresh PSO runs on the shared road matrices.
 
 Budget protocol: seeds 0–4, population 32, 80 generations, report ACTUAL evaluations
 including feasibility fallback construction, runtime, feasibility, overtime,
@@ -72,3 +73,28 @@ reachable-component snapping (IDs 109 and 237; 78.63m and 81.18m). Maximum snap
 across all locations is 114.47m. These address-to-vertex offsets are not drivable
 legs and are excluded from routing costs. Both teams must accept the same snapping
 policy. Do not silently move, delete or regenerate a customer to make a graph work.
+
+
+## Current protocol and reference-audit revision
+
+The shared current rule is soft minimum 10 at EUR 2,000 per missing customer,
+hard maximum 50, with real cost and penalty separately reported and their sum
+in `total_eur`. Subhan's soft-repair branch enforces this in Split/validation;
+its source commit is `48f3367693ea36c53a0964fad47f90f9ec3af1f4`. That algorithm branch needs separate
+review/merge; these documents do not imply it is already in main.
+
+Current reported pilot: seeds 0–4, population 32,200 generations,6,032 evaluations
+per run. Cost-GA real-cost/score mean EUR 1,473.3936, best EUR 1,461.0733,
+sample SD EUR 7.4471; all five penalty values are zero. The earlier 80-generation,
+hard-10–50 results above are historical, not this pilot.
+
+The original experiment road input SHA-256 is `4560322db5a3ca30c5778bc4cf97e161c1daafa31f24b3d49cde3ddc2512b6e4`. HU's corrected road
+attachment SHA-256 is `6d794dff4a03cebb1f9127796209fa1f263450a780ce76ade9c26244b6a2676c`. Only `pso_reference_solution` is refreshed;
+all matrices, demands, vehicles, costs, original coordinates and neutral GA seed
+are identical. Preserve the original hash with the experiment rather than
+claiming it used the later attachment bytes.
+
+The same PSO-team reference routes have been rescheduled on road matrices:
+real cost EUR 1,472.0597; penalty 0; overtime 28.4723 vehicle-hours. This is a fixed
+plan re-evaluation, not a new PSO run. Its old reported cost is historical only.
+See RESULTS_AND_LIMITATIONS.md for per-seed numbers, artifact links and caveats.
