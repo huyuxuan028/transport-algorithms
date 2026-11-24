@@ -10,7 +10,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parent
 EPS=1e-7
 
-def route_m(route,d):return sum(d[a][b] for a,b in zip([0]+route,route+[0]))
+def route_m(route,d,*,summation=sum):return summation(d[a][b] for a,b in zip([0]+route,route+[0]))
 
 def make_fleet(inst,type_indices):
     types=inst['vehicle_types']
@@ -178,18 +178,18 @@ def two_opt(route,d,passes=1):
         i,j=pair;r[i:j+1]=reversed(r[i:j+1])
     return r
 
-def travel_minutes(route,inst,vehicle):
+def travel_minutes(route,inst,vehicle,*,summation=sum):
     if 'duration_matrix_s' in inst:
-        return route_m(route,inst['duration_matrix_s'])/60.0
-    return route_m(route,inst['distance_matrix_m'])/1000/vehicle.get('speed_kmh',inst['model']['schedule_average_speed_kmh'])*60
+        return route_m(route,inst['duration_matrix_s'],summation=summation)/60.0
+    return route_m(route,inst['distance_matrix_m'],summation=summation)/1000/vehicle.get('speed_kmh',inst['model']['schedule_average_speed_kmh'])*60
 
-def schedule(route_groups,inst,vehicles=None):
+def schedule(route_groups,inst,vehicles=None,*,summation=sum):
     customers=inst['customers'];d=inst['distance_matrix_m'];result=[]
     vehicles=inst['vehicles'] if vehicles is None else vehicles
     for k,trips in enumerate(route_groups):
         clock=0.;v=vehicles[k];speed=v.get('speed_kmh',inst['model']['schedule_average_speed_kmh'])
         for order in trips:
-            km=route_m(order,d)/1000;duration=travel_minutes(order,inst,v)+sum(customers[i]['service_minutes'] for i in order)
+            km=route_m(order,d,summation=summation)/1000;duration=travel_minutes(order,inst,v,summation=summation)+summation(customers[i]['service_minutes'] for i in order)
             result.append({'vehicle':k,'customers':order,'start_minutes':clock,'finish_minutes':clock+duration,
                            'distance_km':km,'fuel_litres':km*v['fuel_l_per_100km']/100})
             clock+=duration

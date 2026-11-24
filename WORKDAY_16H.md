@@ -71,13 +71,15 @@ directory. Compare the result with
 `data/shared_workday_16h_manifest.json` before sharing the files between teams.
 Both algorithms should read the same case files and identify each case by its
 file SHA-256. Instance seeds 0–99 specify address subsets of size 150–249. Use
-separate search seeds for algorithm runs.
+separate search seeds for algorithm runs. v1 serialization explicitly preserves
+sequential floating-point accumulation when building reference schedules so
+Python 3.11 and newer runtimes reproduce the same committed hashes.
 
 Each case keeps the depot, source addresses, orders, fixed fleet and road
 travel values. The local customer IDs index both directed matrix axes.
 `source_customer_ids[local_id]` gives the original customer ID. The
 `reference_transports` are filtered from the source initialization routes
-and provide a common starting point. They can exceed the workday horizon,
+and serve as historical initialization references. They can exceed the workday horizon,
 so validate each algorithm's returned plan under `model.time_horizon_minutes`.
 Feasibility was checked on all 100 cases by filtering the full run's routes
 to each case and revalidating the resulting schedules. These checks establish

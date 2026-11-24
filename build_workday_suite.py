@@ -17,13 +17,23 @@ def digest(data):
     return hashlib.sha256(data).hexdigest()
 
 
-def filtered_schedule(transports, source_ids, instance):
+def legacy_sum(values):
+    """Preserve the original v1 Python 3.11 floating-point accumulation."""
+    total = 0
+    for value in values:
+        total += value
+    return total
+
+
+def filtered_schedule(transports, source_ids, instance, *, stable_v1=False):
     new_ids = {source_id: new_id for new_id, source_id in enumerate(source_ids)}
     groups = [[] for _ in instance['vehicles']]
     for trip in transports:
         route = [new_ids[node] for node in trip['customers'] if node in new_ids]
         if route:
             groups[trip['vehicle']].append(route)
+    if stable_v1:
+        return schedule(groups, instance, summation=legacy_sum)
     return schedule(groups, instance)
 
 
@@ -56,7 +66,7 @@ def build_case(source, seed):
         for entry in road['component_resnaps'] if entry['customer_id'] in new_ids
     ]
     subset['road_network'] = metadata
-    subset['reference_transports'] = filtered_schedule(source['reference_transports'], source_ids, subset)
+    subset['reference_transports'] = filtered_schedule(source['reference_transports'], source_ids, subset, stable_v1=True)
     return subset
 
 
