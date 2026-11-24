@@ -2,7 +2,7 @@
 
 Chromosome = (customer permutation, physical vehicle per customer, type per
 vehicle). Each vehicle's sequence is split into feasible depot tours by DP.
-No time windows, daily horizon or geometric packing. Python standard library.
+Optional daily work horizon. No time windows or geometric packing.
 """
 import argparse,json,math,random,time
 from pathlib import Path
@@ -25,6 +25,13 @@ def fixed_type_indices(inst):
 
 class InfeasiblePartition(ValueError):
     """A valid chromosome has no feasible contiguous partition under hard rules."""
+
+def time_horizon(inst):
+    minutes=inst.get('model',{}).get('time_horizon_minutes')
+    if minutes is None:return math.inf
+    if type(minutes) not in (int,float) or not math.isfinite(minutes) or minutes<=0:
+        raise ValueError('time_horizon_minutes must be positive and finite or null')
+    return minutes
 
 def stop_limits(inst):
     m=inst.get('model',{});mode=m.get('stop_count_mode','soft')
@@ -72,6 +79,7 @@ def feasible_types(inst,volume_buffer=None):
 
 def validate_instance(inst,volume_buffer=None):
     stop_limits(inst)
+    time_horizon(inst)
     buf=inst.get('model',{}).get('volume_buffer',0.0) if volume_buffer is None else volume_buffer
     if not isinstance(buf,(int,float)) or not math.isfinite(buf) or not 0<=buf<1:raise ValueError('volume_buffer must be in [0,1)')
     customers=inst['customers'];vehicles=inst['vehicles'];d=inst['distance_matrix_m'];n=len(customers)
@@ -195,7 +203,9 @@ def validate_solution(inst,trips,vehicles=None,volume_buffer=None,cost_overrides
         raise ValueError('Solution changes the given fixed fleet')
     buf=inst.get('model',{}).get('volume_buffer',0.0) if volume_buffer is None else volume_buffer
     min_stops,max_stops=stop_limits(inst)
-    n=len(inst['customers'])-1;visits=[];distance=fuel=0.;clocks=[0.]*len(vehicles);details=[]
+    horizon=time_horizon(inst)
+    n=len(inst['customers'])-1;visits=[];distance=fuel=0.;clocks=[0.]*len(vehicles);work=[0.]*len(vehicles);details=[]
+    started=set()
     d=inst['distance_matrix_m'];c=inst['customers']
     for trip in sorted(trips,key=lambda t:(t['vehicle'],t['start_minutes'])):
         if any(not math.isfinite(trip[field]) for field in ['start_minutes','finish_minutes','distance_km','fuel_litres']):raise ValueError('Nonfinite trip metric')
@@ -208,20 +218,96 @@ def validate_solution(inst,trips,vehicles=None,volume_buffer=None,cost_overrides
         if w>v['payload_kg']+EPS or vol>(v['volume_m3']*(1.0-buf))+EPS:raise ValueError('Overloaded trip')
         km=route_m(route,d)/1000;litres=km*v['fuel_l_per_100km']/100
         duration=travel_minutes(route,inst,v)+sum(c[i]['service_minutes'] for i in route)
+        if horizon!=math.inf and k not in started and abs(trip['start_minutes'])>EPS:raise ValueError('First trip must start at minute zero')
         if trip['start_minutes']<clocks[k]-EPS:raise ValueError('Overlapping trips on a physical vehicle')
         if abs(trip['finish_minutes']-trip['start_minutes']-duration)>EPS:raise ValueError('Wrong trip duration')
+        if trip['start_minutes']+duration>horizon+EPS:raise ValueError('Vehicle exceeds time_horizon_minutes')
         if abs(trip['distance_km']-km)>EPS or abs(trip['fuel_litres']-litres)>EPS:raise ValueError('Wrong objective values')
         if not math.isfinite(trip['start_minutes']) or trip['start_minutes']<0:raise ValueError('Invalid time')
-        clocks[k]=trip['finish_minutes'];distance+=km;fuel+=litres
+        started.add(k);work[k]+=duration;clocks[k]=trip['finish_minutes'];distance+=km;fuel+=litres
         details.append({'vehicle':v['id'],'customers':route,'weight_kg':w,'volume_m3':vol,'distance_km':km,'fuel_litres':litres})
     if sorted(visits)!=list(range(1,n+1)):raise ValueError('Missing or duplicated customers')
     cost=evaluate_costs(trips,vehicles,inst,cost_overrides)
     return {'feasible':True,'distance_km':distance,'fuel_litres':fuel,'trips':len(trips),
         'fleet_type_ids':[v['type_id'] for v in vehicles],
-        'vehicles_used':len(set(t['vehicle'] for t in trips)),'finish_minutes_by_vehicle':clocks,
+        'vehicles_used':len(started),'finish_minutes_by_vehicle':clocks,'work_minutes_by_vehicle':work,
         'trip_details':details,'cost':cost}
 
 def decode(genome,inst,local_search=True,volume_buffer=None,cost_overrides=None,search_objective='distance'):
+    decoded=_decode(genome,inst,local_search,volume_buffer,cost_overrides,search_objective)
+    if horizon_excess(decoded['transports'],len(decoded['fleet']),time_horizon(inst)):
+        raise InfeasiblePartition('Vehicle exceeds time_horizon_minutes')
+    return decoded
+
+def horizon_excess(trips,fleet_size,horizon):
+    if horizon==math.inf:return 0.
+    finishes=[0.]*fleet_size
+    for trip in trips:
+        k=trip['vehicle']
+        finishes[k]=max(finishes[k],trip['finish_minutes'])
+    return sum(finish-horizon for finish in finishes if finish>horizon+EPS)
+
+def rebalance_workday(candidate,inst,volume_buffer,horizon):
+    """Move stops from late vehicles to compatible trips with time to spare."""
+    vehicles=candidate['fleet']
+    groups=[[] for _ in vehicles]
+    for trip in candidate['transports']:
+        groups[trip['vehicle']].append(trip['customers'][:])
+    customers=inst['customers']
+    lo,hi=stop_limits(inst)
+    if 'duration_matrix_s' in inst:
+        minutes=[[[value/60 for value in row] for row in inst['duration_matrix_s']]]*len(vehicles)
+    else:
+        minutes=[[[value*0.06/v.get('speed_kmh',inst['model']['schedule_average_speed_kmh'])
+                   for value in row] for row in inst['distance_matrix_m']] for v in vehicles]
+    clocks=[0.]*len(vehicles)
+    for trip in candidate['transports']:
+        clocks[trip['vehicle']]=trip['finish_minutes']
+    for _ in customers[1:]:
+        if max(clocks)<=horizon+EPS:break
+        best=None
+        for target,vehicle in enumerate(vehicles):
+            spare=horizon-clocks[target]
+            if spare<=EPS:continue
+            target_matrix=minutes[target]
+            destinations=groups[target]+([[]] if lo==1 else [])
+            for t,route in enumerate(destinations):
+                if len(route)>=hi:continue
+                weight=vehicle['payload_kg']-sum(customers[i]['weight_kg'] for i in route)
+                volume=vehicle['volume_m3']*(1-volume_buffer)-sum(customers[i]['volume_m3'] for i in route)
+                path=[0]+route+[0]
+                for source,routes in enumerate(groups):
+                    late=clocks[source]-horizon
+                    if late<=EPS:continue
+                    source_matrix=minutes[source]
+                    for s,old_route in enumerate(routes):
+                        if 1<len(old_route)<=lo:continue
+                        for j,node in enumerate(old_route):
+                            customer=customers[node]
+                            if customer['weight_kg']>weight+EPS or customer['volume_m3']>volume+EPS:continue
+                            before=old_route[j-1] if j else 0
+                            after=old_route[j+1] if j+1<len(old_route) else 0
+                            service=customer['service_minutes']
+                            bypass=source_matrix[before][after] if len(old_route)>1 else 0.
+                            saved=service+source_matrix[before][node]+source_matrix[node][after]-bypass
+                            benefit=min(late,saved)
+                            if benefit<=EPS or (best is not None and benefit < -best[0][0]):continue
+                            for pos,(a,b) in enumerate(zip(path,path[1:])):
+                                bypass=target_matrix[a][b] if route else 0.
+                                added=service+target_matrix[a][node]+target_matrix[node][b]-bypass
+                                score=(-benefit,added-saved)
+                                if added<=spare+EPS and (best is None or score<best[0]):
+                                    best=(score,source,s,j,target,t,pos,saved,added)
+        if best is None:break
+        _,source,s,j,target,t,pos,saved,added=best
+        node=groups[source][s].pop(j)
+        if not groups[source][s]:groups[source].pop(s)
+        if t==len(groups[target]):groups[target].append([])
+        groups[target][t].insert(pos,node)
+        clocks[source]-=saved;clocks[target]+=added
+    return groups
+
+def _decode(genome,inst,local_search,volume_buffer,cost_overrides,search_objective):
     order,assignment,type_indices=genome;n=len(inst['customers'])-1
     if sorted(order)!=list(range(1,n+1)) or len(assignment)!=n:raise ValueError('Invalid chromosome')
     fixed=fixed_type_indices(inst)
@@ -232,7 +318,7 @@ def decode(genome,inst,local_search=True,volume_buffer=None,cost_overrides=None,
            inst['customers'][i]['weight_kg']>vehicles[k]['payload_kg']+EPS or
            inst['customers'][i]['volume_m3']>(vehicles[k]['volume_m3']*(1.0-buf))+EPS
            for i,k in enumerate(assignment,1)):raise ValueError('Invalid or incompatible vehicle allocation')
-    groups=[];new_order=[]
+    groups=[]
     for k,v in enumerate(vehicles):
         subseq=[i for i in order if assignment[i-1]==k]
         trips=split_vehicle(subseq,v,inst,volume_buffer=buf)
@@ -247,7 +333,11 @@ def decode(genome,inst,local_search=True,volume_buffer=None,cost_overrides=None,
             else:trips=improved
         groups.append(trips)
     if inst.get('model',{}).get('stop_count_mode','soft')!='hard':groups=repair_short_trips(groups,inst,vehicles,buf)
-    assignment=assignment[:]
+    return decoded_groups(groups,vehicles,type_indices,inst,cost_overrides)
+
+def decoded_groups(groups,vehicles,type_indices,inst,cost_overrides):
+    n=len(inst['customers'])-1
+    new_order=[];assignment=[None]*n
     for k,g in enumerate(groups):
         for r in g:
             new_order.extend(r)
@@ -272,26 +362,32 @@ def solve(inst,seed=0,population=40,generations=100,objective='fuel_litres',meth
     if any(not allowed[i] for i in range(1,n+1)):raise ValueError('An indivisible order fits no vehicle type')
     if objective not in ['fuel_litres','distance','cost'] or method not in ['ga','random'] or population<4 or generations<0:raise ValueError('Invalid search configuration')
     key='distance_km' if objective=='distance' else ('total_eur' if objective=='cost' else 'fuel_litres')
+    horizon=time_horizon(inst)
     rng=random.Random(seed);start=time.perf_counter();evaluations=0
     buf=inst.get('model',{}).get('volume_buffer',0.0) if volume_buffer is None else volume_buffer
     def evaluate(g):
         nonlocal evaluations
         evaluations+=1
-        try:return decode(g,inst,local_search=local_search,volume_buffer=volume_buffer,cost_overrides=cost_overrides,search_objective=objective)
-        except InfeasiblePartition:return {'genome':g,key:math.inf}
+        try:
+            candidate=_decode(g,inst,local_search,volume_buffer,cost_overrides,objective)
+        except InfeasiblePartition:
+            return {'genome':g,key:math.inf,'horizon_excess_minutes':math.inf}
+        candidate['horizon_excess_minutes']=horizon_excess(candidate['transports'],len(candidate['fleet']),horizon)
+        return candidate
+    def rank(candidate):
+        return candidate['horizon_excess_minutes'],candidate[key]
     base_order=[i for trip in inst['reference_transports'] for i in trip['customers']]
     base_assign=[None]*n
     for trip in inst['reference_transports']:
         for i in trip['customers']:base_assign[i-1]=trip['vehicle']
-    # The witness verifies coverage/capacity, but may not satisfy the newly selected hard stop policy.
-    import copy
-    witness_inst=copy.deepcopy(inst);witness_inst['model']['stop_count_mode']='soft'
+    # The historical witness seeds search and may predate the active hard constraints.
+    witness_inst=dict(inst,model=dict(inst['model'],stop_count_mode='soft',time_horizon_minutes=None))
     witness_validation=validate_solution(witness_inst,inst['reference_transports'],volume_buffer=volume_buffer,cost_overrides=cost_overrides)
     type_by_id={v['id']:i for i,v in enumerate(inst['vehicle_types'])}
     base_types=[type_by_id[v['type_id']] for v in inst['vehicles']]
     base=evaluate([base_order,base_assign,base_types]);pool=[base]
     if heuristic_seed:
-        nn_order=[];distances=inst['distance_matrix_m']
+        nn_order=[];distances=inst['duration_matrix_s'] if horizon!=math.inf and 'duration_matrix_s' in inst else inst['distance_matrix_m']
         for k in range(len(base_types)):
             remaining={i for i in range(1,n+1) if base_assign[i-1]==k};last=0
             while remaining:
@@ -315,7 +411,7 @@ def solve(inst,seed=0,population=40,generations=100,objective='fuel_litres',meth
             hard=max(range(1,n+1),key=lambda i:-len(allowed[i]));types[rng.randrange(len(types))]=rng.choice(allowed[hard])
         return repair([rng.sample(range(1,n+1),n),[rng.randrange(len(types)) for _ in range(n)],types])
     for _ in range(population-len(pool)):pool.append(evaluate(random_genome()))
-    pool.sort(key=lambda x:x[key])
+    pool.sort(key=rank)
     if not math.isfinite(pool[0][key]):
         # A conservative hard-policy seed: try serving all orders with one available
         # compatible vehicle. This is a heuristic, not an infeasibility certificate.
@@ -323,13 +419,28 @@ def solve(inst,seed=0,population=40,generations=100,objective='fuel_litres',meth
             if not all(t in allowed[i] for i in range(1,n+1)):continue
             candidate=evaluate([base_order[:],[k]*n,base_types[:]])
             if math.isfinite(candidate[key]):
-                pool[-1]=candidate;pool.sort(key=lambda x:x[key]);break
+                pool[-1]=candidate;pool.sort(key=rank);break
         if not math.isfinite(pool[0][key]):raise InfeasiblePartition('Initialization found no hard-feasible candidate; this does not prove the instance infeasible')
+    if rank(pool[0])[0]>0.:
+        lo,hi=stop_limits(inst)
+        witness_trips=inst['reference_transports']
+        initial_candidates=[pool[0]]
+        if all(lo<=len(t['customers'])<=hi for t in witness_trips):
+            initial_candidates.insert(0,dict(fleet=inst['vehicles'],genome=[base_order,base_assign,base_types],
+                                             transports=witness_trips))
+        for initial in initial_candidates:
+            groups=rebalance_workday(initial,inst,buf,horizon)
+            repaired=decoded_groups(groups,initial['fleet'],initial['genome'][2],inst,cost_overrides)
+            repaired['horizon_excess_minutes']=horizon_excess(repaired['transports'],len(repaired['fleet']),horizon)
+            evaluations+=1
+            if rank(repaired)<rank(pool[0]):
+                pool[-1]=repaired;pool.sort(key=rank)
+            if rank(pool[0])[0]==0.:break
     best=pool[0]
     def diagnostic(generation):
-        feasible=[p for p in pool if math.isfinite(p[key])]
+        feasible=[p for p in pool if rank(p)[0]==0.]
         signatures={tuple((t['vehicle'],tuple(t['customers'])) for t in p['transports']) for p in feasible}
-        return {'generation':generation,'objective':best[key],'evaluations':evaluations,
+        return {'generation':generation,'objective':best[key] if rank(best)[0]==0. else None,'evaluations':evaluations,
                 'unique_decoded_plans':len(signatures),'feasible_population':len(feasible),'population_size':len(pool)}
     history=[diagnostic(0)]
     for generation in range(1,generations+1):
@@ -337,7 +448,7 @@ def solve(inst,seed=0,population=40,generations=100,objective='fuel_litres',meth
         for _ in range(population-2):
             if method=='random':g=random_genome()
             else:
-                a=min(rng.sample(pool,3),key=lambda x:x[key])['genome'];b=min(rng.sample(pool,3),key=lambda x:x[key])['genome']
+                a=min(rng.sample(pool,3),key=rank)['genome'];b=min(rng.sample(pool,3),key=rank)['genome']
                 order=ox(a[0],b[0],rng) if rng.random()<crossover_rate else a[0][:]
                 assignment=[aa if rng.random()<.5 else bb for aa,bb in zip(a[1],b[1])]
                 if n>1 and rng.random()<.3:
@@ -380,12 +491,18 @@ def solve(inst,seed=0,population=40,generations=100,objective='fuel_litres',meth
                     j=rng.randrange(len(types));types[j]=rng.randrange(len(inst['vehicle_types']))
                 g=repair([order,assignment,types])
             child=evaluate(g);next_pool.append(child)
-        pool=sorted(next_pool,key=lambda x:x[key]);best=min(best,pool[0],key=lambda x:x[key])
+        pool=sorted(next_pool,key=rank);best=min(best,pool[0],key=rank)
         history.append(diagnostic(generation))
+    if rank(best)[0]>0.:
+        raise InfeasiblePartition(f'Search found no horizon-feasible candidate after {evaluations} evaluations (minimum excess {rank(best)[0]:.2f} minutes)')
+    if horizon!=math.inf:
+        witness_validation['time_horizon_feasible']=all(
+            finish<=horizon+EPS for finish in witness_validation['finish_minutes_by_vehicle'])
+        witness_validation['feasible']=witness_validation['time_horizon_feasible']
     elapsed=time.perf_counter()-start
     return {'instance':inst['name'],'seed':seed,'method':method,'objective':objective,'population':population,
         'heuristic_seed':heuristic_seed,'local_search':local_search,'crossover_rate':crossover_rate,'generations':generations,'evaluations':evaluations,'runtime_seconds':elapsed,
-        'best':best,'baseline_decoded':base if math.isfinite(base[key]) else None,'generated_witness':witness_validation,
+        'best':best,'baseline_decoded':base if rank(base)[0]==0. else None,'generated_witness':witness_validation,
         'validation':validate_solution(inst,best['transports'],best['fleet'],volume_buffer=volume_buffer,cost_overrides=cost_overrides),'history':history,'stop_count_mode':inst['model'].get('stop_count_mode','soft'),
         'optimality_gap':None,'warning':'No certified optimum. Five available vehicles; idle slots are allowed. Overtime is charged at the configured multiplier. No 3D loading.'}
 
@@ -400,7 +517,7 @@ def main():
     if a.fuel_price is not None:overrides['fuel_price']=a.fuel_price
     if a.wage is not None:overrides['wage']=a.wage
     if a.overtime_multiplier is not None:overrides['overtime_mult']=a.overtime_multiplier
-    inst=json.loads(a.instance.read_text())
+    inst=json.loads(a.instance.read_bytes())
     if a.stop_count_mode:inst['model']['stop_count_mode']=a.stop_count_mode
     if a.require_road and ('road_network' not in inst or 'duration_matrix_s' not in inst):raise ValueError('Road matrices and provenance are required')
     result=solve(inst,a.seed,a.population,a.generations,a.objective,a.method,volume_buffer=a.volume_buffer,cost_overrides=overrides)

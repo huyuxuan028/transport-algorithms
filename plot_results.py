@@ -126,7 +126,10 @@ def plot_convergence(pilot,out):
             group=[r for r in pilot['runs'] if r['method']==method and r['objective']==objective]
             if not group:continue
             n=min(len(r['history']) for r in group)
-            ys=[statistics.mean(r['history'][j]['objective'] for r in group) for j in range(n)]
+            ys=[]
+            for j in range(n):
+                values=[r['history'][j]['objective'] for r in group]
+                ys.append(statistics.mean(values) if None not in values else float('nan'))
             ax.plot(range(n),ys,lw=2,color=color,label=f'{label} (mean of {len(group)} seeds)')
         unit={'fuel_litres':'Estimated fuel (L)','distance':'Distance (km)','cost':'Cost (EUR)'}.get(objective,objective)
         ax.set(xlabel='Generation',ylabel=unit,title=objective.replace('_',' '));ax.legend(fontsize=7);ax.grid(alpha=.15)
