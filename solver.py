@@ -195,6 +195,12 @@ def schedule(route_groups,inst,vehicles=None):
             clock+=duration
     return result
 
+class SolutionViolation(ValueError):
+    def __init__(self, reason, message):
+        super().__init__(message)
+        self.reason=reason
+
+
 def validate_solution(inst,trips,vehicles=None,volume_buffer=None,cost_overrides=None):
     """Recompute capacity, coverage, distance, fuel, and nonoverlapping schedules."""
     vehicles=inst['vehicles'] if vehicles is None else vehicles
@@ -212,21 +218,24 @@ def validate_solution(inst,trips,vehicles=None,volume_buffer=None,cost_overrides
         k=trip['vehicle']
         if not isinstance(k,int) or not 0<=k<len(vehicles):raise ValueError('Invalid physical vehicle ID')
         v=vehicles[k];route=trip['customers'];speed=v.get('speed_kmh',inst['model']['schedule_average_speed_kmh'])
-        if not route or any(not isinstance(i,int) or not 1<=i<=n for i in route):raise ValueError('Invalid visit')
-        if not min_stops<=len(route)<=max_stops:raise ValueError('Hard stop-count violation')
+        if not route:raise SolutionViolation('empty_trip','Invalid visit')
+        if any(not isinstance(i,int) or not 1<=i<=n for i in route):raise SolutionViolation('coverage','Invalid visit')
+        if len(route)>max_stops:raise SolutionViolation('max_stops','Hard stop-count violation')
+        if len(route)<min_stops:raise SolutionViolation('min_stops','Hard stop-count violation')
         visits.extend(route);w=sum(c[i]['weight_kg'] for i in route);vol=sum(c[i]['volume_m3'] for i in route)
-        if w>v['payload_kg']+EPS or vol>(v['volume_m3']*(1.0-buf))+EPS:raise ValueError('Overloaded trip')
+        if w>v['payload_kg']+EPS:raise SolutionViolation('payload','Overloaded trip')
+        if vol>v['volume_m3']*(1.0-buf)+EPS:raise SolutionViolation('usable_volume','Overloaded trip')
         km=route_m(route,d)/1000;litres=km*v['fuel_l_per_100km']/100
         duration=travel_minutes(route,inst,v)+sum(c[i]['service_minutes'] for i in route)
         if horizon!=math.inf and k not in started and abs(trip['start_minutes'])>EPS:raise ValueError('First trip must start at minute zero')
         if trip['start_minutes']<clocks[k]-EPS:raise ValueError('Overlapping trips on a physical vehicle')
         if abs(trip['finish_minutes']-trip['start_minutes']-duration)>EPS:raise ValueError('Wrong trip duration')
-        if trip['start_minutes']+duration>horizon+EPS:raise ValueError('Vehicle exceeds time_horizon_minutes')
+        if trip['start_minutes']+duration>horizon+EPS:raise SolutionViolation('workday_horizon','Vehicle exceeds time_horizon_minutes')
         if abs(trip['distance_km']-km)>EPS or abs(trip['fuel_litres']-litres)>EPS:raise ValueError('Wrong objective values')
         if not math.isfinite(trip['start_minutes']) or trip['start_minutes']<0:raise ValueError('Invalid time')
         started.add(k);work[k]+=duration;clocks[k]=trip['finish_minutes'];distance+=km;fuel+=litres
         details.append({'vehicle':v['id'],'customers':route,'weight_kg':w,'volume_m3':vol,'distance_km':km,'fuel_litres':litres})
-    if sorted(visits)!=list(range(1,n+1)):raise ValueError('Missing or duplicated customers')
+    if sorted(visits)!=list(range(1,n+1)):raise SolutionViolation('coverage','Missing or duplicated customers')
     cost=evaluate_costs(trips,vehicles,inst,cost_overrides)
     return {'feasible':True,'distance_km':distance,'fuel_litres':fuel,'trips':len(trips),
         'fleet_type_ids':[v['type_id'] for v in vehicles],
@@ -307,7 +316,7 @@ def rebalance_workday(candidate,inst,volume_buffer,horizon):
         clocks[source]-=saved;clocks[target]+=added
     return groups
 
-def _decode(genome,inst,local_search,volume_buffer,cost_overrides,search_objective):
+def _decode(genome,inst,local_search,volume_buffer,cost_overrides,search_objective,audit=None):
     order,assignment,type_indices=genome;n=len(inst['customers'])-1
     if sorted(order)!=list(range(1,n+1)) or len(assignment)!=n:raise ValueError('Invalid chromosome')
     fixed=fixed_type_indices(inst)
@@ -318,10 +327,11 @@ def _decode(genome,inst,local_search,volume_buffer,cost_overrides,search_objecti
            inst['customers'][i]['weight_kg']>vehicles[k]['payload_kg']+EPS or
            inst['customers'][i]['volume_m3']>(vehicles[k]['volume_m3']*(1.0-buf))+EPS
            for i,k in enumerate(assignment,1)):raise ValueError('Invalid or incompatible vehicle allocation')
-    groups=[]
+    groups=[];split_groups=[]
     for k,v in enumerate(vehicles):
         subseq=[i for i in order if assignment[i-1]==k]
         trips=split_vehicle(subseq,v,inst,volume_buffer=buf)
+        if audit is not None:split_groups.append(trips)
         if local_search:
             improved=[two_opt(r,inst['distance_matrix_m']) for r in trips]
             if search_objective=='cost':
@@ -332,20 +342,24 @@ def _decode(genome,inst,local_search,volume_buffer,cost_overrides,search_objecti
                 if vehicle_cost(improved)<=vehicle_cost(trips)+EPS:trips=improved
             else:trips=improved
         groups.append(trips)
+    if audit is not None:
+        for stage,routes in [('after_split',split_groups),('before_short_trip_repair',groups)]:
+            audit[stage]=candidate_metrics(decoded_groups(routes,vehicles,type_indices,inst,cost_overrides),time_horizon(inst))
     if inst.get('model',{}).get('stop_count_mode','soft')!='hard':groups=repair_short_trips(groups,inst,vehicles,buf)
     return decoded_groups(groups,vehicles,type_indices,inst,cost_overrides)
 
 def decoded_groups(groups,vehicles,type_indices,inst,cost_overrides):
+    return candidate_from_trips(schedule(groups,inst,vehicles),vehicles,type_indices,inst,cost_overrides)
+
+def candidate_from_trips(trips,vehicles,type_indices,inst,cost_overrides,cost=None):
     n=len(inst['customers'])-1
     new_order=[];assignment=[None]*n
-    for k,g in enumerate(groups):
-        for r in g:
-            new_order.extend(r)
-            for i in r:assignment[i-1]=k
+    for trip in trips:
+        new_order.extend(trip['customers'])
+        for i in trip['customers']:assignment[i-1]=trip['vehicle']
     if len(new_order)!=n:raise ValueError('Unknown vehicle allocation')
-    trips=schedule(groups,inst,vehicles)
     km=sum(t['distance_km'] for t in trips);fuel=sum(t['fuel_litres'] for t in trips)
-    cost=evaluate_costs(trips,vehicles,inst,cost_overrides)
+    if cost is None:cost=evaluate_costs(trips,vehicles,inst,cost_overrides)
     return {'genome':[new_order,assignment[:],type_indices[:]],'fleet':vehicles,
         'transports':trips,'distance_km':km,'fuel_litres':fuel,'cost':cost,'total_eur':cost['total_eur']}
 
@@ -356,37 +370,79 @@ def ox(a,b,rng):
     for j,i in zip(list(range(right,len(a)))+list(range(left)),values):out[j]=i
     return out
 
-def solve(inst,seed=0,population=40,generations=100,objective='fuel_litres',method='ga',volume_buffer=None,cost_overrides=None,local_search=True,crossover_rate=0.9,heuristic_seed=True):
+def candidate_metrics(candidate,horizon):
+    trips=candidate['transports']
+    excess=horizon_excess(trips,len(candidate['fleet']),horizon)
+    return {
+        'feasible':excess==0.,
+        'horizon_excess_minutes':excess,
+        'max_vehicle_minutes':max(t['finish_minutes'] for t in trips),
+        'short_trips':candidate['cost']['trips_below_min'],
+        **{key:candidate['cost'][key] for key in ('real_cost_eur','penalty_eur','total_eur')},
+    }
+
+def solve(inst,seed=0,population=40,generations=100,objective='fuel_litres',method='ga',
+          volume_buffer=None,cost_overrides=None,local_search=True,crossover_rate=0.9,
+          heuristic_seed=True,evaluation_budget=None,audit=False,initial_transports=None,
+          relocate=False,swap=False,cross_trip_trials_per_generation=40):
+    """Search within a budget that counts GA candidates and cross-trip trials."""
     allowed=validate_instance(inst,volume_buffer);n=len(inst['customers'])-1
     fixed=fixed_type_indices(inst)
     if any(not allowed[i] for i in range(1,n+1)):raise ValueError('An indivisible order fits no vehicle type')
     if objective not in ['fuel_litres','distance','cost'] or method not in ['ga','random'] or population<4 or generations<0:raise ValueError('Invalid search configuration')
+    if evaluation_budget is not None and (type(evaluation_budget) is not int or evaluation_budget<population):
+        raise ValueError('Evaluation budget must be an integer covering initialization')
+    if initial_transports is not None and not heuristic_seed:raise ValueError('An explicit seed requires seeded initialization')
+    cross_trip=None
+    if relocate or swap:
+        if objective!='cost' or method!='ga' or type(cross_trip_trials_per_generation) is not int or cross_trip_trials_per_generation<1:
+            raise ValueError('Cross-trip search requires cost GA and a positive trial limit')
+        from cross_trip_search import CrossTripSearch
+        operators=[name for name,enabled in [('relocate',relocate),('swap',swap)] if enabled]
+        cross_trip=CrossTripSearch(inst,volume_buffer,cost_overrides,operators)
     key='distance_km' if objective=='distance' else ('total_eur' if objective=='cost' else 'fuel_litres')
     horizon=time_horizon(inst)
     rng=random.Random(seed);start=time.perf_counter();evaluations=0
     buf=inst.get('model',{}).get('volume_buffer',0.0) if volume_buffer is None else volume_buffer
-    def evaluate(g):
+    initial_random=[]
+    def evaluate(g,stages=None):
         nonlocal evaluations
         evaluations+=1
         try:
-            candidate=_decode(g,inst,local_search,volume_buffer,cost_overrides,objective)
+            candidate=_decode(g,inst,local_search,volume_buffer,cost_overrides,objective,stages)
         except InfeasiblePartition:
             return {'genome':g,key:math.inf,'horizon_excess_minutes':math.inf}
         candidate['horizon_excess_minutes']=horizon_excess(candidate['transports'],len(candidate['fleet']),horizon)
+        if stages is not None:stages['after_short_trip_repair']=candidate_metrics(candidate,horizon)
         return candidate
     def rank(candidate):
         return candidate['horizon_excess_minutes'],candidate[key]
-    base_order=[i for trip in inst['reference_transports'] for i in trip['customers']]
-    base_assign=[None]*n
-    for trip in inst['reference_transports']:
-        for i in trip['customers']:base_assign[i-1]=trip['vehicle']
-    # The historical witness seeds search and may predate the active hard constraints.
-    witness_inst=dict(inst,model=dict(inst['model'],stop_count_mode='soft',time_horizon_minutes=None))
-    witness_validation=validate_solution(witness_inst,inst['reference_transports'],volume_buffer=volume_buffer,cost_overrides=cost_overrides)
-    type_by_id={v['id']:i for i,v in enumerate(inst['vehicle_types'])}
-    base_types=[type_by_id[v['type_id']] for v in inst['vehicles']]
-    base=evaluate([base_order,base_assign,base_types]);pool=[base]
-    if heuristic_seed:
+    def local_trial_count():
+        return cross_trip.trials if cross_trip is not None else 0
+    def budget_exhausted():
+        return evaluations+local_trial_count()==evaluation_budget
+    base=None;witness_validation=None;pool=[]
+    if initial_transports is not None:
+        ordered=sorted(initial_transports,key=lambda trip:(trip['vehicle'],trip['start_minutes']))
+        validation=validate_solution(inst,ordered,volume_buffer=volume_buffer,cost_overrides=cost_overrides)
+        type_by_id={v['id']:i for i,v in enumerate(inst['vehicle_types'])}
+        types=[type_by_id[v['type_id']] for v in inst['vehicles']]
+        base=dict(candidate_from_trips(ordered,inst['vehicles'],types,inst,cost_overrides,validation['cost']),
+                  horizon_excess_minutes=0.)
+        pool.append(base)
+        evaluations+=1
+    elif heuristic_seed:
+        witness_trips=inst['reference_transports']
+        base_order=[i for trip in witness_trips for i in trip['customers']]
+        base_assign=[None]*n
+        for trip in witness_trips:
+            for i in trip['customers']:base_assign[i-1]=trip['vehicle']
+        # The historical witness may predate the active hard constraints.
+        witness_inst=dict(inst,model=dict(inst['model'],stop_count_mode='soft',time_horizon_minutes=None))
+        witness_validation=validate_solution(witness_inst,witness_trips,volume_buffer=volume_buffer,cost_overrides=cost_overrides)
+        type_by_id={v['id']:i for i,v in enumerate(inst['vehicle_types'])}
+        base_types=[type_by_id[v['type_id']] for v in inst['vehicles']]
+        base=evaluate([base_order,base_assign,base_types]);pool.append(base)
         nn_order=[];distances=inst['duration_matrix_s'] if horizon!=math.inf and 'duration_matrix_s' in inst else inst['distance_matrix_m']
         for k in range(len(base_types)):
             remaining={i for i in range(1,n+1) if base_assign[i-1]==k};last=0
@@ -404,31 +460,40 @@ def solve(inst,seed=0,population=40,generations=100,objective='fuel_litres',meth
                 k=rng.randrange(len(types));types[k]=rng.choice(allowed[i]);slots=[k]
             assignment[i-1]=rng.choice(slots)
         return g
-    def random_genome():
+    def random_genome(stages=None):
         types=fixed[:] if fixed is not None else [rng.randrange(len(inst['vehicle_types'])) for _ in range(inst['fleet_size'])]
         # At least one slot must carry every indivisible order.
         if fixed is None and any(not any(t in allowed[i] for t in types) for i in range(1,n+1)):
             hard=max(range(1,n+1),key=lambda i:-len(allowed[i]));types[rng.randrange(len(types))]=rng.choice(allowed[hard])
-        return repair([rng.sample(range(1,n+1),n),[rng.randrange(len(types)) for _ in range(n)],types])
-    for _ in range(population-len(pool)):pool.append(evaluate(random_genome()))
+        genome=[rng.sample(range(1,n+1),n),[rng.randrange(len(types)) for _ in range(n)],types]
+        if stages is not None:
+            stages['incompatible_assignments_before_repair']=sum(types[k] not in allowed[i] for i,k in enumerate(genome[1],1))
+        repaired=repair(genome)
+        if stages is not None:
+            stages['incompatible_assignments_after_repair']=sum(types[k] not in allowed[i] for i,k in enumerate(repaired[1],1))
+        return repaired
+    for _ in range(population-len(pool)):
+        stages={} if audit else None
+        pool.append(evaluate(random_genome(stages),stages))
+        if stages is not None:initial_random.append(stages)
     pool.sort(key=rank)
-    if not math.isfinite(pool[0][key]):
+    if heuristic_seed and initial_transports is None and not math.isfinite(pool[0][key]):
         # A conservative hard-policy seed: try serving all orders with one available
         # compatible vehicle. This is a heuristic, not an infeasibility certificate.
         for k,t in sorted(enumerate(base_types),key=lambda kt:-inst['vehicle_types'][kt[1]]['volume_m3']):
             if not all(t in allowed[i] for i in range(1,n+1)):continue
+            if budget_exhausted():break
             candidate=evaluate([base_order[:],[k]*n,base_types[:]])
             if math.isfinite(candidate[key]):
                 pool[-1]=candidate;pool.sort(key=rank);break
-        if not math.isfinite(pool[0][key]):raise InfeasiblePartition('Initialization found no hard-feasible candidate; this does not prove the instance infeasible')
-    if rank(pool[0])[0]>0.:
+    if heuristic_seed and initial_transports is None and math.isfinite(pool[0][key]) and rank(pool[0])[0]>0.:
         lo,hi=stop_limits(inst)
-        witness_trips=inst['reference_transports']
         initial_candidates=[pool[0]]
         if all(lo<=len(t['customers'])<=hi for t in witness_trips):
             initial_candidates.insert(0,dict(fleet=inst['vehicles'],genome=[base_order,base_assign,base_types],
                                              transports=witness_trips))
         for initial in initial_candidates:
+            if budget_exhausted():break
             groups=rebalance_workday(initial,inst,buf,horizon)
             repaired=decoded_groups(groups,initial['fleet'],initial['genome'][2],inst,cost_overrides)
             repaired['horizon_excess_minutes']=horizon_excess(repaired['transports'],len(repaired['fleet']),horizon)
@@ -440,12 +505,21 @@ def solve(inst,seed=0,population=40,generations=100,objective='fuel_litres',meth
     def diagnostic(generation):
         feasible=[p for p in pool if rank(p)[0]==0.]
         signatures={tuple((t['vehicle'],tuple(t['customers'])) for t in p['transports']) for p in feasible}
-        return {'generation':generation,'objective':best[key] if rank(best)[0]==0. else None,'evaluations':evaluations,
+        point={'generation':generation,'objective':best[key] if rank(best)[0]==0. else None,'evaluations':evaluations,
                 'unique_decoded_plans':len(signatures),'feasible_population':len(feasible),'population_size':len(pool)}
+        if audit:
+            point['best_decoded']=candidate_metrics(best,horizon) if 'transports' in best else None
+        point['local_trials']=local_trial_count()
+        point['combined_evaluations']=evaluations+point['local_trials']
+        return point
     history=[diagnostic(0)]
     for generation in range(1,generations+1):
+        if budget_exhausted():break
         next_pool=pool[:2]
         for _ in range(population-2):
+            if budget_exhausted():
+                next_pool.extend(pool[len(next_pool):])
+                break
             if method=='random':g=random_genome()
             else:
                 a=min(rng.sample(pool,3),key=rank)['genome'];b=min(rng.sample(pool,3),key=rank)['genome']
@@ -492,18 +566,35 @@ def solve(inst,seed=0,population=40,generations=100,objective='fuel_litres',meth
                 g=repair([order,assignment,types])
             child=evaluate(g);next_pool.append(child)
         pool=sorted(next_pool,key=rank);best=min(best,pool[0],key=rank)
+        if cross_trip is not None and rank(best)[0]==0. and not budget_exhausted():
+            local_limit=cross_trip_trials_per_generation
+            if evaluation_budget is not None:
+                local_limit=min(local_limit,evaluation_budget-evaluations-local_trial_count())
+            improved=cross_trip.improve(best,local_limit)
+            if improved is not best:
+                pool[-1]=improved
+                pool.sort(key=rank)
+                best=improved
         history.append(diagnostic(generation))
-    if rank(best)[0]>0.:
+    feasible=rank(best)[0]==0.
+    if not feasible and not audit:
+        if not math.isfinite(best[key]):
+            raise InfeasiblePartition('Search found no capacity- and stop-feasible partition')
         raise InfeasiblePartition(f'Search found no horizon-feasible candidate after {evaluations} evaluations (minimum excess {rank(best)[0]:.2f} minutes)')
-    if horizon!=math.inf:
+    if witness_validation is not None and horizon!=math.inf:
         witness_validation['time_horizon_feasible']=all(
             finish<=horizon+EPS for finish in witness_validation['finish_minutes_by_vehicle'])
         witness_validation['feasible']=witness_validation['time_horizon_feasible']
     elapsed=time.perf_counter()-start
     return {'instance':inst['name'],'seed':seed,'method':method,'objective':objective,'population':population,
         'heuristic_seed':heuristic_seed,'local_search':local_search,'crossover_rate':crossover_rate,'generations':generations,'evaluations':evaluations,'runtime_seconds':elapsed,
-        'best':best,'baseline_decoded':base if rank(base)[0]==0. else None,'generated_witness':witness_validation,
-        'validation':validate_solution(inst,best['transports'],best['fleet'],volume_buffer=volume_buffer,cost_overrides=cost_overrides),'history':history,'stop_count_mode':inst['model'].get('stop_count_mode','soft'),
+        'best':best if feasible else None,'baseline_decoded':base if base is not None and rank(base)[0]==0. else None,'generated_witness':witness_validation,
+        'cross_trip_counts':cross_trip.counts if cross_trip is not None else {},
+        'relocate_rejections':cross_trip.relocate_rejections if relocate else {},
+        'relocate_screened_route_pairs':cross_trip.relocate_screened_route_pairs if relocate else {},
+        'local_trials':history[-1]['local_trials'],'combined_evaluations':history[-1]['combined_evaluations'],
+        'validation':validate_solution(inst,best['transports'],best['fleet'],volume_buffer=volume_buffer,cost_overrides=cost_overrides) if feasible else {'feasible':False},
+        **({'initial_random_audit':initial_random} if audit else {}),'history':history,'stop_count_mode':inst['model'].get('stop_count_mode','soft'),
         'optimality_gap':None,'warning':'No certified optimum. Five available vehicles; idle slots are allowed. Overtime is charged at the configured multiplier. No 3D loading.'}
 
 def main():
@@ -512,7 +603,10 @@ def main():
     p.add_argument('--population',type=int,default=40);p.add_argument('--generations',type=int,default=100)
     p.add_argument('--method',choices=['ga','random'],default='ga');p.add_argument('--output',type=Path,default=ROOT/'results/solution.json')
     p.add_argument('--stop-count-mode',choices=['soft','hard'],default=None);p.add_argument('--require-road',action='store_true');p.add_argument('--volume-buffer',type=float,default=None);p.add_argument('--fuel-price',type=float,default=None)
-    p.add_argument('--wage',type=float,default=None);p.add_argument('--overtime-multiplier',type=float,default=None);a=p.parse_args()
+    p.add_argument('--wage',type=float,default=None);p.add_argument('--overtime-multiplier',type=float,default=None)
+    p.add_argument('--no-heuristic-seed',action='store_true',help='Initialize from random chromosomes only')
+    p.add_argument('--relocate',action='store_true',help='Enable cross-trip single-customer moves')
+    p.add_argument('--swap',action='store_true',help='Enable cross-trip customer exchanges');a=p.parse_args()
     overrides={}
     if a.fuel_price is not None:overrides['fuel_price']=a.fuel_price
     if a.wage is not None:overrides['wage']=a.wage
@@ -520,7 +614,7 @@ def main():
     inst=json.loads(a.instance.read_bytes())
     if a.stop_count_mode:inst['model']['stop_count_mode']=a.stop_count_mode
     if a.require_road and ('road_network' not in inst or 'duration_matrix_s' not in inst):raise ValueError('Road matrices and provenance are required')
-    result=solve(inst,a.seed,a.population,a.generations,a.objective,a.method,volume_buffer=a.volume_buffer,cost_overrides=overrides)
+    result=solve(inst,a.seed,a.population,a.generations,a.objective,a.method,volume_buffer=a.volume_buffer,cost_overrides=overrides,heuristic_seed=not a.no_heuristic_seed,relocate=a.relocate,swap=a.swap)
     a.output.parent.mkdir(parents=True,exist_ok=True);a.output.write_text(json.dumps(result,indent=2,allow_nan=False))
     print(json.dumps({k:result[k] for k in ['instance','method','objective','runtime_seconds','evaluations']},indent=2))
     print(json.dumps({k:v for k,v in result['validation'].items() if k!='trip_details'},indent=2))
