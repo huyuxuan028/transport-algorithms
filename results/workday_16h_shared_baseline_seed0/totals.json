@@ -1,0 +1,11 @@
+{
+  "planned": 100,
+  "recorded": 100,
+  "pending": 0,
+  "feasible": 100,
+  "failed": 0,
+  "zero_penalty": 52,
+  "feasible_rate": 1.0,
+  "zero_penalty_rate_all": 0.52,
+  "zero_penalty_rate_feasible": 0.52
+}

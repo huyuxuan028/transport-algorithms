@@ -1,0 +1,12 @@
+{
+  "manifest_sha256": "f1d4e16ded3be8601f54ced9254a5d5e4cca964aeacc95af316d7a56c67f44df",
+  "seed_plan_sha256": "5ab70229f0ecf5f806547935e1703ebc30a280ccf5b129ac2074d63b3b498d6c",
+  "solver_sha256": "21ae0f2011afb6626fbb6c1693ac9dfda0d878c99065567ca31b9b39cf68c245",
+  "python": "3.11.9",
+  "seed": 0,
+  "population": 32,
+  "generations": 200,
+  "evaluation_budget": 6032,
+  "relocate": false,
+  "swap": false
+}

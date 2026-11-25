@@ -1,0 +1,110 @@
+[
+  {
+    "case": 74,
+    "seed": 0,
+    "arm": "original",
+    "reason": "Reused matching baseline checkpoint"
+  },
+  {
+    "case": 74,
+    "seed": 0,
+    "arm": "relocate_only",
+    "reason": "No checkpoint with matching solver and settings"
+  },
+  {
+    "case": 74,
+    "seed": 1,
+    "arm": "original",
+    "reason": "No checkpoint with matching solver and settings"
+  },
+  {
+    "case": 74,
+    "seed": 1,
+    "arm": "relocate_only",
+    "reason": "No checkpoint with matching solver and settings"
+  },
+  {
+    "case": 74,
+    "seed": 2,
+    "arm": "original",
+    "reason": "No checkpoint with matching solver and settings"
+  },
+  {
+    "case": 74,
+    "seed": 2,
+    "arm": "relocate_only",
+    "reason": "No checkpoint with matching solver and settings"
+  },
+  {
+    "case": 75,
+    "seed": 0,
+    "arm": "original",
+    "reason": "Reused matching baseline checkpoint"
+  },
+  {
+    "case": 75,
+    "seed": 0,
+    "arm": "relocate_only",
+    "reason": "No checkpoint with matching solver and settings"
+  },
+  {
+    "case": 75,
+    "seed": 1,
+    "arm": "original",
+    "reason": "No checkpoint with matching solver and settings"
+  },
+  {
+    "case": 75,
+    "seed": 1,
+    "arm": "relocate_only",
+    "reason": "No checkpoint with matching solver and settings"
+  },
+  {
+    "case": 75,
+    "seed": 2,
+    "arm": "original",
+    "reason": "No checkpoint with matching solver and settings"
+  },
+  {
+    "case": 75,
+    "seed": 2,
+    "arm": "relocate_only",
+    "reason": "No checkpoint with matching solver and settings"
+  },
+  {
+    "case": 99,
+    "seed": 0,
+    "arm": "original",
+    "reason": "Reused matching baseline checkpoint"
+  },
+  {
+    "case": 99,
+    "seed": 0,
+    "arm": "relocate_only",
+    "reason": "Existing pilot checkpoint has no solver fingerprint"
+  },
+  {
+    "case": 99,
+    "seed": 1,
+    "arm": "original",
+    "reason": "Existing pilot checkpoint has no solver fingerprint"
+  },
+  {
+    "case": 99,
+    "seed": 1,
+    "arm": "relocate_only",
+    "reason": "Existing pilot checkpoint has no solver fingerprint"
+  },
+  {
+    "case": 99,
+    "seed": 2,
+    "arm": "original",
+    "reason": "Existing pilot checkpoint has no solver fingerprint"
+  },
+  {
+    "case": 99,
+    "seed": 2,
+    "arm": "relocate_only",
+    "reason": "Existing pilot checkpoint has no solver fingerprint"
+  }
+]
