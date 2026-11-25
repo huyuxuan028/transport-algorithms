@@ -1,0 +1,6572 @@
+{
+  "record": {
+    "case": 0,
+    "customers": 150,
+    "seed": 2,
+    "arm": "original",
+    "instance_sha256": "6f2f89ab26dbdfe699d01afcc28a10eb09d8955fd3c880189a9ec2b545b6af21",
+    "initial_plan_sha256": "938a90acc31a6ed2faaa1782a2061659948cb55e1821a6df38eac76fc44ea0e0",
+    "initial_total_eur": 293315.7571,
+    "ga_evaluations": 6032,
+    "local_trials": 0,
+    "combined_evaluations": 6032,
+    "runtime_seconds": 14.415238299872726,
+    "feasible": true,
+    "horizon_excess_minutes": 0,
+    "max_vehicle_minutes": 744.6828886684364,
+    "short_trips": 0,
+    "real_cost_eur": 805.4667,
+    "penalty_eur": 0.0,
+    "total_eur": 805.4667
+  },
+  "source_seed_plan_sha256": "5ab70229f0ecf5f806547935e1703ebc30a280ccf5b129ac2074d63b3b498d6c",
+  "python": "3.11.9",
+  "result": {
+    "instance": "budapest-workday-16h-v1-000",
+    "seed": 2,
+    "method": "ga",
+    "objective": "cost",
+    "population": 32,
+    "heuristic_seed": true,
+    "local_search": true,
+    "crossover_rate": 0.9,
+    "generations": 200,
+    "evaluations": 6032,
+    "runtime_seconds": 14.415238299872726,
+    "best": {
+      "genome": [
+        [
+          116,
+          128,
+          50,
+          115,
+          146,
+          78,
+          20,
+          39,
+          65,
+          85,
+          51,
+          37,
+          90,
+          62,
+          102,
+          79,
+          118,
+          148,
+          113,
+          48,
+          8,
+          61,
+          147,
+          122,
+          142,
+          93,
+          137,
+          77,
+          13,
+          29,
+          42,
+          123,
+          63,
+          60,
+          92,
+          96,
+          59,
+          94,
+          132,
+          16,
+          139,
+          15,
+          45,
+          105,
+          46,
+          91,
+          88,
+          72,
+          49,
+          69,
+          133,
+          35,
+          84,
+          140,
+          70,
+          14,
+          110,
+          56,
+          58,
+          67,
+          150,
+          23,
+          95,
+          18,
+          41,
+          33,
+          101,
+          80,
+          19,
+          5,
+          134,
+          55,
+          131,
+          4,
+          32,
+          99,
+          9,
+          135,
+          138,
+          149,
+          98,
+          64,
+          30,
+          112,
+          82,
+          22,
+          28,
+          74,
+          144,
+          40,
+          126,
+          141,
+          108,
+          21,
+          2,
+          89,
+          125,
+          107,
+          71,
+          76,
+          6,
+          17,
+          97,
+          100,
+          83,
+          57,
+          120,
+          114,
+          106,
+          43,
+          68,
+          27,
+          12,
+          104,
+          75,
+          130,
+          10,
+          103,
+          66,
+          3,
+          73,
+          36,
+          119,
+          143,
+          86,
+          25,
+          53,
+          24,
+          117,
+          38,
+          34,
+          136,
+          44,
+          7,
+          87,
+          129,
+          1,
+          54,
+          111,
+          47,
+          81,
+          26,
+          109,
+          31,
+          121,
+          11,
+          145,
+          127,
+          52,
+          124
+        ],
+        [
+          4,
+          3,
+          4,
+          2,
+          2,
+          3,
+          4,
+          0,
+          2,
+          3,
+          4,
+          3,
+          1,
+          2,
+          2,
+          1,
+          3,
+          2,
+          2,
+          0,
+          3,
+          3,
+          2,
+          4,
+          4,
+          4,
+          3,
+          3,
+          1,
+          2,
+          4,
+          2,
+          2,
+          4,
+          2,
+          4,
+          0,
+          4,
+          0,
+          3,
+          2,
+          1,
+          3,
+          4,
+          2,
+          2,
+          4,
+          0,
+          2,
+          0,
+          0,
+          4,
+          4,
+          4,
+          2,
+          2,
+          3,
+          2,
+          1,
+          1,
+          1,
+          0,
+          1,
+          2,
+          0,
+          4,
+          2,
+          3,
+          2,
+          2,
+          3,
+          2,
+          4,
+          3,
+          3,
+          3,
+          1,
+          0,
+          0,
+          2,
+          4,
+          3,
+          3,
+          2,
+          0,
+          4,
+          4,
+          2,
+          3,
+          0,
+          2,
+          1,
+          1,
+          1,
+          2,
+          1,
+          3,
+          2,
+          2,
+          3,
+          2,
+          0,
+          4,
+          3,
+          2,
+          3,
+          3,
+          3,
+          4,
+          2,
+          4,
+          2,
+          0,
+          3,
+          0,
+          0,
+          4,
+          0,
+          4,
+          3,
+          4,
+          1,
+          1,
+          4,
+          3,
+          3,
+          4,
+          0,
+          4,
+          3,
+          2,
+          1,
+          2,
+          2,
+          2,
+          4,
+          1,
+          2,
+          1,
+          2,
+          3,
+          1,
+          4,
+          3,
+          4,
+          0,
+          1,
+          0,
+          2,
+          2
+        ],
+        [
+          0,
+          0,
+          1,
+          1,
+          2
+        ]
+      ],
+      "fleet": [
+        {
+          "cargo_height_m": 1.11,
+          "cargo_length_m": 1.8,
+          "cargo_width_m": 1.55,
+          "fuel_l_per_100km": 5.35,
+          "id": "caddy-1",
+          "maintenance_eur_per_1000km": 80.0,
+          "name": "VW Caddy Cargo SWB",
+          "payload_kg": 680.0,
+          "source": "PSO team vehicles.csv (xsilentkiller/industrial-transport); cargo dims, speeds, wages, maintenance marked assumed there",
+          "speed_kmh": 50.0,
+          "top_speed_kmh": 178.0,
+          "type_id": "caddy",
+          "volume_m3": 3.1,
+          "wage_eur_per_h": 12.0
+        },
+        {
+          "cargo_height_m": 1.11,
+          "cargo_length_m": 1.8,
+          "cargo_width_m": 1.55,
+          "fuel_l_per_100km": 5.35,
+          "id": "caddy-2",
+          "maintenance_eur_per_1000km": 80.0,
+          "name": "VW Caddy Cargo SWB",
+          "payload_kg": 680.0,
+          "source": "PSO team vehicles.csv (xsilentkiller/industrial-transport); cargo dims, speeds, wages, maintenance marked assumed there",
+          "speed_kmh": 50.0,
+          "top_speed_kmh": 178.0,
+          "type_id": "caddy",
+          "volume_m3": 3.1,
+          "wage_eur_per_h": 12.0
+        },
+        {
+          "cargo_height_m": 1.8,
+          "cargo_length_m": 3.27,
+          "cargo_width_m": 1.78,
+          "fuel_l_per_100km": 9.05,
+          "id": "sprinter-3",
+          "maintenance_eur_per_1000km": 120.0,
+          "name": "Mercedes Sprinter 315 CDI L2H2",
+          "payload_kg": 1231.0,
+          "source": "PSO team vehicles.csv (xsilentkiller/industrial-transport); cargo dims, speeds, wages, maintenance marked assumed there",
+          "speed_kmh": 48.0,
+          "top_speed_kmh": 161.0,
+          "type_id": "sprinter",
+          "volume_m3": 10.5,
+          "wage_eur_per_h": 13.0
+        },
+        {
+          "cargo_height_m": 1.8,
+          "cargo_length_m": 3.27,
+          "cargo_width_m": 1.78,
+          "fuel_l_per_100km": 9.05,
+          "id": "sprinter-4",
+          "maintenance_eur_per_1000km": 120.0,
+          "name": "Mercedes Sprinter 315 CDI L2H2",
+          "payload_kg": 1231.0,
+          "source": "PSO team vehicles.csv (xsilentkiller/industrial-transport); cargo dims, speeds, wages, maintenance marked assumed there",
+          "speed_kmh": 48.0,
+          "top_speed_kmh": 161.0,
+          "type_id": "sprinter",
+          "volume_m3": 10.5,
+          "wage_eur_per_h": 13.0
+        },
+        {
+          "cargo_height_m": 2.45,
+          "cargo_length_m": 7.2,
+          "cargo_width_m": 2.42,
+          "fuel_l_per_100km": 21.0,
+          "id": "man_tgl-5",
+          "maintenance_eur_per_1000km": 250.0,
+          "name": "MAN TGL 12.190 box",
+          "payload_kg": 5480.0,
+          "source": "PSO team vehicles.csv (xsilentkiller/industrial-transport); cargo dims, speeds, wages, maintenance marked assumed there",
+          "speed_kmh": 40.0,
+          "top_speed_kmh": 100.0,
+          "type_id": "man_tgl",
+          "volume_m3": 42.7,
+          "wage_eur_per_h": 16.0
+        }
+      ],
+      "transports": [
+        {
+          "vehicle": 0,
+          "customers": [
+            116,
+            128,
+            50,
+            115,
+            146,
+            78,
+            20,
+            39,
+            65,
+            85
+          ],
+          "start_minutes": 0.0,
+          "finish_minutes": 162.56545092732526,
+          "distance_km": 38.70335625417193,
+          "fuel_litres": 2.0706295595981983
+        },
+        {
+          "vehicle": 0,
+          "customers": [
+            51,
+            37,
+            90,
+            62,
+            102,
+            79,
+            118,
+            148,
+            113,
+            48,
+            8
+          ],
+          "start_minutes": 162.56545092732526,
+          "finish_minutes": 330.8705354886206,
+          "distance_km": 34.9631399842209,
+          "fuel_litres": 1.870527989155818
+        },
+        {
+          "vehicle": 1,
+          "customers": [
+            61,
+            147,
+            122,
+            142,
+            93,
+            137,
+            77,
+            13,
+            29,
+            42
+          ],
+          "start_minutes": 0.0,
+          "finish_minutes": 185.09053973947653,
+          "distance_km": 53.204885599963,
+          "fuel_litres": 2.8464613795980203
+        },
+        {
+          "vehicle": 1,
+          "customers": [
+            123,
+            63,
+            60,
+            92,
+            96,
+            59,
+            94,
+            132,
+            16,
+            139
+          ],
+          "start_minutes": 185.09053973947653,
+          "finish_minutes": 367.9168596493985,
+          "distance_km": 50.12673066989036,
+          "fuel_litres": 2.681780090839134
+        },
+        {
+          "vehicle": 2,
+          "customers": [
+            15,
+            45,
+            105,
+            46,
+            91,
+            88,
+            72,
+            49,
+            69,
+            133,
+            35,
+            84,
+            140,
+            70,
+            14,
+            110,
+            56,
+            58
+          ],
+          "start_minutes": 0.0,
+          "finish_minutes": 286.70218277989164,
+          "distance_km": 52.859129011420286,
+          "fuel_litres": 4.783751175533536
+        },
+        {
+          "vehicle": 2,
+          "customers": [
+            67,
+            150,
+            23,
+            95,
+            18,
+            41,
+            33,
+            101,
+            80,
+            19,
+            5,
+            134,
+            55
+          ],
+          "start_minutes": 286.70218277989164,
+          "finish_minutes": 546.8243086856357,
+          "distance_km": 70.0360828650785,
+          "fuel_litres": 6.338265499289605
+        },
+        {
+          "vehicle": 2,
+          "customers": [
+            131,
+            4,
+            32,
+            99,
+            9,
+            135,
+            138,
+            149,
+            98,
+            64,
+            30,
+            112
+          ],
+          "start_minutes": 546.8243086856357,
+          "finish_minutes": 744.6828886684364,
+          "distance_km": 36.624860035772016,
+          "fuel_litres": 3.3145498332373675
+        },
+        {
+          "vehicle": 3,
+          "customers": [
+            82,
+            22,
+            28,
+            74,
+            144,
+            40,
+            126,
+            141,
+            108,
+            21,
+            2,
+            89,
+            125,
+            107,
+            71,
+            76,
+            6,
+            17
+          ],
+          "start_minutes": 0.0,
+          "finish_minutes": 287.2149038390495,
+          "distance_km": 55.46885489102242,
+          "fuel_litres": 5.019931367637529
+        },
+        {
+          "vehicle": 3,
+          "customers": [
+            97,
+            100,
+            83,
+            57,
+            120,
+            114,
+            106,
+            43,
+            68,
+            27,
+            12,
+            104,
+            75,
+            130,
+            10
+          ],
+          "start_minutes": 287.2149038390495,
+          "finish_minutes": 588.1935303449285,
+          "distance_km": 79.32239913197353,
+          "fuel_litres": 7.178677121443604
+        },
+        {
+          "vehicle": 4,
+          "customers": [
+            103,
+            66,
+            3,
+            73,
+            36,
+            119,
+            143,
+            86,
+            25,
+            53,
+            24,
+            117,
+            38,
+            34,
+            136,
+            44,
+            7,
+            87,
+            129,
+            1,
+            54,
+            111,
+            47,
+            81,
+            26,
+            109,
+            31,
+            121,
+            11,
+            145,
+            127,
+            52,
+            124
+          ],
+          "start_minutes": 0.0,
+          "finish_minutes": 507.99791676357665,
+          "distance_km": 78.41764044407675,
+          "fuel_litres": 16.467704493256118
+        }
+      ],
+      "distance_km": 549.7270788875896,
+      "fuel_litres": 52.57227850958893,
+      "cost": {
+        "fuel_eur": 84.1156,
+        "wage_eur": 652.2695,
+        "overtime_hours": 6.6812,
+        "maintenance_eur": 69.0816,
+        "real_cost_eur": 805.4667,
+        "penalty_eur": 0.0,
+        "total_eur": 805.4667,
+        "trips_below_min": 0,
+        "trips_above_max": 0
+      },
+      "total_eur": 805.4667,
+      "horizon_excess_minutes": 0
+    },
+    "baseline_decoded": {
+      "genome": [
+        [
+          140,
+          70,
+          84,
+          35,
+          147,
+          122,
+          129,
+          142,
+          93,
+          137,
+          39,
+          79,
+          55,
+          96,
+          111,
+          12,
+          145,
+          133,
+          130,
+          47,
+          120,
+          67,
+          34,
+          61,
+          127,
+          3,
+          72,
+          14,
+          46,
+          77,
+          23,
+          31,
+          59,
+          94,
+          88,
+          118,
+          53,
+          143,
+          82,
+          81,
+          105,
+          24,
+          119,
+          114,
+          131,
+          56,
+          110,
+          42,
+          4,
+          58,
+          49,
+          69,
+          124,
+          45,
+          18,
+          95,
+          80,
+          19,
+          33,
+          101,
+          41,
+          5,
+          29,
+          99,
+          9,
+          135,
+          32,
+          138,
+          17,
+          30,
+          64,
+          112,
+          98,
+          149,
+          75,
+          52,
+          104,
+          15,
+          63,
+          123,
+          97,
+          100,
+          60,
+          83,
+          92,
+          57,
+          141,
+          40,
+          108,
+          21,
+          2,
+          126,
+          89,
+          144,
+          134,
+          74,
+          28,
+          22,
+          132,
+          16,
+          139,
+          71,
+          76,
+          6,
+          107,
+          125,
+          106,
+          43,
+          68,
+          27,
+          10,
+          73,
+          50,
+          150,
+          121,
+          109,
+          115,
+          146,
+          78,
+          20,
+          65,
+          116,
+          128,
+          36,
+          85,
+          117,
+          38,
+          44,
+          136,
+          7,
+          87,
+          1,
+          54,
+          13,
+          102,
+          62,
+          148,
+          113,
+          90,
+          25,
+          86,
+          48,
+          51,
+          8,
+          37,
+          103,
+          66,
+          11,
+          91,
+          26
+        ],
+        [
+          4,
+          3,
+          0,
+          2,
+          2,
+          3,
+          4,
+          4,
+          2,
+          3,
+          4,
+          0,
+          4,
+          1,
+          3,
+          3,
+          2,
+          2,
+          2,
+          4,
+          3,
+          3,
+          1,
+          1,
+          4,
+          4,
+          3,
+          3,
+          2,
+          2,
+          1,
+          2,
+          2,
+          0,
+          0,
+          4,
+          4,
+          4,
+          0,
+          3,
+          2,
+          2,
+          3,
+          4,
+          2,
+          1,
+          0,
+          4,
+          2,
+          4,
+          4,
+          3,
+          1,
+          4,
+          0,
+          2,
+          3,
+          2,
+          1,
+          3,
+          0,
+          4,
+          3,
+          2,
+          4,
+          4,
+          0,
+          3,
+          2,
+          0,
+          3,
+          1,
+          4,
+          3,
+          3,
+          3,
+          1,
+          4,
+          0,
+          2,
+          1,
+          1,
+          3,
+          0,
+          4,
+          4,
+          4,
+          1,
+          3,
+          4,
+          4,
+          3,
+          0,
+          1,
+          2,
+          0,
+          3,
+          2,
+          2,
+          3,
+          2,
+          4,
+          4,
+          3,
+          1,
+          3,
+          3,
+          3,
+          4,
+          2,
+          0,
+          2,
+          4,
+          1,
+          4,
+          4,
+          4,
+          1,
+          1,
+          0,
+          4,
+          0,
+          3,
+          2,
+          3,
+          3,
+          0,
+          4,
+          0,
+          0,
+          2,
+          3,
+          0,
+          3,
+          2,
+          4,
+          0,
+          2,
+          3,
+          0,
+          3,
+          0,
+          1,
+          3,
+          0,
+          4,
+          0,
+          4,
+          2,
+          4
+        ],
+        [
+          0,
+          0,
+          1,
+          1,
+          2
+        ]
+      ],
+      "fleet": [
+        {
+          "cargo_height_m": 1.11,
+          "cargo_length_m": 1.8,
+          "cargo_width_m": 1.55,
+          "fuel_l_per_100km": 5.35,
+          "id": "caddy-1",
+          "maintenance_eur_per_1000km": 80.0,
+          "name": "VW Caddy Cargo SWB",
+          "payload_kg": 680.0,
+          "source": "PSO team vehicles.csv (xsilentkiller/industrial-transport); cargo dims, speeds, wages, maintenance marked assumed there",
+          "speed_kmh": 50.0,
+          "top_speed_kmh": 178.0,
+          "type_id": "caddy",
+          "volume_m3": 3.1,
+          "wage_eur_per_h": 12.0
+        },
+        {
+          "cargo_height_m": 1.11,
+          "cargo_length_m": 1.8,
+          "cargo_width_m": 1.55,
+          "fuel_l_per_100km": 5.35,
+          "id": "caddy-2",
+          "maintenance_eur_per_1000km": 80.0,
+          "name": "VW Caddy Cargo SWB",
+          "payload_kg": 680.0,
+          "source": "PSO team vehicles.csv (xsilentkiller/industrial-transport); cargo dims, speeds, wages, maintenance marked assumed there",
+          "speed_kmh": 50.0,
+          "top_speed_kmh": 178.0,
+          "type_id": "caddy",
+          "volume_m3": 3.1,
+          "wage_eur_per_h": 12.0
+        },
+        {
+          "cargo_height_m": 1.8,
+          "cargo_length_m": 3.27,
+          "cargo_width_m": 1.78,
+          "fuel_l_per_100km": 9.05,
+          "id": "sprinter-3",
+          "maintenance_eur_per_1000km": 120.0,
+          "name": "Mercedes Sprinter 315 CDI L2H2",
+          "payload_kg": 1231.0,
+          "source": "PSO team vehicles.csv (xsilentkiller/industrial-transport); cargo dims, speeds, wages, maintenance marked assumed there",
+          "speed_kmh": 48.0,
+          "top_speed_kmh": 161.0,
+          "type_id": "sprinter",
+          "volume_m3": 10.5,
+          "wage_eur_per_h": 13.0
+        },
+        {
+          "cargo_height_m": 1.8,
+          "cargo_length_m": 3.27,
+          "cargo_width_m": 1.78,
+          "fuel_l_per_100km": 9.05,
+          "id": "sprinter-4",
+          "maintenance_eur_per_1000km": 120.0,
+          "name": "Mercedes Sprinter 315 CDI L2H2",
+          "payload_kg": 1231.0,
+          "source": "PSO team vehicles.csv (xsilentkiller/industrial-transport); cargo dims, speeds, wages, maintenance marked assumed there",
+          "speed_kmh": 48.0,
+          "top_speed_kmh": 161.0,
+          "type_id": "sprinter",
+          "volume_m3": 10.5,
+          "wage_eur_per_h": 13.0
+        },
+        {
+          "cargo_height_m": 2.45,
+          "cargo_length_m": 7.2,
+          "cargo_width_m": 2.42,
+          "fuel_l_per_100km": 21.0,
+          "id": "man_tgl-5",
+          "maintenance_eur_per_1000km": 250.0,
+          "name": "MAN TGL 12.190 box",
+          "payload_kg": 5480.0,
+          "source": "PSO team vehicles.csv (xsilentkiller/industrial-transport); cargo dims, speeds, wages, maintenance marked assumed there",
+          "speed_kmh": 40.0,
+          "top_speed_kmh": 100.0,
+          "type_id": "man_tgl",
+          "volume_m3": 42.7,
+          "wage_eur_per_h": 16.0
+        }
+      ],
+      "transports": [
+        {
+          "vehicle": 0,
+          "customers": [
+            140,
+            70,
+            84,
+            35
+          ],
+          "start_minutes": 0.0,
+          "finish_minutes": 74.51223385905922,
+          "distance_km": 17.76830003468228,
+          "fuel_litres": 0.9506040518555019
+        },
+        {
+          "vehicle": 0,
+          "customers": [
+            147,
+            122,
+            129,
+            142,
+            93,
+            137
+          ],
+          "start_minutes": 74.51223385905922,
+          "finish_minutes": 195.76830013565535,
+          "distance_km": 38.528378540372124,
+          "fuel_litres": 2.0612682519099086
+        },
+        {
+          "vehicle": 0,
+          "customers": [
+            39,
+            79,
+            55,
+            96
+          ],
+          "start_minutes": 195.76830013565535,
+          "finish_minutes": 312.82303495422593,
+          "distance_km": 44.647224234053326,
+          "fuel_litres": 2.388626496521853
+        },
+        {
+          "vehicle": 0,
+          "customers": [
+            111,
+            12,
+            145
+          ],
+          "start_minutes": 312.82303495422593,
+          "finish_minutes": 427.4311172158548,
+          "distance_km": 42.9575179205616,
+          "fuel_litres": 2.2982272087500455
+        },
+        {
+          "vehicle": 0,
+          "customers": [
+            133,
+            130,
+            47,
+            120
+          ],
+          "start_minutes": 427.4311172158548,
+          "finish_minutes": 561.3289717378068,
+          "distance_km": 58.68561881518338,
+          "fuel_litres": 3.1396806066123104
+        },
+        {
+          "vehicle": 0,
+          "customers": [
+            67
+          ],
+          "start_minutes": 561.3289717378068,
+          "finish_minutes": 615.9990805553749,
+          "distance_km": 26.606610511384922,
+          "fuel_litres": 1.4234536623590932
+        },
+        {
+          "vehicle": 0,
+          "customers": [
+            34,
+            61
+          ],
+          "start_minutes": 615.9990805553749,
+          "finish_minutes": 701.7727402997231,
+          "distance_km": 35.48612325320248,
+          "fuel_litres": 1.8985075940463323
+        },
+        {
+          "vehicle": 0,
+          "customers": [
+            127
+          ],
+          "start_minutes": 701.7727402997231,
+          "finish_minutes": 772.1766511641716,
+          "distance_km": 33.28450841779729,
+          "fuel_litres": 1.780721200352155
+        },
+        {
+          "vehicle": 0,
+          "customers": [
+            3
+          ],
+          "start_minutes": 772.1766511641716,
+          "finish_minutes": 825.4148384901961,
+          "distance_km": 24.141432865188833,
+          "fuel_litres": 1.2915666582876026
+        },
+        {
+          "vehicle": 1,
+          "customers": [
+            72,
+            14
+          ],
+          "start_minutes": 0.0,
+          "finish_minutes": 82.10857753148372,
+          "distance_km": 34.63275968994568,
+          "fuel_litres": 1.8528526434120938
+        },
+        {
+          "vehicle": 1,
+          "customers": [
+            46,
+            77,
+            23
+          ],
+          "start_minutes": 82.10857753148372,
+          "finish_minutes": 215.5261171269641,
+          "distance_km": 61.32661765204567,
+          "fuel_litres": 3.280974044384443
+        },
+        {
+          "vehicle": 1,
+          "customers": [
+            31,
+            59,
+            94
+          ],
+          "start_minutes": 215.5261171269641,
+          "finish_minutes": 316.03551768492275,
+          "distance_km": 40.51157301125194,
+          "fuel_litres": 2.1673691561019783
+        },
+        {
+          "vehicle": 1,
+          "customers": [
+            88,
+            118
+          ],
+          "start_minutes": 316.03551768492275,
+          "finish_minutes": 408.7837872382403,
+          "distance_km": 41.945782373308404,
+          "fuel_litres": 2.2440993569719994
+        },
+        {
+          "vehicle": 1,
+          "customers": [
+            53,
+            143
+          ],
+          "start_minutes": 408.7837872382403,
+          "finish_minutes": 475.898581444389,
+          "distance_km": 27.268369249259283,
+          "fuel_litres": 1.4588577548353714
+        },
+        {
+          "vehicle": 1,
+          "customers": [
+            82,
+            81
+          ],
+          "start_minutes": 475.898581444389,
+          "finish_minutes": 584.8367036059182,
+          "distance_km": 52.102484364846546,
+          "fuel_litres": 2.7874829135192902
+        },
+        {
+          "vehicle": 1,
+          "customers": [
+            105,
+            24
+          ],
+          "start_minutes": 584.8367036059182,
+          "finish_minutes": 678.446539122262,
+          "distance_km": 40.21276237724627,
+          "fuel_litres": 2.1513827871826754
+        },
+        {
+          "vehicle": 1,
+          "customers": [
+            119
+          ],
+          "start_minutes": 678.446539122262,
+          "finish_minutes": 731.0163246593203,
+          "distance_km": 25.060802454739083,
+          "fuel_litres": 1.340752931328541
+        },
+        {
+          "vehicle": 1,
+          "customers": [
+            114
+          ],
+          "start_minutes": 731.0163246593203,
+          "finish_minutes": 790.4571067383081,
+          "distance_km": 28.296018168186404,
+          "fuel_litres": 1.5138369719979723
+        },
+        {
+          "vehicle": 2,
+          "customers": [
+            131,
+            56,
+            110,
+            42,
+            4,
+            58,
+            49,
+            69,
+            124,
+            45
+          ],
+          "start_minutes": 0.0,
+          "finish_minutes": 175.31651754502667,
+          "distance_km": 40.932463779557786,
+          "fuel_litres": 3.7043879720499797
+        },
+        {
+          "vehicle": 2,
+          "customers": [
+            18,
+            95,
+            80,
+            19,
+            33,
+            101,
+            41,
+            5,
+            29
+          ],
+          "start_minutes": 175.31651754502667,
+          "finish_minutes": 383.14005031203743,
+          "distance_km": 67.30138723963213,
+          "fuel_litres": 6.090775545186709
+        },
+        {
+          "vehicle": 2,
+          "customers": [
+            99,
+            9,
+            135,
+            32,
+            138,
+            17,
+            30,
+            64,
+            112,
+            98,
+            149
+          ],
+          "start_minutes": 383.14005031203743,
+          "finish_minutes": 583.858487636428,
+          "distance_km": 42.79310611784234,
+          "fuel_litres": 3.872776103664732
+        },
+        {
+          "vehicle": 3,
+          "customers": [
+            75,
+            52,
+            104,
+            15,
+            63,
+            123,
+            97,
+            100,
+            60,
+            83,
+            92,
+            57
+          ],
+          "start_minutes": 0.0,
+          "finish_minutes": 206.02767531485352,
+          "distance_km": 44.77212885505166,
+          "fuel_litres": 4.051877661382176
+        },
+        {
+          "vehicle": 3,
+          "customers": [
+            141,
+            40,
+            108,
+            21,
+            2,
+            126,
+            89,
+            144,
+            134,
+            74,
+            28,
+            22
+          ],
+          "start_minutes": 206.02767531485352,
+          "finish_minutes": 407.60706930465807,
+          "distance_km": 47.40575861134096,
+          "fuel_litres": 4.290221154326357
+        },
+        {
+          "vehicle": 3,
+          "customers": [
+            132,
+            16,
+            139,
+            71,
+            76,
+            6,
+            107,
+            125,
+            106,
+            43,
+            68,
+            27,
+            10
+          ],
+          "start_minutes": 407.60706930465807,
+          "finish_minutes": 711.991322375098,
+          "distance_km": 106.53428332971471,
+          "fuel_litres": 9.641352641339182
+        },
+        {
+          "vehicle": 4,
+          "customers": [
+            73,
+            50,
+            150,
+            121,
+            109,
+            115,
+            146,
+            78,
+            20,
+            65,
+            116,
+            128,
+            36,
+            85,
+            117,
+            38,
+            44,
+            136,
+            7,
+            87,
+            1,
+            54
+          ],
+          "start_minutes": 0.0,
+          "finish_minutes": 316.3804153784914,
+          "distance_km": 55.44676941365905,
+          "fuel_litres": 11.6438215768684
+        },
+        {
+          "vehicle": 4,
+          "customers": [
+            13,
+            102,
+            62,
+            148,
+            113,
+            90,
+            25,
+            86,
+            48,
+            51,
+            8,
+            37,
+            103,
+            66,
+            11,
+            91
+          ],
+          "start_minutes": 316.3804153784914,
+          "finish_minutes": 556.982615344089,
+          "distance_km": 51.97571663778413,
+          "fuel_litres": 10.914900493934667
+        },
+        {
+          "vehicle": 4,
+          "customers": [
+            26
+          ],
+          "start_minutes": 556.982615344089,
+          "finish_minutes": 642.0647127559424,
+          "distance_km": 44.97080259621682,
+          "fuel_litres": 9.443868545205532
+        }
+      ],
+      "distance_km": 1175.5953005140552,
+      "fuel_litres": 99.6842459843869,
+      "cost": {
+        "fuel_eur": 159.4948,
+        "wage_eur": 1022.3182,
+        "overtime_hours": 19.2298,
+        "maintenance_eur": 133.944,
+        "real_cost_eur": 1315.7571,
+        "penalty_eur": 292000.0,
+        "total_eur": 293315.7571,
+        "trips_below_min": 20,
+        "trips_above_max": 0
+      },
+      "total_eur": 293315.7571,
+      "horizon_excess_minutes": 0.0
+    },
+    "generated_witness": null,
+    "cross_trip_counts": {},
+    "relocate_rejections": {},
+    "relocate_screened_route_pairs": {},
+    "local_trials": 0,
+    "combined_evaluations": 6032,
+    "validation": {
+      "feasible": true,
+      "distance_km": 549.7270788875896,
+      "fuel_litres": 52.57227850958893,
+      "trips": 10,
+      "fleet_type_ids": [
+        "caddy",
+        "caddy",
+        "sprinter",
+        "sprinter",
+        "man_tgl"
+      ],
+      "vehicles_used": 5,
+      "finish_minutes_by_vehicle": [
+        330.8705354886206,
+        367.9168596493985,
+        744.6828886684364,
+        588.1935303449285,
+        507.99791676357665
+      ],
+      "work_minutes_by_vehicle": [
+        330.8705354886206,
+        367.9168596493985,
+        744.6828886684364,
+        588.1935303449285,
+        507.99791676357665
+      ],
+      "trip_details": [
+        {
+          "vehicle": "caddy-1",
+          "customers": [
+            116,
+            128,
+            50,
+            115,
+            146,
+            78,
+            20,
+            39,
+            65,
+            85
+          ],
+          "weight_kg": 127.914,
+          "volume_m3": 2.6326,
+          "distance_km": 38.70335625417193,
+          "fuel_litres": 2.0706295595981983
+        },
+        {
+          "vehicle": "caddy-1",
+          "customers": [
+            51,
+            37,
+            90,
+            62,
+            102,
+            79,
+            118,
+            148,
+            113,
+            48,
+            8
+          ],
+          "weight_kg": 197.834,
+          "volume_m3": 2.7106,
+          "distance_km": 34.9631399842209,
+          "fuel_litres": 1.870527989155818
+        },
+        {
+          "vehicle": "caddy-2",
+          "customers": [
+            61,
+            147,
+            122,
+            142,
+            93,
+            137,
+            77,
+            13,
+            29,
+            42
+          ],
+          "weight_kg": 141.154,
+          "volume_m3": 2.7717,
+          "distance_km": 53.204885599963,
+          "fuel_litres": 2.8464613795980203
+        },
+        {
+          "vehicle": "caddy-2",
+          "customers": [
+            123,
+            63,
+            60,
+            92,
+            96,
+            59,
+            94,
+            132,
+            16,
+            139
+          ],
+          "weight_kg": 162.586,
+          "volume_m3": 2.7487999999999997,
+          "distance_km": 50.12673066989036,
+          "fuel_litres": 2.681780090839134
+        },
+        {
+          "vehicle": "sprinter-3",
+          "customers": [
+            15,
+            45,
+            105,
+            46,
+            91,
+            88,
+            72,
+            49,
+            69,
+            133,
+            35,
+            84,
+            140,
+            70,
+            14,
+            110,
+            56,
+            58
+          ],
+          "weight_kg": 336.16599999999994,
+          "volume_m3": 8.680900000000003,
+          "distance_km": 52.859129011420286,
+          "fuel_litres": 4.783751175533536
+        },
+        {
+          "vehicle": "sprinter-3",
+          "customers": [
+            67,
+            150,
+            23,
+            95,
+            18,
+            41,
+            33,
+            101,
+            80,
+            19,
+            5,
+            134,
+            55
+          ],
+          "weight_kg": 305.27000000000004,
+          "volume_m3": 8.0466,
+          "distance_km": 70.0360828650785,
+          "fuel_litres": 6.338265499289605
+        },
+        {
+          "vehicle": "sprinter-3",
+          "customers": [
+            131,
+            4,
+            32,
+            99,
+            9,
+            135,
+            138,
+            149,
+            98,
+            64,
+            30,
+            112
+          ],
+          "weight_kg": 271.846,
+          "volume_m3": 7.7494999999999985,
+          "distance_km": 36.624860035772016,
+          "fuel_litres": 3.3145498332373675
+        },
+        {
+          "vehicle": "sprinter-4",
+          "customers": [
+            82,
+            22,
+            28,
+            74,
+            144,
+            40,
+            126,
+            141,
+            108,
+            21,
+            2,
+            89,
+            125,
+            107,
+            71,
+            76,
+            6,
+            17
+          ],
+          "weight_kg": 427.09799999999996,
+          "volume_m3": 9.052200000000001,
+          "distance_km": 55.46885489102242,
+          "fuel_litres": 5.019931367637529
+        },
+        {
+          "vehicle": "sprinter-4",
+          "customers": [
+            97,
+            100,
+            83,
+            57,
+            120,
+            114,
+            106,
+            43,
+            68,
+            27,
+            12,
+            104,
+            75,
+            130,
+            10
+          ],
+          "weight_kg": 375.791,
+          "volume_m3": 9.1717,
+          "distance_km": 79.32239913197353,
+          "fuel_litres": 7.178677121443604
+        },
+        {
+          "vehicle": "man_tgl-5",
+          "customers": [
+            103,
+            66,
+            3,
+            73,
+            36,
+            119,
+            143,
+            86,
+            25,
+            53,
+            24,
+            117,
+            38,
+            34,
+            136,
+            44,
+            7,
+            87,
+            129,
+            1,
+            54,
+            111,
+            47,
+            81,
+            26,
+            109,
+            31,
+            121,
+            11,
+            145,
+            127,
+            52,
+            124
+          ],
+          "weight_kg": 931.2889999999999,
+          "volume_m3": 25.1015,
+          "distance_km": 78.41764044407675,
+          "fuel_litres": 16.467704493256118
+        }
+      ],
+      "cost": {
+        "fuel_eur": 84.1156,
+        "wage_eur": 652.2695,
+        "overtime_hours": 6.6812,
+        "maintenance_eur": 69.0816,
+        "real_cost_eur": 805.4667,
+        "penalty_eur": 0.0,
+        "total_eur": 805.4667,
+        "trips_below_min": 0,
+        "trips_above_max": 0
+      }
+    },
+    "initial_random_audit": [
+      {
+        "incompatible_assignments_before_repair": 0,
+        "incompatible_assignments_after_repair": 0,
+        "after_split": {
+          "feasible": false,
+          "horizon_excess_minutes": 345.0939155566514,
+          "max_vehicle_minutes": 1305.0939155566514,
+          "short_trips": 15,
+          "real_cost_eur": 2006.9804,
+          "penalty_eur": 168000.0,
+          "total_eur": 170006.9804
+        },
+        "before_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 259.5767759909777,
+          "max_vehicle_minutes": 1219.5767759909777,
+          "short_trips": 15,
+          "real_cost_eur": 1808.2808,
+          "penalty_eur": 168000.0,
+          "total_eur": 169808.2808
+        },
+        "after_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 146.88630343667137,
+          "max_vehicle_minutes": 1106.8863034366714,
+          "short_trips": 4,
+          "real_cost_eur": 1511.0715,
+          "penalty_eur": 50000.0,
+          "total_eur": 51511.0715
+        }
+      },
+      {
+        "incompatible_assignments_before_repair": 0,
+        "incompatible_assignments_after_repair": 0,
+        "after_split": {
+          "feasible": false,
+          "horizon_excess_minutes": 338.50300449277495,
+          "max_vehicle_minutes": 1278.24377885378,
+          "short_trips": 11,
+          "real_cost_eur": 1949.6964,
+          "penalty_eur": 120000.0,
+          "total_eur": 121949.6964
+        },
+        "before_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 174.07927370147786,
+          "max_vehicle_minutes": 1134.0792737014779,
+          "short_trips": 11,
+          "real_cost_eur": 1744.6188,
+          "penalty_eur": 120000.0,
+          "total_eur": 121744.6188
+        },
+        "after_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 465.94138796429775,
+          "max_vehicle_minutes": 1269.1595272992636,
+          "short_trips": 0,
+          "real_cost_eur": 1571.1927,
+          "penalty_eur": 0.0,
+          "total_eur": 1571.1927
+        }
+      },
+      {
+        "incompatible_assignments_before_repair": 0,
+        "incompatible_assignments_after_repair": 0,
+        "after_split": {
+          "feasible": false,
+          "horizon_excess_minutes": 125.70442763804226,
+          "max_vehicle_minutes": 1085.7044276380423,
+          "short_trips": 11,
+          "real_cost_eur": 1947.9033,
+          "penalty_eur": 104000.0,
+          "total_eur": 105947.9033
+        },
+        "before_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 43.88547706532074,
+          "max_vehicle_minutes": 1003.8854770653207,
+          "short_trips": 11,
+          "real_cost_eur": 1773.9422,
+          "penalty_eur": 104000.0,
+          "total_eur": 105773.9422
+        },
+        "after_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 183.54995876262365,
+          "max_vehicle_minutes": 1143.5499587626236,
+          "short_trips": 4,
+          "real_cost_eur": 1565.7698,
+          "penalty_eur": 48000.0,
+          "total_eur": 49565.7698
+        }
+      },
+      {
+        "incompatible_assignments_before_repair": 0,
+        "incompatible_assignments_after_repair": 0,
+        "after_split": {
+          "feasible": false,
+          "horizon_excess_minutes": 438.250454853164,
+          "max_vehicle_minutes": 1398.250454853164,
+          "short_trips": 11,
+          "real_cost_eur": 2117.4311,
+          "penalty_eur": 128000.0,
+          "total_eur": 130117.4311
+        },
+        "before_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 330.8175750170333,
+          "max_vehicle_minutes": 1290.8175750170333,
+          "short_trips": 11,
+          "real_cost_eur": 1937.8346,
+          "penalty_eur": 128000.0,
+          "total_eur": 129937.8346
+        },
+        "after_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 690.5965179788038,
+          "max_vehicle_minutes": 1489.8832573359052,
+          "short_trips": 0,
+          "real_cost_eur": 1730.1613,
+          "penalty_eur": 0.0,
+          "total_eur": 1730.1613
+        }
+      },
+      {
+        "incompatible_assignments_before_repair": 0,
+        "incompatible_assignments_after_repair": 0,
+        "after_split": {
+          "feasible": false,
+          "horizon_excess_minutes": 386.2991176076787,
+          "max_vehicle_minutes": 1309.2425452640211,
+          "short_trips": 15,
+          "real_cost_eur": 1971.8916,
+          "penalty_eur": 174000.0,
+          "total_eur": 175971.8916
+        },
+        "before_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 265.1480999919297,
+          "max_vehicle_minutes": 1225.1480999919297,
+          "short_trips": 15,
+          "real_cost_eur": 1777.4244,
+          "penalty_eur": 174000.0,
+          "total_eur": 175777.4244
+        },
+        "after_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 44.80596032890708,
+          "max_vehicle_minutes": 1004.8059603289071,
+          "short_trips": 6,
+          "real_cost_eur": 1527.4915,
+          "penalty_eur": 64000.0,
+          "total_eur": 65527.4915
+        }
+      },
+      {
+        "incompatible_assignments_before_repair": 0,
+        "incompatible_assignments_after_repair": 0,
+        "after_split": {
+          "feasible": false,
+          "horizon_excess_minutes": 294.3809966416504,
+          "max_vehicle_minutes": 1231.8935035560066,
+          "short_trips": 17,
+          "real_cost_eur": 2090.1717,
+          "penalty_eur": 202000.0,
+          "total_eur": 204090.1717
+        },
+        "before_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 213.43004857246206,
+          "max_vehicle_minutes": 1173.430048572462,
+          "short_trips": 17,
+          "real_cost_eur": 1915.0097,
+          "penalty_eur": 202000.0,
+          "total_eur": 203915.0097
+        },
+        "after_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 162.55623405123515,
+          "max_vehicle_minutes": 1122.5562340512352,
+          "short_trips": 4,
+          "real_cost_eur": 1565.0665,
+          "penalty_eur": 54000.0,
+          "total_eur": 55565.0665
+        }
+      },
+      {
+        "incompatible_assignments_before_repair": 0,
+        "incompatible_assignments_after_repair": 0,
+        "after_split": {
+          "feasible": false,
+          "horizon_excess_minutes": 111.66365400933842,
+          "max_vehicle_minutes": 1033.493320713674,
+          "short_trips": 12,
+          "real_cost_eur": 2005.4166,
+          "penalty_eur": 134000.0,
+          "total_eur": 136005.4166
+        },
+        "before_short_trip_repair": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 951.7073748536327,
+          "short_trips": 12,
+          "real_cost_eur": 1830.2584,
+          "penalty_eur": 134000.0,
+          "total_eur": 135830.2584
+        },
+        "after_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 321.41740477101905,
+          "max_vehicle_minutes": 1145.7110848895923,
+          "short_trips": 0,
+          "real_cost_eur": 1586.9509,
+          "penalty_eur": 0.0,
+          "total_eur": 1586.9509
+        }
+      },
+      {
+        "incompatible_assignments_before_repair": 0,
+        "incompatible_assignments_after_repair": 0,
+        "after_split": {
+          "feasible": false,
+          "horizon_excess_minutes": 119.91887020645731,
+          "max_vehicle_minutes": 1056.3443149544173,
+          "short_trips": 13,
+          "real_cost_eur": 2007.8909,
+          "penalty_eur": 132000.0,
+          "total_eur": 134007.8909
+        },
+        "before_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 18.868623052753378,
+          "max_vehicle_minutes": 978.8686230527534,
+          "short_trips": 13,
+          "real_cost_eur": 1845.5995,
+          "penalty_eur": 132000.0,
+          "total_eur": 133845.5995
+        },
+        "after_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 174.07566451371054,
+          "max_vehicle_minutes": 1094.3690859511262,
+          "short_trips": 4,
+          "real_cost_eur": 1569.0934,
+          "penalty_eur": 40000.0,
+          "total_eur": 41569.0934
+        }
+      },
+      {
+        "incompatible_assignments_before_repair": 0,
+        "incompatible_assignments_after_repair": 0,
+        "after_split": {
+          "feasible": false,
+          "horizon_excess_minutes": 132.59718953724132,
+          "max_vehicle_minutes": 1074.9873418877282,
+          "short_trips": 13,
+          "real_cost_eur": 2014.3418,
+          "penalty_eur": 168000.0,
+          "total_eur": 170014.3418
+        },
+        "before_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 80.8397559581972,
+          "max_vehicle_minutes": 1040.8397559581972,
+          "short_trips": 13,
+          "real_cost_eur": 1870.0771,
+          "penalty_eur": 168000.0,
+          "total_eur": 169870.0771
+        },
+        "after_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 284.2862332080251,
+          "max_vehicle_minutes": 1177.458035269908,
+          "short_trips": 5,
+          "real_cost_eur": 1681.8393,
+          "penalty_eur": 60000.0,
+          "total_eur": 61681.8393
+        }
+      },
+      {
+        "incompatible_assignments_before_repair": 0,
+        "incompatible_assignments_after_repair": 0,
+        "after_split": {
+          "feasible": false,
+          "horizon_excess_minutes": 154.58890900315123,
+          "max_vehicle_minutes": 1082.3966780331373,
+          "short_trips": 11,
+          "real_cost_eur": 1962.9064,
+          "penalty_eur": 102000.0,
+          "total_eur": 103962.9064
+        },
+        "before_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 21.421312129209127,
+          "max_vehicle_minutes": 981.4213121292091,
+          "short_trips": 11,
+          "real_cost_eur": 1756.9477,
+          "penalty_eur": 102000.0,
+          "total_eur": 103756.9477
+        },
+        "after_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 160.3950326368165,
+          "max_vehicle_minutes": 1045.3931579947598,
+          "short_trips": 0,
+          "real_cost_eur": 1483.4065,
+          "penalty_eur": 0.0,
+          "total_eur": 1483.4065
+        }
+      },
+      {
+        "incompatible_assignments_before_repair": 0,
+        "incompatible_assignments_after_repair": 0,
+        "after_split": {
+          "feasible": false,
+          "horizon_excess_minutes": 88.16178672536307,
+          "max_vehicle_minutes": 1029.1483360826815,
+          "short_trips": 8,
+          "real_cost_eur": 1956.8689,
+          "penalty_eur": 74000.0,
+          "total_eur": 75956.8689
+        },
+        "before_short_trip_repair": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 941.8828205984637,
+          "short_trips": 8,
+          "real_cost_eur": 1780.1053,
+          "penalty_eur": 74000.0,
+          "total_eur": 75780.1053
+        },
+        "after_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 279.68032750776615,
+          "max_vehicle_minutes": 1101.2585926375116,
+          "short_trips": 0,
+          "real_cost_eur": 1574.4676,
+          "penalty_eur": 0.0,
+          "total_eur": 1574.4676
+        }
+      },
+      {
+        "incompatible_assignments_before_repair": 0,
+        "incompatible_assignments_after_repair": 0,
+        "after_split": {
+          "feasible": false,
+          "horizon_excess_minutes": 128.08701267079198,
+          "max_vehicle_minutes": 1059.9477671673376,
+          "short_trips": 15,
+          "real_cost_eur": 1937.8671,
+          "penalty_eur": 180000.0,
+          "total_eur": 181937.8671
+        },
+        "before_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 40.349602969658804,
+          "max_vehicle_minutes": 1000.3496029696588,
+          "short_trips": 15,
+          "real_cost_eur": 1766.3075,
+          "penalty_eur": 180000.0,
+          "total_eur": 181766.3075
+        },
+        "after_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 118.42396307187028,
+          "max_vehicle_minutes": 1078.4239630718703,
+          "short_trips": 4,
+          "real_cost_eur": 1490.9483,
+          "penalty_eur": 46000.0,
+          "total_eur": 47490.9483
+        }
+      },
+      {
+        "incompatible_assignments_before_repair": 0,
+        "incompatible_assignments_after_repair": 0,
+        "after_split": {
+          "feasible": false,
+          "horizon_excess_minutes": 38.6721991161005,
+          "max_vehicle_minutes": 998.6721991161005,
+          "short_trips": 12,
+          "real_cost_eur": 1941.6391,
+          "penalty_eur": 130000.0,
+          "total_eur": 131941.6391
+        },
+        "before_short_trip_repair": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 909.2097243948318,
+          "short_trips": 12,
+          "real_cost_eur": 1768.6254,
+          "penalty_eur": 130000.0,
+          "total_eur": 131768.6254
+        },
+        "after_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 299.43498780748087,
+          "max_vehicle_minutes": 1132.7036805204255,
+          "short_trips": 2,
+          "real_cost_eur": 1558.4897,
+          "penalty_eur": 20000.0,
+          "total_eur": 21558.4897
+        }
+      },
+      {
+        "incompatible_assignments_before_repair": 0,
+        "incompatible_assignments_after_repair": 0,
+        "after_split": {
+          "feasible": false,
+          "horizon_excess_minutes": 286.54192371955514,
+          "max_vehicle_minutes": 1246.5419237195551,
+          "short_trips": 15,
+          "real_cost_eur": 1881.2622,
+          "penalty_eur": 172000.0,
+          "total_eur": 173881.2622
+        },
+        "before_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 190.89171972547342,
+          "max_vehicle_minutes": 1150.8917197254734,
+          "short_trips": 15,
+          "real_cost_eur": 1714.6462,
+          "penalty_eur": 172000.0,
+          "total_eur": 173714.6462
+        },
+        "after_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 145.72662988274783,
+          "max_vehicle_minutes": 1105.7266298827478,
+          "short_trips": 2,
+          "real_cost_eur": 1421.3808,
+          "penalty_eur": 24000.0,
+          "total_eur": 25421.3808
+        }
+      },
+      {
+        "incompatible_assignments_before_repair": 0,
+        "incompatible_assignments_after_repair": 0,
+        "after_split": {
+          "feasible": false,
+          "horizon_excess_minutes": 415.5351068702266,
+          "max_vehicle_minutes": 1229.5248533471204,
+          "short_trips": 15,
+          "real_cost_eur": 1965.623,
+          "penalty_eur": 180000.0,
+          "total_eur": 181965.623
+        },
+        "before_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 209.93392734107965,
+          "max_vehicle_minutes": 1136.7531810127953,
+          "short_trips": 15,
+          "real_cost_eur": 1790.6475,
+          "penalty_eur": 180000.0,
+          "total_eur": 181790.6475
+        },
+        "after_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 485.62285762426086,
+          "max_vehicle_minutes": 1314.3274417609239,
+          "short_trips": 0,
+          "real_cost_eur": 1511.8261,
+          "penalty_eur": 0.0,
+          "total_eur": 1511.8261
+        }
+      },
+      {
+        "incompatible_assignments_before_repair": 0,
+        "incompatible_assignments_after_repair": 0,
+        "after_split": {
+          "feasible": false,
+          "horizon_excess_minutes": 360.2067083145298,
+          "max_vehicle_minutes": 1320.2067083145298,
+          "short_trips": 18,
+          "real_cost_eur": 2030.9502,
+          "penalty_eur": 230000.0,
+          "total_eur": 232030.9502
+        },
+        "before_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 297.2902451705636,
+          "max_vehicle_minutes": 1257.2902451705636,
+          "short_trips": 18,
+          "real_cost_eur": 1866.8028,
+          "penalty_eur": 230000.0,
+          "total_eur": 231866.8028
+        },
+        "after_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 64.43717706849611,
+          "max_vehicle_minutes": 1011.0335401180964,
+          "short_trips": 6,
+          "real_cost_eur": 1586.0077,
+          "penalty_eur": 74000.0,
+          "total_eur": 75586.0077
+        }
+      },
+      {
+        "incompatible_assignments_before_repair": 0,
+        "incompatible_assignments_after_repair": 0,
+        "after_split": {
+          "feasible": false,
+          "horizon_excess_minutes": 120.89594572113356,
+          "max_vehicle_minutes": 1043.1516668816435,
+          "short_trips": 13,
+          "real_cost_eur": 2005.7792,
+          "penalty_eur": 152000.0,
+          "total_eur": 154005.7792
+        },
+        "before_short_trip_repair": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 959.6172614337622,
+          "short_trips": 13,
+          "real_cost_eur": 1832.2149,
+          "penalty_eur": 152000.0,
+          "total_eur": 153832.2149
+        },
+        "after_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 213.17931157481894,
+          "max_vehicle_minutes": 1161.3926785558579,
+          "short_trips": 5,
+          "real_cost_eur": 1605.0608,
+          "penalty_eur": 66000.0,
+          "total_eur": 67605.0608
+        }
+      },
+      {
+        "incompatible_assignments_before_repair": 0,
+        "incompatible_assignments_after_repair": 0,
+        "after_split": {
+          "feasible": false,
+          "horizon_excess_minutes": 293.02863943628813,
+          "max_vehicle_minutes": 1142.760434047691,
+          "short_trips": 13,
+          "real_cost_eur": 2036.0772,
+          "penalty_eur": 156000.0,
+          "total_eur": 158036.0772
+        },
+        "before_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 169.66831243349998,
+          "max_vehicle_minutes": 1073.7032378150354,
+          "short_trips": 13,
+          "real_cost_eur": 1840.293,
+          "penalty_eur": 156000.0,
+          "total_eur": 157840.293
+        },
+        "after_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 365.21475407293724,
+          "max_vehicle_minutes": 1244.2450115198199,
+          "short_trips": 1,
+          "real_cost_eur": 1554.4511,
+          "penalty_eur": 16000.0,
+          "total_eur": 17554.4511
+        }
+      },
+      {
+        "incompatible_assignments_before_repair": 0,
+        "incompatible_assignments_after_repair": 0,
+        "after_split": {
+          "feasible": false,
+          "horizon_excess_minutes": 439.90558806119407,
+          "max_vehicle_minutes": 1222.1301985213208,
+          "short_trips": 16,
+          "real_cost_eur": 1925.5115,
+          "penalty_eur": 184000.0,
+          "total_eur": 185925.5115
+        },
+        "before_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 271.0568076746772,
+          "max_vehicle_minutes": 1158.179757772507,
+          "short_trips": 16,
+          "real_cost_eur": 1739.3304,
+          "penalty_eur": 184000.0,
+          "total_eur": 185739.3304
+        },
+        "after_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 178.32757682700367,
+          "max_vehicle_minutes": 1138.3275768270037,
+          "short_trips": 1,
+          "real_cost_eur": 1368.2489,
+          "penalty_eur": 14000.0,
+          "total_eur": 15368.2489
+        }
+      },
+      {
+        "incompatible_assignments_before_repair": 0,
+        "incompatible_assignments_after_repair": 0,
+        "after_split": {
+          "feasible": false,
+          "horizon_excess_minutes": 346.1251171254946,
+          "max_vehicle_minutes": 1253.1313022674817,
+          "short_trips": 13,
+          "real_cost_eur": 2099.7599,
+          "penalty_eur": 174000.0,
+          "total_eur": 176099.7599
+        },
+        "before_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 260.34001953681104,
+          "max_vehicle_minutes": 1215.9736783801468,
+          "short_trips": 13,
+          "real_cost_eur": 1938.7306,
+          "penalty_eur": 174000.0,
+          "total_eur": 175938.7306
+        },
+        "after_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 233.10388612931183,
+          "max_vehicle_minutes": 1193.1038861293118,
+          "short_trips": 2,
+          "real_cost_eur": 1591.5351,
+          "penalty_eur": 28000.0,
+          "total_eur": 29591.5351
+        }
+      },
+      {
+        "incompatible_assignments_before_repair": 0,
+        "incompatible_assignments_after_repair": 0,
+        "after_split": {
+          "feasible": false,
+          "horizon_excess_minutes": 168.69545466240356,
+          "max_vehicle_minutes": 1127.0549708485912,
+          "short_trips": 15,
+          "real_cost_eur": 2162.0647,
+          "penalty_eur": 180000.0,
+          "total_eur": 182162.0647
+        },
+        "before_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 85.73143703398227,
+          "max_vehicle_minutes": 1045.7314370339823,
+          "short_trips": 15,
+          "real_cost_eur": 1973.6255,
+          "penalty_eur": 180000.0,
+          "total_eur": 181973.6255
+        },
+        "after_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 298.0730056733887,
+          "max_vehicle_minutes": 1140.4005385488492,
+          "short_trips": 3,
+          "real_cost_eur": 1624.5919,
+          "penalty_eur": 36000.0,
+          "total_eur": 37624.5919
+        }
+      },
+      {
+        "incompatible_assignments_before_repair": 0,
+        "incompatible_assignments_after_repair": 0,
+        "after_split": {
+          "feasible": false,
+          "horizon_excess_minutes": 491.0927889948987,
+          "max_vehicle_minutes": 1210.1434888731962,
+          "short_trips": 17,
+          "real_cost_eur": 2023.2884,
+          "penalty_eur": 206000.0,
+          "total_eur": 208023.2884
+        },
+        "before_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 262.314198084684,
+          "max_vehicle_minutes": 1166.6007859018737,
+          "short_trips": 17,
+          "real_cost_eur": 1819.3003,
+          "penalty_eur": 206000.0,
+          "total_eur": 207819.3003
+        },
+        "after_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 150.1779823589818,
+          "max_vehicle_minutes": 1110.1779823589818,
+          "short_trips": 4,
+          "real_cost_eur": 1467.2269,
+          "penalty_eur": 44000.0,
+          "total_eur": 45467.2269
+        }
+      },
+      {
+        "incompatible_assignments_before_repair": 0,
+        "incompatible_assignments_after_repair": 0,
+        "after_split": {
+          "feasible": false,
+          "horizon_excess_minutes": 231.92467920287527,
+          "max_vehicle_minutes": 1083.9563584531732,
+          "short_trips": 13,
+          "real_cost_eur": 2120.9459,
+          "penalty_eur": 142000.0,
+          "total_eur": 144120.9459
+        },
+        "before_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 79.54758922520841,
+          "max_vehicle_minutes": 1024.523160813265,
+          "short_trips": 13,
+          "real_cost_eur": 1911.4547,
+          "penalty_eur": 142000.0,
+          "total_eur": 143911.4547
+        },
+        "after_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 393.8075945936878,
+          "max_vehicle_minutes": 1191.3049288822779,
+          "short_trips": 3,
+          "real_cost_eur": 1632.4957,
+          "penalty_eur": 50000.0,
+          "total_eur": 51632.4957
+        }
+      },
+      {
+        "incompatible_assignments_before_repair": 0,
+        "incompatible_assignments_after_repair": 0,
+        "after_split": {
+          "feasible": false,
+          "horizon_excess_minutes": 341.87639248434584,
+          "max_vehicle_minutes": 1301.8763924843458,
+          "short_trips": 15,
+          "real_cost_eur": 2010.9242,
+          "penalty_eur": 158000.0,
+          "total_eur": 160010.9242
+        },
+        "before_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 242.66703882759202,
+          "max_vehicle_minutes": 1202.667038827592,
+          "short_trips": 15,
+          "real_cost_eur": 1815.8374,
+          "penalty_eur": 158000.0,
+          "total_eur": 159815.8374
+        },
+        "after_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 177.19859185253495,
+          "max_vehicle_minutes": 1051.6410333417773,
+          "short_trips": 4,
+          "real_cost_eur": 1484.72,
+          "penalty_eur": 62000.0,
+          "total_eur": 63484.72
+        }
+      },
+      {
+        "incompatible_assignments_before_repair": 0,
+        "incompatible_assignments_after_repair": 0,
+        "after_split": {
+          "feasible": false,
+          "horizon_excess_minutes": 71.51454681044333,
+          "max_vehicle_minutes": 1001.5142345626025,
+          "short_trips": 13,
+          "real_cost_eur": 2081.6238,
+          "penalty_eur": 152000.0,
+          "total_eur": 154081.6238
+        },
+        "before_short_trip_repair": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 939.9887126289234,
+          "short_trips": 13,
+          "real_cost_eur": 1883.357,
+          "penalty_eur": 152000.0,
+          "total_eur": 153883.357
+        },
+        "after_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 208.44237058367264,
+          "max_vehicle_minutes": 1129.9231772510489,
+          "short_trips": 4,
+          "real_cost_eur": 1626.6294,
+          "penalty_eur": 58000.0,
+          "total_eur": 59626.6294
+        }
+      },
+      {
+        "incompatible_assignments_before_repair": 0,
+        "incompatible_assignments_after_repair": 0,
+        "after_split": {
+          "feasible": false,
+          "horizon_excess_minutes": 101.32956917461684,
+          "max_vehicle_minutes": 1061.3295691746168,
+          "short_trips": 12,
+          "real_cost_eur": 1938.9855,
+          "penalty_eur": 136000.0,
+          "total_eur": 137938.9855
+        },
+        "before_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 20.390006999576826,
+          "max_vehicle_minutes": 980.3900069995768,
+          "short_trips": 12,
+          "real_cost_eur": 1790.2242,
+          "penalty_eur": 136000.0,
+          "total_eur": 137790.2242
+        },
+        "after_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 231.9038238774824,
+          "max_vehicle_minutes": 1096.1919089092962,
+          "short_trips": 5,
+          "real_cost_eur": 1621.4225,
+          "penalty_eur": 56000.0,
+          "total_eur": 57621.4225
+        }
+      },
+      {
+        "incompatible_assignments_before_repair": 0,
+        "incompatible_assignments_after_repair": 0,
+        "after_split": {
+          "feasible": false,
+          "horizon_excess_minutes": 488.3094222713453,
+          "max_vehicle_minutes": 1211.1765634870344,
+          "short_trips": 13,
+          "real_cost_eur": 2048.2197,
+          "penalty_eur": 156000.0,
+          "total_eur": 158048.2197
+        },
+        "before_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 342.6589282126547,
+          "max_vehicle_minutes": 1146.9930193828834,
+          "short_trips": 13,
+          "real_cost_eur": 1872.3988,
+          "penalty_eur": 156000.0,
+          "total_eur": 157872.3988
+        },
+        "after_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 355.52911825782417,
+          "max_vehicle_minutes": 1204.3246057321887,
+          "short_trips": 7,
+          "real_cost_eur": 1625.4265,
+          "penalty_eur": 106000.0,
+          "total_eur": 107625.4265
+        }
+      },
+      {
+        "incompatible_assignments_before_repair": 0,
+        "incompatible_assignments_after_repair": 0,
+        "after_split": {
+          "feasible": false,
+          "horizon_excess_minutes": 415.6077018870076,
+          "max_vehicle_minutes": 1108.8800825572457,
+          "short_trips": 17,
+          "real_cost_eur": 2106.491,
+          "penalty_eur": 218000.0,
+          "total_eur": 220106.491
+        },
+        "before_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 204.70673902563044,
+          "max_vehicle_minutes": 1069.048350500503,
+          "short_trips": 17,
+          "real_cost_eur": 1960.8283,
+          "penalty_eur": 218000.0,
+          "total_eur": 219960.8283
+        },
+        "after_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 508.2025968936614,
+          "max_vehicle_minutes": 1241.8201184408247,
+          "short_trips": 6,
+          "real_cost_eur": 1623.4855,
+          "penalty_eur": 76000.0,
+          "total_eur": 77623.4855
+        }
+      },
+      {
+        "incompatible_assignments_before_repair": 0,
+        "incompatible_assignments_after_repair": 0,
+        "after_split": {
+          "feasible": false,
+          "horizon_excess_minutes": 140.12387450427582,
+          "max_vehicle_minutes": 1021.6311283374232,
+          "short_trips": 10,
+          "real_cost_eur": 1994.6359,
+          "penalty_eur": 120000.0,
+          "total_eur": 121994.6359
+        },
+        "before_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 21.97079336808258,
+          "max_vehicle_minutes": 974.2447446211339,
+          "short_trips": 10,
+          "real_cost_eur": 1839.6797,
+          "penalty_eur": 120000.0,
+          "total_eur": 121839.6797
+        },
+        "after_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 418.86406551137475,
+          "max_vehicle_minutes": 1177.964823033245,
+          "short_trips": 0,
+          "real_cost_eur": 1635.229,
+          "penalty_eur": 0.0,
+          "total_eur": 1635.229
+        }
+      },
+      {
+        "incompatible_assignments_before_repair": 0,
+        "incompatible_assignments_after_repair": 0,
+        "after_split": {
+          "feasible": false,
+          "horizon_excess_minutes": 246.67628161020934,
+          "max_vehicle_minutes": 1087.1343839368608,
+          "short_trips": 15,
+          "real_cost_eur": 2019.7125,
+          "penalty_eur": 178000.0,
+          "total_eur": 180019.7125
+        },
+        "before_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 99.01225922172137,
+          "max_vehicle_minutes": 1029.984973681699,
+          "short_trips": 15,
+          "real_cost_eur": 1820.3624,
+          "penalty_eur": 178000.0,
+          "total_eur": 179820.3624
+        },
+        "after_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 57.0750464619307,
+          "max_vehicle_minutes": 1013.9564240804335,
+          "short_trips": 5,
+          "real_cost_eur": 1487.0252,
+          "penalty_eur": 68000.0,
+          "total_eur": 69487.0252
+        }
+      },
+      {
+        "incompatible_assignments_before_repair": 0,
+        "incompatible_assignments_after_repair": 0,
+        "after_split": {
+          "feasible": false,
+          "horizon_excess_minutes": 405.9016969826316,
+          "max_vehicle_minutes": 1174.966200920372,
+          "short_trips": 16,
+          "real_cost_eur": 2027.298,
+          "penalty_eur": 196000.0,
+          "total_eur": 198027.298
+        },
+        "before_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 213.231525906093,
+          "max_vehicle_minutes": 1095.6400951518858,
+          "short_trips": 16,
+          "real_cost_eur": 1858.3652,
+          "penalty_eur": 196000.0,
+          "total_eur": 197858.3652
+        },
+        "after_short_trip_repair": {
+          "feasible": false,
+          "horizon_excess_minutes": 170.13472419237883,
+          "max_vehicle_minutes": 1098.2083634851206,
+          "short_trips": 4,
+          "real_cost_eur": 1476.5941,
+          "penalty_eur": 46000.0,
+          "total_eur": 47476.5941
+        }
+      }
+    ],
+    "history": [
+      {
+        "generation": 0,
+        "objective": 293315.7571,
+        "evaluations": 32,
+        "unique_decoded_plans": 1,
+        "feasible_population": 1,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 825.4148384901961,
+          "short_trips": 20,
+          "real_cost_eur": 1315.7571,
+          "penalty_eur": 292000.0,
+          "total_eur": 293315.7571
+        },
+        "local_trials": 0,
+        "combined_evaluations": 32
+      },
+      {
+        "generation": 1,
+        "objective": 59278.2316,
+        "evaluations": 62,
+        "unique_decoded_plans": 2,
+        "feasible_population": 2,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 926.0615731683429,
+          "short_trips": 4,
+          "real_cost_eur": 1278.2316,
+          "penalty_eur": 58000.0,
+          "total_eur": 59278.2316
+        },
+        "local_trials": 0,
+        "combined_evaluations": 62
+      },
+      {
+        "generation": 2,
+        "objective": 59278.2316,
+        "evaluations": 92,
+        "unique_decoded_plans": 2,
+        "feasible_population": 2,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 926.0615731683429,
+          "short_trips": 4,
+          "real_cost_eur": 1278.2316,
+          "penalty_eur": 58000.0,
+          "total_eur": 59278.2316
+        },
+        "local_trials": 0,
+        "combined_evaluations": 92
+      },
+      {
+        "generation": 3,
+        "objective": 1173.8221,
+        "evaluations": 122,
+        "unique_decoded_plans": 3,
+        "feasible_population": 3,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 957.4400610231954,
+          "short_trips": 0,
+          "real_cost_eur": 1173.8221,
+          "penalty_eur": 0.0,
+          "total_eur": 1173.8221
+        },
+        "local_trials": 0,
+        "combined_evaluations": 122
+      },
+      {
+        "generation": 4,
+        "objective": 1173.8221,
+        "evaluations": 152,
+        "unique_decoded_plans": 3,
+        "feasible_population": 3,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 957.4400610231954,
+          "short_trips": 0,
+          "real_cost_eur": 1173.8221,
+          "penalty_eur": 0.0,
+          "total_eur": 1173.8221
+        },
+        "local_trials": 0,
+        "combined_evaluations": 152
+      },
+      {
+        "generation": 5,
+        "objective": 1163.317,
+        "evaluations": 182,
+        "unique_decoded_plans": 4,
+        "feasible_population": 4,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 952.8446863076499,
+          "short_trips": 0,
+          "real_cost_eur": 1163.317,
+          "penalty_eur": 0.0,
+          "total_eur": 1163.317
+        },
+        "local_trials": 0,
+        "combined_evaluations": 182
+      },
+      {
+        "generation": 6,
+        "objective": 1163.317,
+        "evaluations": 212,
+        "unique_decoded_plans": 3,
+        "feasible_population": 3,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 952.8446863076499,
+          "short_trips": 0,
+          "real_cost_eur": 1163.317,
+          "penalty_eur": 0.0,
+          "total_eur": 1163.317
+        },
+        "local_trials": 0,
+        "combined_evaluations": 212
+      },
+      {
+        "generation": 7,
+        "objective": 1163.317,
+        "evaluations": 242,
+        "unique_decoded_plans": 2,
+        "feasible_population": 2,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 952.8446863076499,
+          "short_trips": 0,
+          "real_cost_eur": 1163.317,
+          "penalty_eur": 0.0,
+          "total_eur": 1163.317
+        },
+        "local_trials": 0,
+        "combined_evaluations": 242
+      },
+      {
+        "generation": 8,
+        "objective": 1163.317,
+        "evaluations": 272,
+        "unique_decoded_plans": 2,
+        "feasible_population": 2,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 952.8446863076499,
+          "short_trips": 0,
+          "real_cost_eur": 1163.317,
+          "penalty_eur": 0.0,
+          "total_eur": 1163.317
+        },
+        "local_trials": 0,
+        "combined_evaluations": 272
+      },
+      {
+        "generation": 9,
+        "objective": 1139.5314,
+        "evaluations": 302,
+        "unique_decoded_plans": 4,
+        "feasible_population": 4,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 940.9981806938097,
+          "short_trips": 0,
+          "real_cost_eur": 1139.5314,
+          "penalty_eur": 0.0,
+          "total_eur": 1139.5314
+        },
+        "local_trials": 0,
+        "combined_evaluations": 302
+      },
+      {
+        "generation": 10,
+        "objective": 1130.6088,
+        "evaluations": 332,
+        "unique_decoded_plans": 9,
+        "feasible_population": 9,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 943.9644671502795,
+          "short_trips": 0,
+          "real_cost_eur": 1130.6088,
+          "penalty_eur": 0.0,
+          "total_eur": 1130.6088
+        },
+        "local_trials": 0,
+        "combined_evaluations": 332
+      },
+      {
+        "generation": 11,
+        "objective": 1112.6296,
+        "evaluations": 362,
+        "unique_decoded_plans": 7,
+        "feasible_population": 7,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 935.9406710037068,
+          "short_trips": 0,
+          "real_cost_eur": 1112.6296,
+          "penalty_eur": 0.0,
+          "total_eur": 1112.6296
+        },
+        "local_trials": 0,
+        "combined_evaluations": 362
+      },
+      {
+        "generation": 12,
+        "objective": 1112.6296,
+        "evaluations": 392,
+        "unique_decoded_plans": 7,
+        "feasible_population": 7,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 935.9406710037068,
+          "short_trips": 0,
+          "real_cost_eur": 1112.6296,
+          "penalty_eur": 0.0,
+          "total_eur": 1112.6296
+        },
+        "local_trials": 0,
+        "combined_evaluations": 392
+      },
+      {
+        "generation": 13,
+        "objective": 1099.7453,
+        "evaluations": 422,
+        "unique_decoded_plans": 10,
+        "feasible_population": 10,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 927.2865191828156,
+          "short_trips": 0,
+          "real_cost_eur": 1099.7453,
+          "penalty_eur": 0.0,
+          "total_eur": 1099.7453
+        },
+        "local_trials": 0,
+        "combined_evaluations": 422
+      },
+      {
+        "generation": 14,
+        "objective": 1099.7453,
+        "evaluations": 452,
+        "unique_decoded_plans": 6,
+        "feasible_population": 6,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 927.2865191828156,
+          "short_trips": 0,
+          "real_cost_eur": 1099.7453,
+          "penalty_eur": 0.0,
+          "total_eur": 1099.7453
+        },
+        "local_trials": 0,
+        "combined_evaluations": 452
+      },
+      {
+        "generation": 15,
+        "objective": 1099.3422,
+        "evaluations": 482,
+        "unique_decoded_plans": 11,
+        "feasible_population": 11,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 925.0002283457188,
+          "short_trips": 0,
+          "real_cost_eur": 1099.3422,
+          "penalty_eur": 0.0,
+          "total_eur": 1099.3422
+        },
+        "local_trials": 0,
+        "combined_evaluations": 482
+      },
+      {
+        "generation": 16,
+        "objective": 1080.8024,
+        "evaluations": 512,
+        "unique_decoded_plans": 10,
+        "feasible_population": 11,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 924.0619909314909,
+          "short_trips": 0,
+          "real_cost_eur": 1080.8024,
+          "penalty_eur": 0.0,
+          "total_eur": 1080.8024
+        },
+        "local_trials": 0,
+        "combined_evaluations": 512
+      },
+      {
+        "generation": 17,
+        "objective": 1069.4329,
+        "evaluations": 542,
+        "unique_decoded_plans": 7,
+        "feasible_population": 8,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 924.0619909314909,
+          "short_trips": 0,
+          "real_cost_eur": 1069.4329,
+          "penalty_eur": 0.0,
+          "total_eur": 1069.4329
+        },
+        "local_trials": 0,
+        "combined_evaluations": 542
+      },
+      {
+        "generation": 18,
+        "objective": 1069.4329,
+        "evaluations": 572,
+        "unique_decoded_plans": 10,
+        "feasible_population": 11,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 924.0619909314909,
+          "short_trips": 0,
+          "real_cost_eur": 1069.4329,
+          "penalty_eur": 0.0,
+          "total_eur": 1069.4329
+        },
+        "local_trials": 0,
+        "combined_evaluations": 572
+      },
+      {
+        "generation": 19,
+        "objective": 1062.7231,
+        "evaluations": 602,
+        "unique_decoded_plans": 13,
+        "feasible_population": 16,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 924.0619909314909,
+          "short_trips": 0,
+          "real_cost_eur": 1062.7231,
+          "penalty_eur": 0.0,
+          "total_eur": 1062.7231
+        },
+        "local_trials": 0,
+        "combined_evaluations": 602
+      },
+      {
+        "generation": 20,
+        "objective": 1053.8855,
+        "evaluations": 632,
+        "unique_decoded_plans": 16,
+        "feasible_population": 18,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 924.0619909314909,
+          "short_trips": 0,
+          "real_cost_eur": 1053.8855,
+          "penalty_eur": 0.0,
+          "total_eur": 1053.8855
+        },
+        "local_trials": 0,
+        "combined_evaluations": 632
+      },
+      {
+        "generation": 21,
+        "objective": 1044.3353,
+        "evaluations": 662,
+        "unique_decoded_plans": 19,
+        "feasible_population": 20,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 924.0619909314909,
+          "short_trips": 0,
+          "real_cost_eur": 1044.3353,
+          "penalty_eur": 0.0,
+          "total_eur": 1044.3353
+        },
+        "local_trials": 0,
+        "combined_evaluations": 662
+      },
+      {
+        "generation": 22,
+        "objective": 1038.1319,
+        "evaluations": 692,
+        "unique_decoded_plans": 22,
+        "feasible_population": 23,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 924.0619909314909,
+          "short_trips": 0,
+          "real_cost_eur": 1038.1319,
+          "penalty_eur": 0.0,
+          "total_eur": 1038.1319
+        },
+        "local_trials": 0,
+        "combined_evaluations": 692
+      },
+      {
+        "generation": 23,
+        "objective": 1036.4516,
+        "evaluations": 722,
+        "unique_decoded_plans": 19,
+        "feasible_population": 21,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 910.9066029436449,
+          "short_trips": 0,
+          "real_cost_eur": 1036.4516,
+          "penalty_eur": 0.0,
+          "total_eur": 1036.4516
+        },
+        "local_trials": 0,
+        "combined_evaluations": 722
+      },
+      {
+        "generation": 24,
+        "objective": 1028.3454,
+        "evaluations": 752,
+        "unique_decoded_plans": 23,
+        "feasible_population": 24,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 908.9423818568769,
+          "short_trips": 0,
+          "real_cost_eur": 1028.3454,
+          "penalty_eur": 0.0,
+          "total_eur": 1028.3454
+        },
+        "local_trials": 0,
+        "combined_evaluations": 752
+      },
+      {
+        "generation": 25,
+        "objective": 1023.0286,
+        "evaluations": 782,
+        "unique_decoded_plans": 25,
+        "feasible_population": 29,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 908.4878197853806,
+          "short_trips": 0,
+          "real_cost_eur": 1023.0286,
+          "penalty_eur": 0.0,
+          "total_eur": 1023.0286
+        },
+        "local_trials": 0,
+        "combined_evaluations": 782
+      },
+      {
+        "generation": 26,
+        "objective": 1019.2081,
+        "evaluations": 812,
+        "unique_decoded_plans": 22,
+        "feasible_population": 27,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 908.2715921232884,
+          "short_trips": 0,
+          "real_cost_eur": 1019.2081,
+          "penalty_eur": 0.0,
+          "total_eur": 1019.2081
+        },
+        "local_trials": 0,
+        "combined_evaluations": 812
+      },
+      {
+        "generation": 27,
+        "objective": 1012.9098,
+        "evaluations": 842,
+        "unique_decoded_plans": 18,
+        "feasible_population": 23,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 907.5248726569288,
+          "short_trips": 0,
+          "real_cost_eur": 1012.9098,
+          "penalty_eur": 0.0,
+          "total_eur": 1012.9098
+        },
+        "local_trials": 0,
+        "combined_evaluations": 842
+      },
+      {
+        "generation": 28,
+        "objective": 1009.588,
+        "evaluations": 872,
+        "unique_decoded_plans": 19,
+        "feasible_population": 21,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 907.0181424968335,
+          "short_trips": 0,
+          "real_cost_eur": 1009.588,
+          "penalty_eur": 0.0,
+          "total_eur": 1009.588
+        },
+        "local_trials": 0,
+        "combined_evaluations": 872
+      },
+      {
+        "generation": 29,
+        "objective": 1007.4673,
+        "evaluations": 902,
+        "unique_decoded_plans": 22,
+        "feasible_population": 25,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 907.0181424968335,
+          "short_trips": 0,
+          "real_cost_eur": 1007.4673,
+          "penalty_eur": 0.0,
+          "total_eur": 1007.4673
+        },
+        "local_trials": 0,
+        "combined_evaluations": 902
+      },
+      {
+        "generation": 30,
+        "objective": 1006.1527,
+        "evaluations": 932,
+        "unique_decoded_plans": 21,
+        "feasible_population": 24,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 907.0181424968335,
+          "short_trips": 0,
+          "real_cost_eur": 1006.1527,
+          "penalty_eur": 0.0,
+          "total_eur": 1006.1527
+        },
+        "local_trials": 0,
+        "combined_evaluations": 932
+      },
+      {
+        "generation": 31,
+        "objective": 1003.9802,
+        "evaluations": 962,
+        "unique_decoded_plans": 20,
+        "feasible_population": 22,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 907.0181424968335,
+          "short_trips": 0,
+          "real_cost_eur": 1003.9802,
+          "penalty_eur": 0.0,
+          "total_eur": 1003.9802
+        },
+        "local_trials": 0,
+        "combined_evaluations": 962
+      },
+      {
+        "generation": 32,
+        "objective": 1002.5895,
+        "evaluations": 992,
+        "unique_decoded_plans": 21,
+        "feasible_population": 23,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 907.0181424968335,
+          "short_trips": 0,
+          "real_cost_eur": 1002.5895,
+          "penalty_eur": 0.0,
+          "total_eur": 1002.5895
+        },
+        "local_trials": 0,
+        "combined_evaluations": 992
+      },
+      {
+        "generation": 33,
+        "objective": 1001.5003,
+        "evaluations": 1022,
+        "unique_decoded_plans": 21,
+        "feasible_population": 26,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 907.0181424968335,
+          "short_trips": 0,
+          "real_cost_eur": 1001.5003,
+          "penalty_eur": 0.0,
+          "total_eur": 1001.5003
+        },
+        "local_trials": 0,
+        "combined_evaluations": 1022
+      },
+      {
+        "generation": 34,
+        "objective": 1000.5749,
+        "evaluations": 1052,
+        "unique_decoded_plans": 16,
+        "feasible_population": 25,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 907.0181424968335,
+          "short_trips": 0,
+          "real_cost_eur": 1000.5749,
+          "penalty_eur": 0.0,
+          "total_eur": 1000.5749
+        },
+        "local_trials": 0,
+        "combined_evaluations": 1052
+      },
+      {
+        "generation": 35,
+        "objective": 999.682,
+        "evaluations": 1082,
+        "unique_decoded_plans": 23,
+        "feasible_population": 28,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 907.0181424968335,
+          "short_trips": 0,
+          "real_cost_eur": 999.682,
+          "penalty_eur": 0.0,
+          "total_eur": 999.682
+        },
+        "local_trials": 0,
+        "combined_evaluations": 1082
+      },
+      {
+        "generation": 36,
+        "objective": 982.5226,
+        "evaluations": 1112,
+        "unique_decoded_plans": 21,
+        "feasible_population": 26,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 907.0181424968335,
+          "short_trips": 0,
+          "real_cost_eur": 982.5226,
+          "penalty_eur": 0.0,
+          "total_eur": 982.5226
+        },
+        "local_trials": 0,
+        "combined_evaluations": 1112
+      },
+      {
+        "generation": 37,
+        "objective": 971.8296,
+        "evaluations": 1142,
+        "unique_decoded_plans": 20,
+        "feasible_population": 23,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 907.0181424968335,
+          "short_trips": 0,
+          "real_cost_eur": 971.8296,
+          "penalty_eur": 0.0,
+          "total_eur": 971.8296
+        },
+        "local_trials": 0,
+        "combined_evaluations": 1142
+      },
+      {
+        "generation": 38,
+        "objective": 969.3118,
+        "evaluations": 1172,
+        "unique_decoded_plans": 21,
+        "feasible_population": 23,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 907.0181424968335,
+          "short_trips": 0,
+          "real_cost_eur": 969.3118,
+          "penalty_eur": 0.0,
+          "total_eur": 969.3118
+        },
+        "local_trials": 0,
+        "combined_evaluations": 1172
+      },
+      {
+        "generation": 39,
+        "objective": 969.3118,
+        "evaluations": 1202,
+        "unique_decoded_plans": 22,
+        "feasible_population": 22,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 907.0181424968335,
+          "short_trips": 0,
+          "real_cost_eur": 969.3118,
+          "penalty_eur": 0.0,
+          "total_eur": 969.3118
+        },
+        "local_trials": 0,
+        "combined_evaluations": 1202
+      },
+      {
+        "generation": 40,
+        "objective": 969.3118,
+        "evaluations": 1232,
+        "unique_decoded_plans": 16,
+        "feasible_population": 16,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 907.0181424968335,
+          "short_trips": 0,
+          "real_cost_eur": 969.3118,
+          "penalty_eur": 0.0,
+          "total_eur": 969.3118
+        },
+        "local_trials": 0,
+        "combined_evaluations": 1232
+      },
+      {
+        "generation": 41,
+        "objective": 969.3118,
+        "evaluations": 1262,
+        "unique_decoded_plans": 17,
+        "feasible_population": 18,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 907.0181424968335,
+          "short_trips": 0,
+          "real_cost_eur": 969.3118,
+          "penalty_eur": 0.0,
+          "total_eur": 969.3118
+        },
+        "local_trials": 0,
+        "combined_evaluations": 1262
+      },
+      {
+        "generation": 42,
+        "objective": 962.9018,
+        "evaluations": 1292,
+        "unique_decoded_plans": 12,
+        "feasible_population": 15,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 907.0181424968335,
+          "short_trips": 0,
+          "real_cost_eur": 962.9018,
+          "penalty_eur": 0.0,
+          "total_eur": 962.9018
+        },
+        "local_trials": 0,
+        "combined_evaluations": 1292
+      },
+      {
+        "generation": 43,
+        "objective": 961.4328,
+        "evaluations": 1322,
+        "unique_decoded_plans": 13,
+        "feasible_population": 18,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 907.0181424968335,
+          "short_trips": 0,
+          "real_cost_eur": 961.4328,
+          "penalty_eur": 0.0,
+          "total_eur": 961.4328
+        },
+        "local_trials": 0,
+        "combined_evaluations": 1322
+      },
+      {
+        "generation": 44,
+        "objective": 958.9785,
+        "evaluations": 1352,
+        "unique_decoded_plans": 10,
+        "feasible_population": 17,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 902.0322316441182,
+          "short_trips": 0,
+          "real_cost_eur": 958.9785,
+          "penalty_eur": 0.0,
+          "total_eur": 958.9785
+        },
+        "local_trials": 0,
+        "combined_evaluations": 1352
+      },
+      {
+        "generation": 45,
+        "objective": 945.3885,
+        "evaluations": 1382,
+        "unique_decoded_plans": 15,
+        "feasible_population": 19,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 882.8302273346801,
+          "short_trips": 0,
+          "real_cost_eur": 945.3885,
+          "penalty_eur": 0.0,
+          "total_eur": 945.3885
+        },
+        "local_trials": 0,
+        "combined_evaluations": 1382
+      },
+      {
+        "generation": 46,
+        "objective": 945.3885,
+        "evaluations": 1412,
+        "unique_decoded_plans": 23,
+        "feasible_population": 25,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 882.8302273346801,
+          "short_trips": 0,
+          "real_cost_eur": 945.3885,
+          "penalty_eur": 0.0,
+          "total_eur": 945.3885
+        },
+        "local_trials": 0,
+        "combined_evaluations": 1412
+      },
+      {
+        "generation": 47,
+        "objective": 945.3885,
+        "evaluations": 1442,
+        "unique_decoded_plans": 24,
+        "feasible_population": 24,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 882.8302273346801,
+          "short_trips": 0,
+          "real_cost_eur": 945.3885,
+          "penalty_eur": 0.0,
+          "total_eur": 945.3885
+        },
+        "local_trials": 0,
+        "combined_evaluations": 1442
+      },
+      {
+        "generation": 48,
+        "objective": 945.3885,
+        "evaluations": 1472,
+        "unique_decoded_plans": 23,
+        "feasible_population": 23,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 882.8302273346801,
+          "short_trips": 0,
+          "real_cost_eur": 945.3885,
+          "penalty_eur": 0.0,
+          "total_eur": 945.3885
+        },
+        "local_trials": 0,
+        "combined_evaluations": 1472
+      },
+      {
+        "generation": 49,
+        "objective": 945.3885,
+        "evaluations": 1502,
+        "unique_decoded_plans": 19,
+        "feasible_population": 19,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 882.8302273346801,
+          "short_trips": 0,
+          "real_cost_eur": 945.3885,
+          "penalty_eur": 0.0,
+          "total_eur": 945.3885
+        },
+        "local_trials": 0,
+        "combined_evaluations": 1502
+      },
+      {
+        "generation": 50,
+        "objective": 945.3885,
+        "evaluations": 1532,
+        "unique_decoded_plans": 20,
+        "feasible_population": 20,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 882.8302273346801,
+          "short_trips": 0,
+          "real_cost_eur": 945.3885,
+          "penalty_eur": 0.0,
+          "total_eur": 945.3885
+        },
+        "local_trials": 0,
+        "combined_evaluations": 1532
+      },
+      {
+        "generation": 51,
+        "objective": 945.3525,
+        "evaluations": 1562,
+        "unique_decoded_plans": 18,
+        "feasible_population": 19,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 882.8302273346801,
+          "short_trips": 0,
+          "real_cost_eur": 945.3525,
+          "penalty_eur": 0.0,
+          "total_eur": 945.3525
+        },
+        "local_trials": 0,
+        "combined_evaluations": 1562
+      },
+      {
+        "generation": 52,
+        "objective": 945.3525,
+        "evaluations": 1592,
+        "unique_decoded_plans": 19,
+        "feasible_population": 21,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 882.8302273346801,
+          "short_trips": 0,
+          "real_cost_eur": 945.3525,
+          "penalty_eur": 0.0,
+          "total_eur": 945.3525
+        },
+        "local_trials": 0,
+        "combined_evaluations": 1592
+      },
+      {
+        "generation": 53,
+        "objective": 945.3525,
+        "evaluations": 1622,
+        "unique_decoded_plans": 11,
+        "feasible_population": 17,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 882.8302273346801,
+          "short_trips": 0,
+          "real_cost_eur": 945.3525,
+          "penalty_eur": 0.0,
+          "total_eur": 945.3525
+        },
+        "local_trials": 0,
+        "combined_evaluations": 1622
+      },
+      {
+        "generation": 54,
+        "objective": 945.3525,
+        "evaluations": 1652,
+        "unique_decoded_plans": 13,
+        "feasible_population": 20,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 882.8302273346801,
+          "short_trips": 0,
+          "real_cost_eur": 945.3525,
+          "penalty_eur": 0.0,
+          "total_eur": 945.3525
+        },
+        "local_trials": 0,
+        "combined_evaluations": 1652
+      },
+      {
+        "generation": 55,
+        "objective": 945.3525,
+        "evaluations": 1682,
+        "unique_decoded_plans": 13,
+        "feasible_population": 19,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 882.8302273346801,
+          "short_trips": 0,
+          "real_cost_eur": 945.3525,
+          "penalty_eur": 0.0,
+          "total_eur": 945.3525
+        },
+        "local_trials": 0,
+        "combined_evaluations": 1682
+      },
+      {
+        "generation": 56,
+        "objective": 937.4956,
+        "evaluations": 1712,
+        "unique_decoded_plans": 21,
+        "feasible_population": 29,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 790.2607891538737,
+          "short_trips": 0,
+          "real_cost_eur": 937.4956,
+          "penalty_eur": 0.0,
+          "total_eur": 937.4956
+        },
+        "local_trials": 0,
+        "combined_evaluations": 1712
+      },
+      {
+        "generation": 57,
+        "objective": 937.4956,
+        "evaluations": 1742,
+        "unique_decoded_plans": 25,
+        "feasible_population": 28,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 790.2607891538737,
+          "short_trips": 0,
+          "real_cost_eur": 937.4956,
+          "penalty_eur": 0.0,
+          "total_eur": 937.4956
+        },
+        "local_trials": 0,
+        "combined_evaluations": 1742
+      },
+      {
+        "generation": 58,
+        "objective": 934.7426,
+        "evaluations": 1772,
+        "unique_decoded_plans": 27,
+        "feasible_population": 27,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 790.2607891538737,
+          "short_trips": 0,
+          "real_cost_eur": 934.7426,
+          "penalty_eur": 0.0,
+          "total_eur": 934.7426
+        },
+        "local_trials": 0,
+        "combined_evaluations": 1772
+      },
+      {
+        "generation": 59,
+        "objective": 934.7426,
+        "evaluations": 1802,
+        "unique_decoded_plans": 24,
+        "feasible_population": 24,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 790.2607891538737,
+          "short_trips": 0,
+          "real_cost_eur": 934.7426,
+          "penalty_eur": 0.0,
+          "total_eur": 934.7426
+        },
+        "local_trials": 0,
+        "combined_evaluations": 1802
+      },
+      {
+        "generation": 60,
+        "objective": 934.3109,
+        "evaluations": 1832,
+        "unique_decoded_plans": 25,
+        "feasible_population": 26,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 790.2607891538737,
+          "short_trips": 0,
+          "real_cost_eur": 934.3109,
+          "penalty_eur": 0.0,
+          "total_eur": 934.3109
+        },
+        "local_trials": 0,
+        "combined_evaluations": 1832
+      },
+      {
+        "generation": 61,
+        "objective": 931.5717,
+        "evaluations": 1862,
+        "unique_decoded_plans": 27,
+        "feasible_population": 29,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 878.4054448346808,
+          "short_trips": 0,
+          "real_cost_eur": 931.5717,
+          "penalty_eur": 0.0,
+          "total_eur": 931.5717
+        },
+        "local_trials": 0,
+        "combined_evaluations": 1862
+      },
+      {
+        "generation": 62,
+        "objective": 930.2735,
+        "evaluations": 1892,
+        "unique_decoded_plans": 28,
+        "feasible_population": 30,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 878.4054448346808,
+          "short_trips": 0,
+          "real_cost_eur": 930.2735,
+          "penalty_eur": 0.0,
+          "total_eur": 930.2735
+        },
+        "local_trials": 0,
+        "combined_evaluations": 1892
+      },
+      {
+        "generation": 63,
+        "objective": 922.0079,
+        "evaluations": 1922,
+        "unique_decoded_plans": 26,
+        "feasible_population": 27,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 889.3079279517386,
+          "short_trips": 0,
+          "real_cost_eur": 922.0079,
+          "penalty_eur": 0.0,
+          "total_eur": 922.0079
+        },
+        "local_trials": 0,
+        "combined_evaluations": 1922
+      },
+      {
+        "generation": 64,
+        "objective": 915.2256,
+        "evaluations": 1952,
+        "unique_decoded_plans": 29,
+        "feasible_population": 29,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 882.479269064107,
+          "short_trips": 0,
+          "real_cost_eur": 915.2256,
+          "penalty_eur": 0.0,
+          "total_eur": 915.2256
+        },
+        "local_trials": 0,
+        "combined_evaluations": 1952
+      },
+      {
+        "generation": 65,
+        "objective": 908.7574,
+        "evaluations": 1982,
+        "unique_decoded_plans": 28,
+        "feasible_population": 28,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 884.5896966411789,
+          "short_trips": 0,
+          "real_cost_eur": 908.7574,
+          "penalty_eur": 0.0,
+          "total_eur": 908.7574
+        },
+        "local_trials": 0,
+        "combined_evaluations": 1982
+      },
+      {
+        "generation": 66,
+        "objective": 908.7574,
+        "evaluations": 2012,
+        "unique_decoded_plans": 27,
+        "feasible_population": 27,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 884.5896966411789,
+          "short_trips": 0,
+          "real_cost_eur": 908.7574,
+          "penalty_eur": 0.0,
+          "total_eur": 908.7574
+        },
+        "local_trials": 0,
+        "combined_evaluations": 2012
+      },
+      {
+        "generation": 67,
+        "objective": 908.7574,
+        "evaluations": 2042,
+        "unique_decoded_plans": 28,
+        "feasible_population": 28,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 884.5896966411789,
+          "short_trips": 0,
+          "real_cost_eur": 908.7574,
+          "penalty_eur": 0.0,
+          "total_eur": 908.7574
+        },
+        "local_trials": 0,
+        "combined_evaluations": 2042
+      },
+      {
+        "generation": 68,
+        "objective": 908.7574,
+        "evaluations": 2072,
+        "unique_decoded_plans": 26,
+        "feasible_population": 26,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 884.5896966411789,
+          "short_trips": 0,
+          "real_cost_eur": 908.7574,
+          "penalty_eur": 0.0,
+          "total_eur": 908.7574
+        },
+        "local_trials": 0,
+        "combined_evaluations": 2072
+      },
+      {
+        "generation": 69,
+        "objective": 903.8008,
+        "evaluations": 2102,
+        "unique_decoded_plans": 30,
+        "feasible_population": 30,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 885.0514558200649,
+          "short_trips": 0,
+          "real_cost_eur": 903.8008,
+          "penalty_eur": 0.0,
+          "total_eur": 903.8008
+        },
+        "local_trials": 0,
+        "combined_evaluations": 2102
+      },
+      {
+        "generation": 70,
+        "objective": 901.9589,
+        "evaluations": 2132,
+        "unique_decoded_plans": 30,
+        "feasible_population": 30,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 899.4865832898417,
+          "short_trips": 0,
+          "real_cost_eur": 901.9589,
+          "penalty_eur": 0.0,
+          "total_eur": 901.9589
+        },
+        "local_trials": 0,
+        "combined_evaluations": 2132
+      },
+      {
+        "generation": 71,
+        "objective": 901.9589,
+        "evaluations": 2162,
+        "unique_decoded_plans": 32,
+        "feasible_population": 32,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 899.4865832898417,
+          "short_trips": 0,
+          "real_cost_eur": 901.9589,
+          "penalty_eur": 0.0,
+          "total_eur": 901.9589
+        },
+        "local_trials": 0,
+        "combined_evaluations": 2162
+      },
+      {
+        "generation": 72,
+        "objective": 901.6074,
+        "evaluations": 2192,
+        "unique_decoded_plans": 31,
+        "feasible_population": 31,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 899.4865832898417,
+          "short_trips": 0,
+          "real_cost_eur": 901.6074,
+          "penalty_eur": 0.0,
+          "total_eur": 901.6074
+        },
+        "local_trials": 0,
+        "combined_evaluations": 2192
+      },
+      {
+        "generation": 73,
+        "objective": 898.6171,
+        "evaluations": 2222,
+        "unique_decoded_plans": 32,
+        "feasible_population": 32,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 883.795984200638,
+          "short_trips": 0,
+          "real_cost_eur": 898.6171,
+          "penalty_eur": 0.0,
+          "total_eur": 898.6171
+        },
+        "local_trials": 0,
+        "combined_evaluations": 2222
+      },
+      {
+        "generation": 74,
+        "objective": 898.6171,
+        "evaluations": 2252,
+        "unique_decoded_plans": 28,
+        "feasible_population": 31,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 883.795984200638,
+          "short_trips": 0,
+          "real_cost_eur": 898.6171,
+          "penalty_eur": 0.0,
+          "total_eur": 898.6171
+        },
+        "local_trials": 0,
+        "combined_evaluations": 2252
+      },
+      {
+        "generation": 75,
+        "objective": 898.367,
+        "evaluations": 2282,
+        "unique_decoded_plans": 30,
+        "feasible_population": 32,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 893.9141037572143,
+          "short_trips": 0,
+          "real_cost_eur": 898.367,
+          "penalty_eur": 0.0,
+          "total_eur": 898.367
+        },
+        "local_trials": 0,
+        "combined_evaluations": 2282
+      },
+      {
+        "generation": 76,
+        "objective": 898.367,
+        "evaluations": 2312,
+        "unique_decoded_plans": 25,
+        "feasible_population": 27,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 893.9141037572143,
+          "short_trips": 0,
+          "real_cost_eur": 898.367,
+          "penalty_eur": 0.0,
+          "total_eur": 898.367
+        },
+        "local_trials": 0,
+        "combined_evaluations": 2312
+      },
+      {
+        "generation": 77,
+        "objective": 897.5795,
+        "evaluations": 2342,
+        "unique_decoded_plans": 25,
+        "feasible_population": 29,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 882.2386822932485,
+          "short_trips": 0,
+          "real_cost_eur": 897.5795,
+          "penalty_eur": 0.0,
+          "total_eur": 897.5795
+        },
+        "local_trials": 0,
+        "combined_evaluations": 2342
+      },
+      {
+        "generation": 78,
+        "objective": 895.1937,
+        "evaluations": 2372,
+        "unique_decoded_plans": 27,
+        "feasible_population": 28,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 893.9141037572143,
+          "short_trips": 0,
+          "real_cost_eur": 895.1937,
+          "penalty_eur": 0.0,
+          "total_eur": 895.1937
+        },
+        "local_trials": 0,
+        "combined_evaluations": 2372
+      },
+      {
+        "generation": 79,
+        "objective": 895.1937,
+        "evaluations": 2402,
+        "unique_decoded_plans": 30,
+        "feasible_population": 31,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 893.9141037572143,
+          "short_trips": 0,
+          "real_cost_eur": 895.1937,
+          "penalty_eur": 0.0,
+          "total_eur": 895.1937
+        },
+        "local_trials": 0,
+        "combined_evaluations": 2402
+      },
+      {
+        "generation": 80,
+        "objective": 895.1937,
+        "evaluations": 2432,
+        "unique_decoded_plans": 30,
+        "feasible_population": 31,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 893.9141037572143,
+          "short_trips": 0,
+          "real_cost_eur": 895.1937,
+          "penalty_eur": 0.0,
+          "total_eur": 895.1937
+        },
+        "local_trials": 0,
+        "combined_evaluations": 2432
+      },
+      {
+        "generation": 81,
+        "objective": 894.0822,
+        "evaluations": 2462,
+        "unique_decoded_plans": 32,
+        "feasible_population": 32,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 882.2386822932485,
+          "short_trips": 0,
+          "real_cost_eur": 894.0822,
+          "penalty_eur": 0.0,
+          "total_eur": 894.0822
+        },
+        "local_trials": 0,
+        "combined_evaluations": 2462
+      },
+      {
+        "generation": 82,
+        "objective": 894.0822,
+        "evaluations": 2492,
+        "unique_decoded_plans": 31,
+        "feasible_population": 32,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 882.2386822932485,
+          "short_trips": 0,
+          "real_cost_eur": 894.0822,
+          "penalty_eur": 0.0,
+          "total_eur": 894.0822
+        },
+        "local_trials": 0,
+        "combined_evaluations": 2492
+      },
+      {
+        "generation": 83,
+        "objective": 893.9933,
+        "evaluations": 2522,
+        "unique_decoded_plans": 29,
+        "feasible_population": 30,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 882.2386822932485,
+          "short_trips": 0,
+          "real_cost_eur": 893.9933,
+          "penalty_eur": 0.0,
+          "total_eur": 893.9933
+        },
+        "local_trials": 0,
+        "combined_evaluations": 2522
+      },
+      {
+        "generation": 84,
+        "objective": 893.9933,
+        "evaluations": 2552,
+        "unique_decoded_plans": 30,
+        "feasible_population": 30,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 882.2386822932485,
+          "short_trips": 0,
+          "real_cost_eur": 893.9933,
+          "penalty_eur": 0.0,
+          "total_eur": 893.9933
+        },
+        "local_trials": 0,
+        "combined_evaluations": 2552
+      },
+      {
+        "generation": 85,
+        "objective": 889.7275,
+        "evaluations": 2582,
+        "unique_decoded_plans": 29,
+        "feasible_population": 31,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 882.2386822932485,
+          "short_trips": 0,
+          "real_cost_eur": 889.7275,
+          "penalty_eur": 0.0,
+          "total_eur": 889.7275
+        },
+        "local_trials": 0,
+        "combined_evaluations": 2582
+      },
+      {
+        "generation": 86,
+        "objective": 889.6611,
+        "evaluations": 2612,
+        "unique_decoded_plans": 31,
+        "feasible_population": 32,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 882.2386822932485,
+          "short_trips": 0,
+          "real_cost_eur": 889.6611,
+          "penalty_eur": 0.0,
+          "total_eur": 889.6611
+        },
+        "local_trials": 0,
+        "combined_evaluations": 2612
+      },
+      {
+        "generation": 87,
+        "objective": 889.6611,
+        "evaluations": 2642,
+        "unique_decoded_plans": 25,
+        "feasible_population": 30,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 882.2386822932485,
+          "short_trips": 0,
+          "real_cost_eur": 889.6611,
+          "penalty_eur": 0.0,
+          "total_eur": 889.6611
+        },
+        "local_trials": 0,
+        "combined_evaluations": 2642
+      },
+      {
+        "generation": 88,
+        "objective": 889.6611,
+        "evaluations": 2672,
+        "unique_decoded_plans": 23,
+        "feasible_population": 30,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 882.2386822932485,
+          "short_trips": 0,
+          "real_cost_eur": 889.6611,
+          "penalty_eur": 0.0,
+          "total_eur": 889.6611
+        },
+        "local_trials": 0,
+        "combined_evaluations": 2672
+      },
+      {
+        "generation": 89,
+        "objective": 889.2486,
+        "evaluations": 2702,
+        "unique_decoded_plans": 27,
+        "feasible_population": 32,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 882.2386822932485,
+          "short_trips": 0,
+          "real_cost_eur": 889.2486,
+          "penalty_eur": 0.0,
+          "total_eur": 889.2486
+        },
+        "local_trials": 0,
+        "combined_evaluations": 2702
+      },
+      {
+        "generation": 90,
+        "objective": 859.4955,
+        "evaluations": 2732,
+        "unique_decoded_plans": 21,
+        "feasible_population": 32,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 882.2386822932485,
+          "short_trips": 0,
+          "real_cost_eur": 859.4955,
+          "penalty_eur": 0.0,
+          "total_eur": 859.4955
+        },
+        "local_trials": 0,
+        "combined_evaluations": 2732
+      },
+      {
+        "generation": 91,
+        "objective": 859.4955,
+        "evaluations": 2762,
+        "unique_decoded_plans": 18,
+        "feasible_population": 30,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 882.2386822932485,
+          "short_trips": 0,
+          "real_cost_eur": 859.4955,
+          "penalty_eur": 0.0,
+          "total_eur": 859.4955
+        },
+        "local_trials": 0,
+        "combined_evaluations": 2762
+      },
+      {
+        "generation": 92,
+        "objective": 859.4955,
+        "evaluations": 2792,
+        "unique_decoded_plans": 24,
+        "feasible_population": 30,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 882.2386822932485,
+          "short_trips": 0,
+          "real_cost_eur": 859.4955,
+          "penalty_eur": 0.0,
+          "total_eur": 859.4955
+        },
+        "local_trials": 0,
+        "combined_evaluations": 2792
+      },
+      {
+        "generation": 93,
+        "objective": 856.7384,
+        "evaluations": 2822,
+        "unique_decoded_plans": 28,
+        "feasible_population": 30,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 882.2386822932485,
+          "short_trips": 0,
+          "real_cost_eur": 856.7384,
+          "penalty_eur": 0.0,
+          "total_eur": 856.7384
+        },
+        "local_trials": 0,
+        "combined_evaluations": 2822
+      },
+      {
+        "generation": 94,
+        "objective": 854.5673,
+        "evaluations": 2852,
+        "unique_decoded_plans": 27,
+        "feasible_population": 27,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 882.2386822932485,
+          "short_trips": 0,
+          "real_cost_eur": 854.5673,
+          "penalty_eur": 0.0,
+          "total_eur": 854.5673
+        },
+        "local_trials": 0,
+        "combined_evaluations": 2852
+      },
+      {
+        "generation": 95,
+        "objective": 854.5673,
+        "evaluations": 2882,
+        "unique_decoded_plans": 31,
+        "feasible_population": 31,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 882.2386822932485,
+          "short_trips": 0,
+          "real_cost_eur": 854.5673,
+          "penalty_eur": 0.0,
+          "total_eur": 854.5673
+        },
+        "local_trials": 0,
+        "combined_evaluations": 2882
+      },
+      {
+        "generation": 96,
+        "objective": 854.4039,
+        "evaluations": 2912,
+        "unique_decoded_plans": 30,
+        "feasible_population": 30,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 882.2386822932485,
+          "short_trips": 0,
+          "real_cost_eur": 854.4039,
+          "penalty_eur": 0.0,
+          "total_eur": 854.4039
+        },
+        "local_trials": 0,
+        "combined_evaluations": 2912
+      },
+      {
+        "generation": 97,
+        "objective": 853.2732,
+        "evaluations": 2942,
+        "unique_decoded_plans": 24,
+        "feasible_population": 26,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 882.2386822932485,
+          "short_trips": 0,
+          "real_cost_eur": 853.2732,
+          "penalty_eur": 0.0,
+          "total_eur": 853.2732
+        },
+        "local_trials": 0,
+        "combined_evaluations": 2942
+      },
+      {
+        "generation": 98,
+        "objective": 853.2732,
+        "evaluations": 2972,
+        "unique_decoded_plans": 25,
+        "feasible_population": 28,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 882.2386822932485,
+          "short_trips": 0,
+          "real_cost_eur": 853.2732,
+          "penalty_eur": 0.0,
+          "total_eur": 853.2732
+        },
+        "local_trials": 0,
+        "combined_evaluations": 2972
+      },
+      {
+        "generation": 99,
+        "objective": 852.6248,
+        "evaluations": 3002,
+        "unique_decoded_plans": 23,
+        "feasible_population": 24,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 882.2386822932485,
+          "short_trips": 0,
+          "real_cost_eur": 852.6248,
+          "penalty_eur": 0.0,
+          "total_eur": 852.6248
+        },
+        "local_trials": 0,
+        "combined_evaluations": 3002
+      },
+      {
+        "generation": 100,
+        "objective": 852.6248,
+        "evaluations": 3032,
+        "unique_decoded_plans": 21,
+        "feasible_population": 23,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 882.2386822932485,
+          "short_trips": 0,
+          "real_cost_eur": 852.6248,
+          "penalty_eur": 0.0,
+          "total_eur": 852.6248
+        },
+        "local_trials": 0,
+        "combined_evaluations": 3032
+      },
+      {
+        "generation": 101,
+        "objective": 840.5316,
+        "evaluations": 3062,
+        "unique_decoded_plans": 24,
+        "feasible_population": 25,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 895.3578618104191,
+          "short_trips": 0,
+          "real_cost_eur": 840.5316,
+          "penalty_eur": 0.0,
+          "total_eur": 840.5316
+        },
+        "local_trials": 0,
+        "combined_evaluations": 3062
+      },
+      {
+        "generation": 102,
+        "objective": 840.5316,
+        "evaluations": 3092,
+        "unique_decoded_plans": 20,
+        "feasible_population": 21,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 895.3578618104191,
+          "short_trips": 0,
+          "real_cost_eur": 840.5316,
+          "penalty_eur": 0.0,
+          "total_eur": 840.5316
+        },
+        "local_trials": 0,
+        "combined_evaluations": 3092
+      },
+      {
+        "generation": 103,
+        "objective": 840.5316,
+        "evaluations": 3122,
+        "unique_decoded_plans": 24,
+        "feasible_population": 27,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 895.3578618104191,
+          "short_trips": 0,
+          "real_cost_eur": 840.5316,
+          "penalty_eur": 0.0,
+          "total_eur": 840.5316
+        },
+        "local_trials": 0,
+        "combined_evaluations": 3122
+      },
+      {
+        "generation": 104,
+        "objective": 840.5316,
+        "evaluations": 3152,
+        "unique_decoded_plans": 25,
+        "feasible_population": 28,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 895.3578618104191,
+          "short_trips": 0,
+          "real_cost_eur": 840.5316,
+          "penalty_eur": 0.0,
+          "total_eur": 840.5316
+        },
+        "local_trials": 0,
+        "combined_evaluations": 3152
+      },
+      {
+        "generation": 105,
+        "objective": 837.6081,
+        "evaluations": 3182,
+        "unique_decoded_plans": 23,
+        "feasible_population": 27,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 895.3578618104191,
+          "short_trips": 0,
+          "real_cost_eur": 837.6081,
+          "penalty_eur": 0.0,
+          "total_eur": 837.6081
+        },
+        "local_trials": 0,
+        "combined_evaluations": 3182
+      },
+      {
+        "generation": 106,
+        "objective": 837.6081,
+        "evaluations": 3212,
+        "unique_decoded_plans": 23,
+        "feasible_population": 27,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 895.3578618104191,
+          "short_trips": 0,
+          "real_cost_eur": 837.6081,
+          "penalty_eur": 0.0,
+          "total_eur": 837.6081
+        },
+        "local_trials": 0,
+        "combined_evaluations": 3212
+      },
+      {
+        "generation": 107,
+        "objective": 837.6081,
+        "evaluations": 3242,
+        "unique_decoded_plans": 25,
+        "feasible_population": 30,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 895.3578618104191,
+          "short_trips": 0,
+          "real_cost_eur": 837.6081,
+          "penalty_eur": 0.0,
+          "total_eur": 837.6081
+        },
+        "local_trials": 0,
+        "combined_evaluations": 3242
+      },
+      {
+        "generation": 108,
+        "objective": 837.6081,
+        "evaluations": 3272,
+        "unique_decoded_plans": 25,
+        "feasible_population": 29,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 895.3578618104191,
+          "short_trips": 0,
+          "real_cost_eur": 837.6081,
+          "penalty_eur": 0.0,
+          "total_eur": 837.6081
+        },
+        "local_trials": 0,
+        "combined_evaluations": 3272
+      },
+      {
+        "generation": 109,
+        "objective": 837.6081,
+        "evaluations": 3302,
+        "unique_decoded_plans": 18,
+        "feasible_population": 27,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 895.3578618104191,
+          "short_trips": 0,
+          "real_cost_eur": 837.6081,
+          "penalty_eur": 0.0,
+          "total_eur": 837.6081
+        },
+        "local_trials": 0,
+        "combined_evaluations": 3302
+      },
+      {
+        "generation": 110,
+        "objective": 837.1956,
+        "evaluations": 3332,
+        "unique_decoded_plans": 13,
+        "feasible_population": 25,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 895.3578618104191,
+          "short_trips": 0,
+          "real_cost_eur": 837.1956,
+          "penalty_eur": 0.0,
+          "total_eur": 837.1956
+        },
+        "local_trials": 0,
+        "combined_evaluations": 3332
+      },
+      {
+        "generation": 111,
+        "objective": 837.1956,
+        "evaluations": 3362,
+        "unique_decoded_plans": 11,
+        "feasible_population": 29,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 895.3578618104191,
+          "short_trips": 0,
+          "real_cost_eur": 837.1956,
+          "penalty_eur": 0.0,
+          "total_eur": 837.1956
+        },
+        "local_trials": 0,
+        "combined_evaluations": 3362
+      },
+      {
+        "generation": 112,
+        "objective": 837.1956,
+        "evaluations": 3392,
+        "unique_decoded_plans": 17,
+        "feasible_population": 30,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 895.3578618104191,
+          "short_trips": 0,
+          "real_cost_eur": 837.1956,
+          "penalty_eur": 0.0,
+          "total_eur": 837.1956
+        },
+        "local_trials": 0,
+        "combined_evaluations": 3392
+      },
+      {
+        "generation": 113,
+        "objective": 837.1956,
+        "evaluations": 3422,
+        "unique_decoded_plans": 17,
+        "feasible_population": 29,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 895.3578618104191,
+          "short_trips": 0,
+          "real_cost_eur": 837.1956,
+          "penalty_eur": 0.0,
+          "total_eur": 837.1956
+        },
+        "local_trials": 0,
+        "combined_evaluations": 3422
+      },
+      {
+        "generation": 114,
+        "objective": 837.1956,
+        "evaluations": 3452,
+        "unique_decoded_plans": 20,
+        "feasible_population": 31,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 895.3578618104191,
+          "short_trips": 0,
+          "real_cost_eur": 837.1956,
+          "penalty_eur": 0.0,
+          "total_eur": 837.1956
+        },
+        "local_trials": 0,
+        "combined_evaluations": 3452
+      },
+      {
+        "generation": 115,
+        "objective": 837.1956,
+        "evaluations": 3482,
+        "unique_decoded_plans": 16,
+        "feasible_population": 28,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 895.3578618104191,
+          "short_trips": 0,
+          "real_cost_eur": 837.1956,
+          "penalty_eur": 0.0,
+          "total_eur": 837.1956
+        },
+        "local_trials": 0,
+        "combined_evaluations": 3482
+      },
+      {
+        "generation": 116,
+        "objective": 837.1956,
+        "evaluations": 3512,
+        "unique_decoded_plans": 8,
+        "feasible_population": 26,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 895.3578618104191,
+          "short_trips": 0,
+          "real_cost_eur": 837.1956,
+          "penalty_eur": 0.0,
+          "total_eur": 837.1956
+        },
+        "local_trials": 0,
+        "combined_evaluations": 3512
+      },
+      {
+        "generation": 117,
+        "objective": 837.1956,
+        "evaluations": 3542,
+        "unique_decoded_plans": 13,
+        "feasible_population": 30,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 895.3578618104191,
+          "short_trips": 0,
+          "real_cost_eur": 837.1956,
+          "penalty_eur": 0.0,
+          "total_eur": 837.1956
+        },
+        "local_trials": 0,
+        "combined_evaluations": 3542
+      },
+      {
+        "generation": 118,
+        "objective": 837.1956,
+        "evaluations": 3572,
+        "unique_decoded_plans": 15,
+        "feasible_population": 30,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 895.3578618104191,
+          "short_trips": 0,
+          "real_cost_eur": 837.1956,
+          "penalty_eur": 0.0,
+          "total_eur": 837.1956
+        },
+        "local_trials": 0,
+        "combined_evaluations": 3572
+      },
+      {
+        "generation": 119,
+        "objective": 837.1956,
+        "evaluations": 3602,
+        "unique_decoded_plans": 17,
+        "feasible_population": 31,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 895.3578618104191,
+          "short_trips": 0,
+          "real_cost_eur": 837.1956,
+          "penalty_eur": 0.0,
+          "total_eur": 837.1956
+        },
+        "local_trials": 0,
+        "combined_evaluations": 3602
+      },
+      {
+        "generation": 120,
+        "objective": 837.1956,
+        "evaluations": 3632,
+        "unique_decoded_plans": 16,
+        "feasible_population": 29,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 895.3578618104191,
+          "short_trips": 0,
+          "real_cost_eur": 837.1956,
+          "penalty_eur": 0.0,
+          "total_eur": 837.1956
+        },
+        "local_trials": 0,
+        "combined_evaluations": 3632
+      },
+      {
+        "generation": 121,
+        "objective": 837.1956,
+        "evaluations": 3662,
+        "unique_decoded_plans": 11,
+        "feasible_population": 32,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 895.3578618104191,
+          "short_trips": 0,
+          "real_cost_eur": 837.1956,
+          "penalty_eur": 0.0,
+          "total_eur": 837.1956
+        },
+        "local_trials": 0,
+        "combined_evaluations": 3662
+      },
+      {
+        "generation": 122,
+        "objective": 837.1956,
+        "evaluations": 3692,
+        "unique_decoded_plans": 14,
+        "feasible_population": 31,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 895.3578618104191,
+          "short_trips": 0,
+          "real_cost_eur": 837.1956,
+          "penalty_eur": 0.0,
+          "total_eur": 837.1956
+        },
+        "local_trials": 0,
+        "combined_evaluations": 3692
+      },
+      {
+        "generation": 123,
+        "objective": 837.1956,
+        "evaluations": 3722,
+        "unique_decoded_plans": 17,
+        "feasible_population": 30,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 895.3578618104191,
+          "short_trips": 0,
+          "real_cost_eur": 837.1956,
+          "penalty_eur": 0.0,
+          "total_eur": 837.1956
+        },
+        "local_trials": 0,
+        "combined_evaluations": 3722
+      },
+      {
+        "generation": 124,
+        "objective": 837.1956,
+        "evaluations": 3752,
+        "unique_decoded_plans": 16,
+        "feasible_population": 31,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 895.3578618104191,
+          "short_trips": 0,
+          "real_cost_eur": 837.1956,
+          "penalty_eur": 0.0,
+          "total_eur": 837.1956
+        },
+        "local_trials": 0,
+        "combined_evaluations": 3752
+      },
+      {
+        "generation": 125,
+        "objective": 837.1956,
+        "evaluations": 3782,
+        "unique_decoded_plans": 14,
+        "feasible_population": 29,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 895.3578618104191,
+          "short_trips": 0,
+          "real_cost_eur": 837.1956,
+          "penalty_eur": 0.0,
+          "total_eur": 837.1956
+        },
+        "local_trials": 0,
+        "combined_evaluations": 3782
+      },
+      {
+        "generation": 126,
+        "objective": 837.1956,
+        "evaluations": 3812,
+        "unique_decoded_plans": 17,
+        "feasible_population": 31,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 895.3578618104191,
+          "short_trips": 0,
+          "real_cost_eur": 837.1956,
+          "penalty_eur": 0.0,
+          "total_eur": 837.1956
+        },
+        "local_trials": 0,
+        "combined_evaluations": 3812
+      },
+      {
+        "generation": 127,
+        "objective": 837.1956,
+        "evaluations": 3842,
+        "unique_decoded_plans": 15,
+        "feasible_population": 28,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 895.3578618104191,
+          "short_trips": 0,
+          "real_cost_eur": 837.1956,
+          "penalty_eur": 0.0,
+          "total_eur": 837.1956
+        },
+        "local_trials": 0,
+        "combined_evaluations": 3842
+      },
+      {
+        "generation": 128,
+        "objective": 837.1956,
+        "evaluations": 3872,
+        "unique_decoded_plans": 17,
+        "feasible_population": 29,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 895.3578618104191,
+          "short_trips": 0,
+          "real_cost_eur": 837.1956,
+          "penalty_eur": 0.0,
+          "total_eur": 837.1956
+        },
+        "local_trials": 0,
+        "combined_evaluations": 3872
+      },
+      {
+        "generation": 129,
+        "objective": 837.0887,
+        "evaluations": 3902,
+        "unique_decoded_plans": 17,
+        "feasible_population": 30,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 883.4189610777747,
+          "short_trips": 0,
+          "real_cost_eur": 837.0887,
+          "penalty_eur": 0.0,
+          "total_eur": 837.0887
+        },
+        "local_trials": 0,
+        "combined_evaluations": 3902
+      },
+      {
+        "generation": 130,
+        "objective": 837.0887,
+        "evaluations": 3932,
+        "unique_decoded_plans": 20,
+        "feasible_population": 30,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 883.4189610777747,
+          "short_trips": 0,
+          "real_cost_eur": 837.0887,
+          "penalty_eur": 0.0,
+          "total_eur": 837.0887
+        },
+        "local_trials": 0,
+        "combined_evaluations": 3932
+      },
+      {
+        "generation": 131,
+        "objective": 837.0887,
+        "evaluations": 3962,
+        "unique_decoded_plans": 18,
+        "feasible_population": 30,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 883.4189610777747,
+          "short_trips": 0,
+          "real_cost_eur": 837.0887,
+          "penalty_eur": 0.0,
+          "total_eur": 837.0887
+        },
+        "local_trials": 0,
+        "combined_evaluations": 3962
+      },
+      {
+        "generation": 132,
+        "objective": 837.0887,
+        "evaluations": 3992,
+        "unique_decoded_plans": 19,
+        "feasible_population": 28,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 883.4189610777747,
+          "short_trips": 0,
+          "real_cost_eur": 837.0887,
+          "penalty_eur": 0.0,
+          "total_eur": 837.0887
+        },
+        "local_trials": 0,
+        "combined_evaluations": 3992
+      },
+      {
+        "generation": 133,
+        "objective": 837.0887,
+        "evaluations": 4022,
+        "unique_decoded_plans": 22,
+        "feasible_population": 30,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 883.4189610777747,
+          "short_trips": 0,
+          "real_cost_eur": 837.0887,
+          "penalty_eur": 0.0,
+          "total_eur": 837.0887
+        },
+        "local_trials": 0,
+        "combined_evaluations": 4022
+      },
+      {
+        "generation": 134,
+        "objective": 837.0887,
+        "evaluations": 4052,
+        "unique_decoded_plans": 19,
+        "feasible_population": 25,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 883.4189610777747,
+          "short_trips": 0,
+          "real_cost_eur": 837.0887,
+          "penalty_eur": 0.0,
+          "total_eur": 837.0887
+        },
+        "local_trials": 0,
+        "combined_evaluations": 4052
+      },
+      {
+        "generation": 135,
+        "objective": 836.9616,
+        "evaluations": 4082,
+        "unique_decoded_plans": 23,
+        "feasible_population": 29,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 883.4189610777747,
+          "short_trips": 0,
+          "real_cost_eur": 836.9616,
+          "penalty_eur": 0.0,
+          "total_eur": 836.9616
+        },
+        "local_trials": 0,
+        "combined_evaluations": 4082
+      },
+      {
+        "generation": 136,
+        "objective": 836.9616,
+        "evaluations": 4112,
+        "unique_decoded_plans": 28,
+        "feasible_population": 31,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 883.4189610777747,
+          "short_trips": 0,
+          "real_cost_eur": 836.9616,
+          "penalty_eur": 0.0,
+          "total_eur": 836.9616
+        },
+        "local_trials": 0,
+        "combined_evaluations": 4112
+      },
+      {
+        "generation": 137,
+        "objective": 836.9616,
+        "evaluations": 4142,
+        "unique_decoded_plans": 22,
+        "feasible_population": 28,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 883.4189610777747,
+          "short_trips": 0,
+          "real_cost_eur": 836.9616,
+          "penalty_eur": 0.0,
+          "total_eur": 836.9616
+        },
+        "local_trials": 0,
+        "combined_evaluations": 4142
+      },
+      {
+        "generation": 138,
+        "objective": 836.9616,
+        "evaluations": 4172,
+        "unique_decoded_plans": 21,
+        "feasible_population": 29,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 883.4189610777747,
+          "short_trips": 0,
+          "real_cost_eur": 836.9616,
+          "penalty_eur": 0.0,
+          "total_eur": 836.9616
+        },
+        "local_trials": 0,
+        "combined_evaluations": 4172
+      },
+      {
+        "generation": 139,
+        "objective": 836.9616,
+        "evaluations": 4202,
+        "unique_decoded_plans": 16,
+        "feasible_population": 31,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 883.4189610777747,
+          "short_trips": 0,
+          "real_cost_eur": 836.9616,
+          "penalty_eur": 0.0,
+          "total_eur": 836.9616
+        },
+        "local_trials": 0,
+        "combined_evaluations": 4202
+      },
+      {
+        "generation": 140,
+        "objective": 836.9616,
+        "evaluations": 4232,
+        "unique_decoded_plans": 14,
+        "feasible_population": 32,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 883.4189610777747,
+          "short_trips": 0,
+          "real_cost_eur": 836.9616,
+          "penalty_eur": 0.0,
+          "total_eur": 836.9616
+        },
+        "local_trials": 0,
+        "combined_evaluations": 4232
+      },
+      {
+        "generation": 141,
+        "objective": 836.9616,
+        "evaluations": 4262,
+        "unique_decoded_plans": 17,
+        "feasible_population": 31,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 883.4189610777747,
+          "short_trips": 0,
+          "real_cost_eur": 836.9616,
+          "penalty_eur": 0.0,
+          "total_eur": 836.9616
+        },
+        "local_trials": 0,
+        "combined_evaluations": 4262
+      },
+      {
+        "generation": 142,
+        "objective": 836.9616,
+        "evaluations": 4292,
+        "unique_decoded_plans": 14,
+        "feasible_population": 31,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 883.4189610777747,
+          "short_trips": 0,
+          "real_cost_eur": 836.9616,
+          "penalty_eur": 0.0,
+          "total_eur": 836.9616
+        },
+        "local_trials": 0,
+        "combined_evaluations": 4292
+      },
+      {
+        "generation": 143,
+        "objective": 836.9616,
+        "evaluations": 4322,
+        "unique_decoded_plans": 12,
+        "feasible_population": 31,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 883.4189610777747,
+          "short_trips": 0,
+          "real_cost_eur": 836.9616,
+          "penalty_eur": 0.0,
+          "total_eur": 836.9616
+        },
+        "local_trials": 0,
+        "combined_evaluations": 4322
+      },
+      {
+        "generation": 144,
+        "objective": 836.9616,
+        "evaluations": 4352,
+        "unique_decoded_plans": 11,
+        "feasible_population": 30,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 883.4189610777747,
+          "short_trips": 0,
+          "real_cost_eur": 836.9616,
+          "penalty_eur": 0.0,
+          "total_eur": 836.9616
+        },
+        "local_trials": 0,
+        "combined_evaluations": 4352
+      },
+      {
+        "generation": 145,
+        "objective": 836.8787,
+        "evaluations": 4382,
+        "unique_decoded_plans": 17,
+        "feasible_population": 31,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 883.4189610777747,
+          "short_trips": 0,
+          "real_cost_eur": 836.8787,
+          "penalty_eur": 0.0,
+          "total_eur": 836.8787
+        },
+        "local_trials": 0,
+        "combined_evaluations": 4382
+      },
+      {
+        "generation": 146,
+        "objective": 836.8787,
+        "evaluations": 4412,
+        "unique_decoded_plans": 19,
+        "feasible_population": 31,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 883.4189610777747,
+          "short_trips": 0,
+          "real_cost_eur": 836.8787,
+          "penalty_eur": 0.0,
+          "total_eur": 836.8787
+        },
+        "local_trials": 0,
+        "combined_evaluations": 4412
+      },
+      {
+        "generation": 147,
+        "objective": 836.8787,
+        "evaluations": 4442,
+        "unique_decoded_plans": 18,
+        "feasible_population": 32,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 883.4189610777747,
+          "short_trips": 0,
+          "real_cost_eur": 836.8787,
+          "penalty_eur": 0.0,
+          "total_eur": 836.8787
+        },
+        "local_trials": 0,
+        "combined_evaluations": 4442
+      },
+      {
+        "generation": 148,
+        "objective": 836.8787,
+        "evaluations": 4472,
+        "unique_decoded_plans": 14,
+        "feasible_population": 30,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 883.4189610777747,
+          "short_trips": 0,
+          "real_cost_eur": 836.8787,
+          "penalty_eur": 0.0,
+          "total_eur": 836.8787
+        },
+        "local_trials": 0,
+        "combined_evaluations": 4472
+      },
+      {
+        "generation": 149,
+        "objective": 836.8787,
+        "evaluations": 4502,
+        "unique_decoded_plans": 15,
+        "feasible_population": 30,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 883.4189610777747,
+          "short_trips": 0,
+          "real_cost_eur": 836.8787,
+          "penalty_eur": 0.0,
+          "total_eur": 836.8787
+        },
+        "local_trials": 0,
+        "combined_evaluations": 4502
+      },
+      {
+        "generation": 150,
+        "objective": 836.8029,
+        "evaluations": 4532,
+        "unique_decoded_plans": 17,
+        "feasible_population": 31,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 883.4189610777747,
+          "short_trips": 0,
+          "real_cost_eur": 836.8029,
+          "penalty_eur": 0.0,
+          "total_eur": 836.8029
+        },
+        "local_trials": 0,
+        "combined_evaluations": 4532
+      },
+      {
+        "generation": 151,
+        "objective": 836.8029,
+        "evaluations": 4562,
+        "unique_decoded_plans": 21,
+        "feasible_population": 31,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 883.4189610777747,
+          "short_trips": 0,
+          "real_cost_eur": 836.8029,
+          "penalty_eur": 0.0,
+          "total_eur": 836.8029
+        },
+        "local_trials": 0,
+        "combined_evaluations": 4562
+      },
+      {
+        "generation": 152,
+        "objective": 836.8029,
+        "evaluations": 4592,
+        "unique_decoded_plans": 18,
+        "feasible_population": 29,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 883.4189610777747,
+          "short_trips": 0,
+          "real_cost_eur": 836.8029,
+          "penalty_eur": 0.0,
+          "total_eur": 836.8029
+        },
+        "local_trials": 0,
+        "combined_evaluations": 4592
+      },
+      {
+        "generation": 153,
+        "objective": 836.8029,
+        "evaluations": 4622,
+        "unique_decoded_plans": 17,
+        "feasible_population": 30,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 883.4189610777747,
+          "short_trips": 0,
+          "real_cost_eur": 836.8029,
+          "penalty_eur": 0.0,
+          "total_eur": 836.8029
+        },
+        "local_trials": 0,
+        "combined_evaluations": 4622
+      },
+      {
+        "generation": 154,
+        "objective": 834.8316,
+        "evaluations": 4652,
+        "unique_decoded_plans": 21,
+        "feasible_population": 31,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 776.0954071077748,
+          "short_trips": 0,
+          "real_cost_eur": 834.8316,
+          "penalty_eur": 0.0,
+          "total_eur": 834.8316
+        },
+        "local_trials": 0,
+        "combined_evaluations": 4652
+      },
+      {
+        "generation": 155,
+        "objective": 834.8316,
+        "evaluations": 4682,
+        "unique_decoded_plans": 23,
+        "feasible_population": 31,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 776.0954071077748,
+          "short_trips": 0,
+          "real_cost_eur": 834.8316,
+          "penalty_eur": 0.0,
+          "total_eur": 834.8316
+        },
+        "local_trials": 0,
+        "combined_evaluations": 4682
+      },
+      {
+        "generation": 156,
+        "objective": 834.8316,
+        "evaluations": 4712,
+        "unique_decoded_plans": 26,
+        "feasible_population": 29,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 776.0954071077748,
+          "short_trips": 0,
+          "real_cost_eur": 834.8316,
+          "penalty_eur": 0.0,
+          "total_eur": 834.8316
+        },
+        "local_trials": 0,
+        "combined_evaluations": 4712
+      },
+      {
+        "generation": 157,
+        "objective": 834.8316,
+        "evaluations": 4742,
+        "unique_decoded_plans": 28,
+        "feasible_population": 28,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 776.0954071077748,
+          "short_trips": 0,
+          "real_cost_eur": 834.8316,
+          "penalty_eur": 0.0,
+          "total_eur": 834.8316
+        },
+        "local_trials": 0,
+        "combined_evaluations": 4742
+      },
+      {
+        "generation": 158,
+        "objective": 834.8316,
+        "evaluations": 4772,
+        "unique_decoded_plans": 25,
+        "feasible_population": 26,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 776.0954071077748,
+          "short_trips": 0,
+          "real_cost_eur": 834.8316,
+          "penalty_eur": 0.0,
+          "total_eur": 834.8316
+        },
+        "local_trials": 0,
+        "combined_evaluations": 4772
+      },
+      {
+        "generation": 159,
+        "objective": 834.8316,
+        "evaluations": 4802,
+        "unique_decoded_plans": 25,
+        "feasible_population": 27,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 776.0954071077748,
+          "short_trips": 0,
+          "real_cost_eur": 834.8316,
+          "penalty_eur": 0.0,
+          "total_eur": 834.8316
+        },
+        "local_trials": 0,
+        "combined_evaluations": 4802
+      },
+      {
+        "generation": 160,
+        "objective": 834.8316,
+        "evaluations": 4832,
+        "unique_decoded_plans": 30,
+        "feasible_population": 31,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 776.0954071077748,
+          "short_trips": 0,
+          "real_cost_eur": 834.8316,
+          "penalty_eur": 0.0,
+          "total_eur": 834.8316
+        },
+        "local_trials": 0,
+        "combined_evaluations": 4832
+      },
+      {
+        "generation": 161,
+        "objective": 834.8316,
+        "evaluations": 4862,
+        "unique_decoded_plans": 26,
+        "feasible_population": 26,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 776.0954071077748,
+          "short_trips": 0,
+          "real_cost_eur": 834.8316,
+          "penalty_eur": 0.0,
+          "total_eur": 834.8316
+        },
+        "local_trials": 0,
+        "combined_evaluations": 4862
+      },
+      {
+        "generation": 162,
+        "objective": 834.8316,
+        "evaluations": 4892,
+        "unique_decoded_plans": 23,
+        "feasible_population": 24,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 776.0954071077748,
+          "short_trips": 0,
+          "real_cost_eur": 834.8316,
+          "penalty_eur": 0.0,
+          "total_eur": 834.8316
+        },
+        "local_trials": 0,
+        "combined_evaluations": 4892
+      },
+      {
+        "generation": 163,
+        "objective": 834.8316,
+        "evaluations": 4922,
+        "unique_decoded_plans": 24,
+        "feasible_population": 28,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 776.0954071077748,
+          "short_trips": 0,
+          "real_cost_eur": 834.8316,
+          "penalty_eur": 0.0,
+          "total_eur": 834.8316
+        },
+        "local_trials": 0,
+        "combined_evaluations": 4922
+      },
+      {
+        "generation": 164,
+        "objective": 830.3865,
+        "evaluations": 4952,
+        "unique_decoded_plans": 25,
+        "feasible_population": 27,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 763.5207473143977,
+          "short_trips": 0,
+          "real_cost_eur": 830.3865,
+          "penalty_eur": 0.0,
+          "total_eur": 830.3865
+        },
+        "local_trials": 0,
+        "combined_evaluations": 4952
+      },
+      {
+        "generation": 165,
+        "objective": 830.3865,
+        "evaluations": 4982,
+        "unique_decoded_plans": 25,
+        "feasible_population": 26,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 763.5207473143977,
+          "short_trips": 0,
+          "real_cost_eur": 830.3865,
+          "penalty_eur": 0.0,
+          "total_eur": 830.3865
+        },
+        "local_trials": 0,
+        "combined_evaluations": 4982
+      },
+      {
+        "generation": 166,
+        "objective": 830.3865,
+        "evaluations": 5012,
+        "unique_decoded_plans": 27,
+        "feasible_population": 29,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 763.5207473143977,
+          "short_trips": 0,
+          "real_cost_eur": 830.3865,
+          "penalty_eur": 0.0,
+          "total_eur": 830.3865
+        },
+        "local_trials": 0,
+        "combined_evaluations": 5012
+      },
+      {
+        "generation": 167,
+        "objective": 826.5923,
+        "evaluations": 5042,
+        "unique_decoded_plans": 25,
+        "feasible_population": 29,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 756.2360078775334,
+          "short_trips": 0,
+          "real_cost_eur": 826.5923,
+          "penalty_eur": 0.0,
+          "total_eur": 826.5923
+        },
+        "local_trials": 0,
+        "combined_evaluations": 5042
+      },
+      {
+        "generation": 168,
+        "objective": 826.4362,
+        "evaluations": 5072,
+        "unique_decoded_plans": 25,
+        "feasible_population": 29,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 761.6116843269773,
+          "short_trips": 0,
+          "real_cost_eur": 826.4362,
+          "penalty_eur": 0.0,
+          "total_eur": 826.4362
+        },
+        "local_trials": 0,
+        "combined_evaluations": 5072
+      },
+      {
+        "generation": 169,
+        "objective": 823.2521,
+        "evaluations": 5102,
+        "unique_decoded_plans": 24,
+        "feasible_population": 30,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 756.2360078775334,
+          "short_trips": 0,
+          "real_cost_eur": 823.2521,
+          "penalty_eur": 0.0,
+          "total_eur": 823.2521
+        },
+        "local_trials": 0,
+        "combined_evaluations": 5102
+      },
+      {
+        "generation": 170,
+        "objective": 823.2521,
+        "evaluations": 5132,
+        "unique_decoded_plans": 21,
+        "feasible_population": 30,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 756.2360078775334,
+          "short_trips": 0,
+          "real_cost_eur": 823.2521,
+          "penalty_eur": 0.0,
+          "total_eur": 823.2521
+        },
+        "local_trials": 0,
+        "combined_evaluations": 5132
+      },
+      {
+        "generation": 171,
+        "objective": 822.0474,
+        "evaluations": 5162,
+        "unique_decoded_plans": 22,
+        "feasible_population": 31,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 753.9001507035038,
+          "short_trips": 0,
+          "real_cost_eur": 822.0474,
+          "penalty_eur": 0.0,
+          "total_eur": 822.0474
+        },
+        "local_trials": 0,
+        "combined_evaluations": 5162
+      },
+      {
+        "generation": 172,
+        "objective": 822.0474,
+        "evaluations": 5192,
+        "unique_decoded_plans": 19,
+        "feasible_population": 31,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 753.9001507035038,
+          "short_trips": 0,
+          "real_cost_eur": 822.0474,
+          "penalty_eur": 0.0,
+          "total_eur": 822.0474
+        },
+        "local_trials": 0,
+        "combined_evaluations": 5192
+      },
+      {
+        "generation": 173,
+        "objective": 822.0474,
+        "evaluations": 5222,
+        "unique_decoded_plans": 22,
+        "feasible_population": 30,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 753.9001507035038,
+          "short_trips": 0,
+          "real_cost_eur": 822.0474,
+          "penalty_eur": 0.0,
+          "total_eur": 822.0474
+        },
+        "local_trials": 0,
+        "combined_evaluations": 5222
+      },
+      {
+        "generation": 174,
+        "objective": 822.0474,
+        "evaluations": 5252,
+        "unique_decoded_plans": 27,
+        "feasible_population": 32,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 753.9001507035038,
+          "short_trips": 0,
+          "real_cost_eur": 822.0474,
+          "penalty_eur": 0.0,
+          "total_eur": 822.0474
+        },
+        "local_trials": 0,
+        "combined_evaluations": 5252
+      },
+      {
+        "generation": 175,
+        "objective": 820.6548,
+        "evaluations": 5282,
+        "unique_decoded_plans": 27,
+        "feasible_population": 32,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 751.2141389234088,
+          "short_trips": 0,
+          "real_cost_eur": 820.6548,
+          "penalty_eur": 0.0,
+          "total_eur": 820.6548
+        },
+        "local_trials": 0,
+        "combined_evaluations": 5282
+      },
+      {
+        "generation": 176,
+        "objective": 820.6548,
+        "evaluations": 5312,
+        "unique_decoded_plans": 28,
+        "feasible_population": 32,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 751.2141389234088,
+          "short_trips": 0,
+          "real_cost_eur": 820.6548,
+          "penalty_eur": 0.0,
+          "total_eur": 820.6548
+        },
+        "local_trials": 0,
+        "combined_evaluations": 5312
+      },
+      {
+        "generation": 177,
+        "objective": 820.6548,
+        "evaluations": 5342,
+        "unique_decoded_plans": 26,
+        "feasible_population": 32,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 751.2141389234088,
+          "short_trips": 0,
+          "real_cost_eur": 820.6548,
+          "penalty_eur": 0.0,
+          "total_eur": 820.6548
+        },
+        "local_trials": 0,
+        "combined_evaluations": 5342
+      },
+      {
+        "generation": 178,
+        "objective": 820.6548,
+        "evaluations": 5372,
+        "unique_decoded_plans": 21,
+        "feasible_population": 32,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 751.2141389234088,
+          "short_trips": 0,
+          "real_cost_eur": 820.6548,
+          "penalty_eur": 0.0,
+          "total_eur": 820.6548
+        },
+        "local_trials": 0,
+        "combined_evaluations": 5372
+      },
+      {
+        "generation": 179,
+        "objective": 820.6548,
+        "evaluations": 5402,
+        "unique_decoded_plans": 18,
+        "feasible_population": 32,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 751.2141389234088,
+          "short_trips": 0,
+          "real_cost_eur": 820.6548,
+          "penalty_eur": 0.0,
+          "total_eur": 820.6548
+        },
+        "local_trials": 0,
+        "combined_evaluations": 5402
+      },
+      {
+        "generation": 180,
+        "objective": 820.6548,
+        "evaluations": 5432,
+        "unique_decoded_plans": 18,
+        "feasible_population": 32,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 751.2141389234088,
+          "short_trips": 0,
+          "real_cost_eur": 820.6548,
+          "penalty_eur": 0.0,
+          "total_eur": 820.6548
+        },
+        "local_trials": 0,
+        "combined_evaluations": 5432
+      },
+      {
+        "generation": 181,
+        "objective": 819.5072,
+        "evaluations": 5462,
+        "unique_decoded_plans": 23,
+        "feasible_population": 31,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 738.4250297005299,
+          "short_trips": 0,
+          "real_cost_eur": 819.5072,
+          "penalty_eur": 0.0,
+          "total_eur": 819.5072
+        },
+        "local_trials": 0,
+        "combined_evaluations": 5462
+      },
+      {
+        "generation": 182,
+        "objective": 819.5072,
+        "evaluations": 5492,
+        "unique_decoded_plans": 27,
+        "feasible_population": 32,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 738.4250297005299,
+          "short_trips": 0,
+          "real_cost_eur": 819.5072,
+          "penalty_eur": 0.0,
+          "total_eur": 819.5072
+        },
+        "local_trials": 0,
+        "combined_evaluations": 5492
+      },
+      {
+        "generation": 183,
+        "objective": 819.5072,
+        "evaluations": 5522,
+        "unique_decoded_plans": 26,
+        "feasible_population": 30,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 738.4250297005299,
+          "short_trips": 0,
+          "real_cost_eur": 819.5072,
+          "penalty_eur": 0.0,
+          "total_eur": 819.5072
+        },
+        "local_trials": 0,
+        "combined_evaluations": 5522
+      },
+      {
+        "generation": 184,
+        "objective": 814.9241,
+        "evaluations": 5552,
+        "unique_decoded_plans": 28,
+        "feasible_population": 31,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 747.9963482050402,
+          "short_trips": 0,
+          "real_cost_eur": 814.9241,
+          "penalty_eur": 0.0,
+          "total_eur": 814.9241
+        },
+        "local_trials": 0,
+        "combined_evaluations": 5552
+      },
+      {
+        "generation": 185,
+        "objective": 814.9241,
+        "evaluations": 5582,
+        "unique_decoded_plans": 26,
+        "feasible_population": 29,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 747.9963482050402,
+          "short_trips": 0,
+          "real_cost_eur": 814.9241,
+          "penalty_eur": 0.0,
+          "total_eur": 814.9241
+        },
+        "local_trials": 0,
+        "combined_evaluations": 5582
+      },
+      {
+        "generation": 186,
+        "objective": 814.9241,
+        "evaluations": 5612,
+        "unique_decoded_plans": 27,
+        "feasible_population": 30,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 747.9963482050402,
+          "short_trips": 0,
+          "real_cost_eur": 814.9241,
+          "penalty_eur": 0.0,
+          "total_eur": 814.9241
+        },
+        "local_trials": 0,
+        "combined_evaluations": 5612
+      },
+      {
+        "generation": 187,
+        "objective": 813.3621,
+        "evaluations": 5642,
+        "unique_decoded_plans": 29,
+        "feasible_population": 30,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 746.2554267285143,
+          "short_trips": 0,
+          "real_cost_eur": 813.3621,
+          "penalty_eur": 0.0,
+          "total_eur": 813.3621
+        },
+        "local_trials": 0,
+        "combined_evaluations": 5642
+      },
+      {
+        "generation": 188,
+        "objective": 812.9652,
+        "evaluations": 5672,
+        "unique_decoded_plans": 27,
+        "feasible_population": 27,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 745.5391856977333,
+          "short_trips": 0,
+          "real_cost_eur": 812.9652,
+          "penalty_eur": 0.0,
+          "total_eur": 812.9652
+        },
+        "local_trials": 0,
+        "combined_evaluations": 5672
+      },
+      {
+        "generation": 189,
+        "objective": 812.9652,
+        "evaluations": 5702,
+        "unique_decoded_plans": 31,
+        "feasible_population": 32,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 745.5391856977333,
+          "short_trips": 0,
+          "real_cost_eur": 812.9652,
+          "penalty_eur": 0.0,
+          "total_eur": 812.9652
+        },
+        "local_trials": 0,
+        "combined_evaluations": 5702
+      },
+      {
+        "generation": 190,
+        "objective": 809.0492,
+        "evaluations": 5732,
+        "unique_decoded_plans": 29,
+        "feasible_population": 31,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 745.5391856977333,
+          "short_trips": 0,
+          "real_cost_eur": 809.0492,
+          "penalty_eur": 0.0,
+          "total_eur": 809.0492
+        },
+        "local_trials": 0,
+        "combined_evaluations": 5732
+      },
+      {
+        "generation": 191,
+        "objective": 805.7089,
+        "evaluations": 5762,
+        "unique_decoded_plans": 30,
+        "feasible_population": 32,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 745.5391856977333,
+          "short_trips": 0,
+          "real_cost_eur": 805.7089,
+          "penalty_eur": 0.0,
+          "total_eur": 805.7089
+        },
+        "local_trials": 0,
+        "combined_evaluations": 5762
+      },
+      {
+        "generation": 192,
+        "objective": 805.7089,
+        "evaluations": 5792,
+        "unique_decoded_plans": 24,
+        "feasible_population": 32,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 745.5391856977333,
+          "short_trips": 0,
+          "real_cost_eur": 805.7089,
+          "penalty_eur": 0.0,
+          "total_eur": 805.7089
+        },
+        "local_trials": 0,
+        "combined_evaluations": 5792
+      },
+      {
+        "generation": 193,
+        "objective": 805.7089,
+        "evaluations": 5822,
+        "unique_decoded_plans": 24,
+        "feasible_population": 31,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 745.5391856977333,
+          "short_trips": 0,
+          "real_cost_eur": 805.7089,
+          "penalty_eur": 0.0,
+          "total_eur": 805.7089
+        },
+        "local_trials": 0,
+        "combined_evaluations": 5822
+      },
+      {
+        "generation": 194,
+        "objective": 805.7089,
+        "evaluations": 5852,
+        "unique_decoded_plans": 23,
+        "feasible_population": 32,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 745.5391856977333,
+          "short_trips": 0,
+          "real_cost_eur": 805.7089,
+          "penalty_eur": 0.0,
+          "total_eur": 805.7089
+        },
+        "local_trials": 0,
+        "combined_evaluations": 5852
+      },
+      {
+        "generation": 195,
+        "objective": 805.7089,
+        "evaluations": 5882,
+        "unique_decoded_plans": 22,
+        "feasible_population": 32,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 745.5391856977333,
+          "short_trips": 0,
+          "real_cost_eur": 805.7089,
+          "penalty_eur": 0.0,
+          "total_eur": 805.7089
+        },
+        "local_trials": 0,
+        "combined_evaluations": 5882
+      },
+      {
+        "generation": 196,
+        "objective": 805.4667,
+        "evaluations": 5912,
+        "unique_decoded_plans": 21,
+        "feasible_population": 32,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 744.6828886684364,
+          "short_trips": 0,
+          "real_cost_eur": 805.4667,
+          "penalty_eur": 0.0,
+          "total_eur": 805.4667
+        },
+        "local_trials": 0,
+        "combined_evaluations": 5912
+      },
+      {
+        "generation": 197,
+        "objective": 805.4667,
+        "evaluations": 5942,
+        "unique_decoded_plans": 19,
+        "feasible_population": 32,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 744.6828886684364,
+          "short_trips": 0,
+          "real_cost_eur": 805.4667,
+          "penalty_eur": 0.0,
+          "total_eur": 805.4667
+        },
+        "local_trials": 0,
+        "combined_evaluations": 5942
+      },
+      {
+        "generation": 198,
+        "objective": 805.4667,
+        "evaluations": 5972,
+        "unique_decoded_plans": 19,
+        "feasible_population": 32,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 744.6828886684364,
+          "short_trips": 0,
+          "real_cost_eur": 805.4667,
+          "penalty_eur": 0.0,
+          "total_eur": 805.4667
+        },
+        "local_trials": 0,
+        "combined_evaluations": 5972
+      },
+      {
+        "generation": 199,
+        "objective": 805.4667,
+        "evaluations": 6002,
+        "unique_decoded_plans": 20,
+        "feasible_population": 31,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 744.6828886684364,
+          "short_trips": 0,
+          "real_cost_eur": 805.4667,
+          "penalty_eur": 0.0,
+          "total_eur": 805.4667
+        },
+        "local_trials": 0,
+        "combined_evaluations": 6002
+      },
+      {
+        "generation": 200,
+        "objective": 805.4667,
+        "evaluations": 6032,
+        "unique_decoded_plans": 17,
+        "feasible_population": 32,
+        "population_size": 32,
+        "best_decoded": {
+          "feasible": true,
+          "horizon_excess_minutes": 0,
+          "max_vehicle_minutes": 744.6828886684364,
+          "short_trips": 0,
+          "real_cost_eur": 805.4667,
+          "penalty_eur": 0.0,
+          "total_eur": 805.4667
+        },
+        "local_trials": 0,
+        "combined_evaluations": 6032
+      }
+    ],
+    "stop_count_mode": "soft",
+    "optimality_gap": null,
+    "warning": "No certified optimum. Five available vehicles; idle slots are allowed. Overtime is charged at the configured multiplier. No 3D loading."
+  }
+}

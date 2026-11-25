@@ -1,0 +1,114 @@
+[
+  {
+    "case": "baseline",
+    "expected": {
+      "feasible": true,
+      "penalty_eur": 0,
+      "error": null
+    },
+    "actual": {
+      "feasible": true,
+      "penalty_eur": 0.0,
+      "error": null
+    },
+    "max_vehicle_minutes": 101.0
+  },
+  {
+    "case": "payload",
+    "expected": {
+      "feasible": false,
+      "penalty_eur": null,
+      "error": "Overloaded trip"
+    },
+    "actual": {
+      "feasible": false,
+      "penalty_eur": null,
+      "error": "Overloaded trip"
+    },
+    "max_vehicle_minutes": 101.0
+  },
+  {
+    "case": "usable_volume",
+    "expected": {
+      "feasible": false,
+      "penalty_eur": null,
+      "error": "Overloaded trip"
+    },
+    "actual": {
+      "feasible": false,
+      "penalty_eur": null,
+      "error": "Overloaded trip"
+    },
+    "max_vehicle_minutes": 101.0
+  },
+  {
+    "case": "eight_stops",
+    "expected": {
+      "feasible": true,
+      "penalty_eur": 4000,
+      "error": null
+    },
+    "actual": {
+      "feasible": true,
+      "penalty_eur": 4000.0,
+      "error": null
+    },
+    "max_vehicle_minutes": 102.0
+  },
+  {
+    "case": "fifty_one_stops",
+    "expected": {
+      "feasible": false,
+      "penalty_eur": null,
+      "error": "Hard stop-count violation"
+    },
+    "actual": {
+      "feasible": false,
+      "penalty_eur": null,
+      "error": "Hard stop-count violation"
+    },
+    "max_vehicle_minutes": 103.0
+  },
+  {
+    "case": "missing_customer",
+    "expected": {
+      "feasible": false,
+      "penalty_eur": null,
+      "error": "Missing or duplicated customers"
+    },
+    "actual": {
+      "feasible": false,
+      "penalty_eur": null,
+      "error": "Missing or duplicated customers"
+    },
+    "max_vehicle_minutes": 101.0
+  },
+  {
+    "case": "duplicate_customer",
+    "expected": {
+      "feasible": false,
+      "penalty_eur": null,
+      "error": "Missing or duplicated customers"
+    },
+    "actual": {
+      "feasible": false,
+      "penalty_eur": null,
+      "error": "Missing or duplicated customers"
+    },
+    "max_vehicle_minutes": 101.0
+  },
+  {
+    "case": "cumulative_961_minutes",
+    "expected": {
+      "feasible": false,
+      "penalty_eur": null,
+      "error": "Vehicle exceeds time_horizon_minutes"
+    },
+    "actual": {
+      "feasible": false,
+      "penalty_eur": null,
+      "error": "Vehicle exceeds time_horizon_minutes"
+    },
+    "max_vehicle_minutes": 961.0
+  }
+]

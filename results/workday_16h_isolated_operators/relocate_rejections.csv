@@ -1,0 +1,4 @@
+seed,arm,attempted,valid,accepted,payload,usable_volume,max_stops,workday_horizon,coverage,empty_trip,min_stops,no_improvement,other_validation,screened_pairs_max_stops,screened_pairs_usable_volume,screened_pairs_min_stops
+0,relocate_only,3420,8,8,0,156,0,3256,0,0,0,0,0,0,2511,0
+1,relocate_only,3420,8,8,0,156,0,3256,0,0,0,0,0,0,2511,0
+2,relocate_only,3420,8,8,0,156,0,3256,0,0,0,0,0,0,2511,0

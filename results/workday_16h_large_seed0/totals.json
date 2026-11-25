@@ -1,0 +1,23 @@
+{
+  "pairs": 25,
+  "wins": 25,
+  "ties": 0,
+  "losses": 0,
+  "median_penalty_reduction_eur": 124000.0,
+  "original": {
+    "zero_penalty": 0,
+    "reused": 25,
+    "mean_real_cost_eur": 1778.960316,
+    "mean_penalty_eur": 252240.0,
+    "mean_total_eur": 254018.960316,
+    "mean_runtime_seconds": 115.85940505996346
+  },
+  "relocate_only": {
+    "zero_penalty": 0,
+    "reused": 2,
+    "mean_real_cost_eur": 1730.95634,
+    "mean_penalty_eur": 147600.0,
+    "mean_total_eur": 149330.95634,
+    "mean_runtime_seconds": 46.270899312002584
+  }
+}

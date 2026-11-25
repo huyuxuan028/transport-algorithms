@@ -30,8 +30,13 @@ def main():
     fig,ax=plt.subplots(figsize=(8,5))
     for name,_ in variants:
         group=[r for r in runs if r['variant']==name]
-        means=[statistics.mean(r['history'][i]['objective'] for r in group) for i in range(a.generations+1)]
+        means=[];lower=[];upper=[]
+        for i in range(a.generations+1):
+            values=[r['history'][i]['objective'] for r in group]
+            if None in values:
+                values=[float('nan')]
+            means.append(statistics.mean(values));lower.append(min(values));upper.append(max(values))
         ax.plot(range(a.generations+1),means,label=name)
-        ax.fill_between(range(a.generations+1),[min(r['history'][i]['objective'] for r in group) for i in range(a.generations+1)],[max(r['history'][i]['objective'] for r in group) for i in range(a.generations+1)],alpha=.12)
+        ax.fill_between(range(a.generations+1),lower,upper,alpha=.12)
     ax.set(xlabel='Generation',ylabel='Mean best-so-far cost (EUR)',title='Algorithm behavior: '+label);ax.legend();fig.tight_layout();fig.savefig(a.output/'convergence.png',dpi=150)
 if __name__=='__main__':main()

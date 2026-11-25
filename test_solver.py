@@ -1,6 +1,6 @@
 import copy,itertools,json,math,unittest
 from pathlib import Path
-from solver import decode,evaluate_costs,make_fleet,repair_short_trips,route_m,schedule,solve,split_vehicle,stop_limits,validate_instance,validate_solution
+from solver import InfeasiblePartition,decode,evaluate_costs,make_fleet,repair_short_trips,route_m,schedule,solve,split_vehicle,stop_limits,validate_instance,validate_solution
 
 ROOT=Path(__file__).parent
 
@@ -18,6 +18,31 @@ def ready():
     x=tiny();x['vehicles']=make_fleet(x,[0,1,2,0,1]);return x
 
 class Tests(unittest.TestCase):
+    def test_workday_horizon_covers_all_trips_and_wages(self):
+        x=ready()
+        x['model'].update(time_horizon_minutes=960,min_stops_per_trip=1,max_stops_per_trip=2)
+        x['duration_matrix_s']=[[0 if a==b else 1200 for b in range(5)] for a in range(5)]
+        for customer in x['customers'][1:]:
+            customer['service_minutes']=210
+        trips=schedule([[[1,2],[3,4]],[],[],[],[]],x)
+        validated=validate_solution(x,trips)
+        self.assertEqual(validated['finish_minutes_by_vehicle'],[960,0,0,0,0])
+        self.assertEqual(validated['cost']['wage_eur'],480)
+        self.assertEqual(validated['cost']['overtime_hours'],8)
+        genome=[[1,2,3,4],[0,0,0,0],[0,1,2,0,1]]
+        self.assertEqual(decode(genome,x)['transports'],trips)
+        x['customers'][4]['service_minutes']+=1
+        trips=schedule([[[1,2],[3,4]],[],[],[],[]],x)
+        x['reference_transports']=trips
+        with self.assertRaisesRegex(ValueError,'time_horizon_minutes'):
+            validate_solution(x,trips)
+        with self.assertRaises(InfeasiblePartition):
+            decode(genome,x)
+        self.assertTrue(solve(x,seed=0,population=12,generations=5)['validation']['feasible'])
+        x['model']['time_horizon_minutes']=1
+        with self.assertRaisesRegex(InfeasiblePartition,'no horizon-feasible candidate'):
+            solve(x,seed=0,population=4,generations=0)
+
     def test_split_matches_exhaustive_contiguous_partitions(self):
         x=ready();v=x['vehicles'][0]
         for order in itertools.permutations(range(1,5)):

@@ -1,5 +1,9 @@
 # Shared benchmark contract: review proposal
 
+For the current GA 16-hour rules and the questions pending confirmation with
+PSO, see the [workday evaluator and initialization audit](WORKDAY_16H_SEED_COMPARISON.md#shared-rules-to-confirm-with-pso).
+The experiment protocols below document earlier runs.
+
 Source: the PSO-team CSV dataset, imported once as `data/shared_pso_250.json`.
 It contains 250 customer records and a depot, with five fixed vehicles:
 two Caddy, two Sprinter and one MAN. Preserve customer IDs, orders, item

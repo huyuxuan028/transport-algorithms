@@ -1,0 +1,5 @@
+size_range,cases,decreased,unchanged,increased,positive_to_zero,median_reduction_real_cost_eur,median_reduction_penalty_eur,median_reduction_total_eur
+150-174,25,25,0,0,25,383.7834,266000.0,266323.6088
+175-199,25,22,3,0,22,367.6475,258000.0,258312.5274
+200-224,25,6,19,0,5,0.0000,0.0,0.0000
+225-249,25,0,25,0,0,0.0000,0.0,0.0000

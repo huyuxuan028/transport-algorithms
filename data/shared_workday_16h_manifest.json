@@ -1,0 +1,608 @@
+{
+  "suite": "budapest-workday-16h-v1",
+  "source_sha256": "6d794dff4a03cebb1f9127796209fa1f263450a780ce76ade9c26244b6a2676c",
+  "workday_start_local": "08:00",
+  "time_horizon_minutes": 960,
+  "instances": [
+    {
+      "file": "budapest-workday-16h-v1-000.json",
+      "seed": 0,
+      "customers": 150,
+      "sha256": "6f2f89ab26dbdfe699d01afcc28a10eb09d8955fd3c880189a9ec2b545b6af21"
+    },
+    {
+      "file": "budapest-workday-16h-v1-001.json",
+      "seed": 1,
+      "customers": 151,
+      "sha256": "c0b3c4f3ae302e626dd641e8d5a327e08703d781352b367f84b04d8a68102f67"
+    },
+    {
+      "file": "budapest-workday-16h-v1-002.json",
+      "seed": 2,
+      "customers": 152,
+      "sha256": "c18b69f9ddae8dc29fa63da8cb0c01daa935bdded06fec7eff76f2214a85692e"
+    },
+    {
+      "file": "budapest-workday-16h-v1-003.json",
+      "seed": 3,
+      "customers": 153,
+      "sha256": "4657bfa960ee0058d7c34289eeeb80d93837d0b48ac966e3dda07cc3085c8981"
+    },
+    {
+      "file": "budapest-workday-16h-v1-004.json",
+      "seed": 4,
+      "customers": 154,
+      "sha256": "43801ebfeee82491696c25eebaa45e31a82f8d19fe6a32aa9c12ab2a8723a19a"
+    },
+    {
+      "file": "budapest-workday-16h-v1-005.json",
+      "seed": 5,
+      "customers": 155,
+      "sha256": "729d989a52e37219647d3d3306c23e87fccebad7c792e9461b60ca140d55a276"
+    },
+    {
+      "file": "budapest-workday-16h-v1-006.json",
+      "seed": 6,
+      "customers": 156,
+      "sha256": "cea3560c6b203a935010312aa277eccc77cd97dd2390f7956048694297c193bf"
+    },
+    {
+      "file": "budapest-workday-16h-v1-007.json",
+      "seed": 7,
+      "customers": 157,
+      "sha256": "7b72f9c2211d1cb14b20abbd41c95ea9a5e1eeddc631dad06b3f1df2860ea6d5"
+    },
+    {
+      "file": "budapest-workday-16h-v1-008.json",
+      "seed": 8,
+      "customers": 158,
+      "sha256": "0763af08b539ecad0d254d1729f2107801a75ace21c36f4565b24bbbdfddb355"
+    },
+    {
+      "file": "budapest-workday-16h-v1-009.json",
+      "seed": 9,
+      "customers": 159,
+      "sha256": "831e63722e3c5de89e551f4d2a311582dbf9e0cbe15c28e8ad57f2e7895e08e0"
+    },
+    {
+      "file": "budapest-workday-16h-v1-010.json",
+      "seed": 10,
+      "customers": 160,
+      "sha256": "11a7e44562564de8df4e9a31f8103b9b479e51ff63c3bae9bc406f01c2dd02f8"
+    },
+    {
+      "file": "budapest-workday-16h-v1-011.json",
+      "seed": 11,
+      "customers": 161,
+      "sha256": "1f3021a33b023710beb5f0216b68fb4803e02841bdf450c906fffeef7646a0fe"
+    },
+    {
+      "file": "budapest-workday-16h-v1-012.json",
+      "seed": 12,
+      "customers": 162,
+      "sha256": "1769a6534ca2b96798865625bd1d4893ed62ee052d0888f97c3cbb874bf74128"
+    },
+    {
+      "file": "budapest-workday-16h-v1-013.json",
+      "seed": 13,
+      "customers": 163,
+      "sha256": "047c5f7788d6ffa04bc62443b0b7395f272e845b487c2a5de20a959da8ee88d3"
+    },
+    {
+      "file": "budapest-workday-16h-v1-014.json",
+      "seed": 14,
+      "customers": 164,
+      "sha256": "45db79b32fb105777c6cd790a26b1de8a76aece29283e4657ba143fc0ea28416"
+    },
+    {
+      "file": "budapest-workday-16h-v1-015.json",
+      "seed": 15,
+      "customers": 165,
+      "sha256": "4ccf462fb45c5bdf5603471a5414893a7b16a93240395f189c20009ccc37457e"
+    },
+    {
+      "file": "budapest-workday-16h-v1-016.json",
+      "seed": 16,
+      "customers": 166,
+      "sha256": "0bc844712c37237abd42bd062ef9cd9cfea86164a73802249b6d62a42e46de58"
+    },
+    {
+      "file": "budapest-workday-16h-v1-017.json",
+      "seed": 17,
+      "customers": 167,
+      "sha256": "8720eabf4f925b428acd08aa34aa88299729e95eabf0b817f006eeef8496aeee"
+    },
+    {
+      "file": "budapest-workday-16h-v1-018.json",
+      "seed": 18,
+      "customers": 168,
+      "sha256": "85cde3ad5ae13ac5b437f4a9f19db69f5b340ab8e22b40df811a86d48cf3e8cf"
+    },
+    {
+      "file": "budapest-workday-16h-v1-019.json",
+      "seed": 19,
+      "customers": 169,
+      "sha256": "2ffcec161da26af0477824cb3286d5d45ff936aa1465b9b7b6cb896a6ee63825"
+    },
+    {
+      "file": "budapest-workday-16h-v1-020.json",
+      "seed": 20,
+      "customers": 170,
+      "sha256": "1ef2729a8dee6b38e4f15fe45e8fccbf2332429f26d495252bd96094a5fc2f47"
+    },
+    {
+      "file": "budapest-workday-16h-v1-021.json",
+      "seed": 21,
+      "customers": 171,
+      "sha256": "751960ca9a2289cac3c174b425630fb3aa2c5a137ee7ef94e2fb105da59c50ad"
+    },
+    {
+      "file": "budapest-workday-16h-v1-022.json",
+      "seed": 22,
+      "customers": 172,
+      "sha256": "3de8fd90c7ff6a4d09dd412c03e345a7587adb1eb9719b5899332f46235e0a48"
+    },
+    {
+      "file": "budapest-workday-16h-v1-023.json",
+      "seed": 23,
+      "customers": 173,
+      "sha256": "ec0c550431b7e4239cdeecb40f4090f2ba322d86e424a64079923cd43c522a85"
+    },
+    {
+      "file": "budapest-workday-16h-v1-024.json",
+      "seed": 24,
+      "customers": 174,
+      "sha256": "1032aa56fb000d5b3816bbd04840fcd6d7601ad779801eeaa0143c3a499118ba"
+    },
+    {
+      "file": "budapest-workday-16h-v1-025.json",
+      "seed": 25,
+      "customers": 175,
+      "sha256": "568ce0c3d960e8d34ddd9842ba88bb7e70998d53157eff7beccc77a9c32583a0"
+    },
+    {
+      "file": "budapest-workday-16h-v1-026.json",
+      "seed": 26,
+      "customers": 176,
+      "sha256": "1e2a7cfd660962b126a94c889165d89a988945086ce0ac2d55bd8d9945edce1d"
+    },
+    {
+      "file": "budapest-workday-16h-v1-027.json",
+      "seed": 27,
+      "customers": 177,
+      "sha256": "2197cf00ee5767aac6dd9fdb54f75da8f4117b1a4af7401807eb6345f246f86e"
+    },
+    {
+      "file": "budapest-workday-16h-v1-028.json",
+      "seed": 28,
+      "customers": 178,
+      "sha256": "68d96656a235535fb2a018e400b7cdd50ff90270de085dcd4737a385ad163cdc"
+    },
+    {
+      "file": "budapest-workday-16h-v1-029.json",
+      "seed": 29,
+      "customers": 179,
+      "sha256": "1f5b98cbdd3e2b16612e6c8cc99cdac14c8e582edadb83b880a50b2bf9b52c49"
+    },
+    {
+      "file": "budapest-workday-16h-v1-030.json",
+      "seed": 30,
+      "customers": 180,
+      "sha256": "962e4c8ba530c06a024ffc866bdfe189bc52277b1ca98b725bc54d2e3ce23c06"
+    },
+    {
+      "file": "budapest-workday-16h-v1-031.json",
+      "seed": 31,
+      "customers": 181,
+      "sha256": "5dad0221ae783aaf450def275defcd6366ffbbf5df131781a6cf52bbf256d463"
+    },
+    {
+      "file": "budapest-workday-16h-v1-032.json",
+      "seed": 32,
+      "customers": 182,
+      "sha256": "8a710ec0c1dab1f0f4e3ce3b39bf4b72a2a6dbb5ea59fa225ae5918ca79b575e"
+    },
+    {
+      "file": "budapest-workday-16h-v1-033.json",
+      "seed": 33,
+      "customers": 183,
+      "sha256": "77a81f9fe862a727c069a854d9c398e6df1b034326d5aa27e39a3be4707fd902"
+    },
+    {
+      "file": "budapest-workday-16h-v1-034.json",
+      "seed": 34,
+      "customers": 184,
+      "sha256": "fc53a56a2c2d2578775127f221ed81bdf09e35b7c1ca7dc5f19ef94c4352427e"
+    },
+    {
+      "file": "budapest-workday-16h-v1-035.json",
+      "seed": 35,
+      "customers": 185,
+      "sha256": "614c717eb24271e5c4fb693b62336c7f25d79b0422e960401d089a42b2313038"
+    },
+    {
+      "file": "budapest-workday-16h-v1-036.json",
+      "seed": 36,
+      "customers": 186,
+      "sha256": "5327e16b0e2e1e66b8b97cf83e630f4108c97371b18090bd9ece54b052471288"
+    },
+    {
+      "file": "budapest-workday-16h-v1-037.json",
+      "seed": 37,
+      "customers": 187,
+      "sha256": "413ea1c150d775dca51923aeb3cb6679a00fa24a6b0dc618b2800403a21525bf"
+    },
+    {
+      "file": "budapest-workday-16h-v1-038.json",
+      "seed": 38,
+      "customers": 188,
+      "sha256": "090976847037864e6964d675a50a037e859b6ddb4a66480d4f7cba9baea2e1f1"
+    },
+    {
+      "file": "budapest-workday-16h-v1-039.json",
+      "seed": 39,
+      "customers": 189,
+      "sha256": "69220dced416b918752aebdb3cefe3e179ba660e3fe7a299bafa7e94255f2ad6"
+    },
+    {
+      "file": "budapest-workday-16h-v1-040.json",
+      "seed": 40,
+      "customers": 190,
+      "sha256": "6c180d32b0f920dc395d69da3d0ccb556f1ad9e51fd909895f4c90d6bd063039"
+    },
+    {
+      "file": "budapest-workday-16h-v1-041.json",
+      "seed": 41,
+      "customers": 191,
+      "sha256": "98c83a031e3f4495aa32d940048ab869be49731135ed9600e568ad4ea2f48a53"
+    },
+    {
+      "file": "budapest-workday-16h-v1-042.json",
+      "seed": 42,
+      "customers": 192,
+      "sha256": "bf5835fe8f5e92bbc47482e5ef197e2f7cfc5eca21e5f08c8dc28f8d221e2826"
+    },
+    {
+      "file": "budapest-workday-16h-v1-043.json",
+      "seed": 43,
+      "customers": 193,
+      "sha256": "8de1fd1bf221a3c2e53e68603114a0d2d2e03a55afb96f88a40efa743f3c1fb7"
+    },
+    {
+      "file": "budapest-workday-16h-v1-044.json",
+      "seed": 44,
+      "customers": 194,
+      "sha256": "a06099edaf3bdbcda0438610aac3570944c5cfd82dec6f3c81df26370e86226d"
+    },
+    {
+      "file": "budapest-workday-16h-v1-045.json",
+      "seed": 45,
+      "customers": 195,
+      "sha256": "ab31fb468bd9b50d042d9bd2354b98194d852fb81ee65910ed6c6662157a6e10"
+    },
+    {
+      "file": "budapest-workday-16h-v1-046.json",
+      "seed": 46,
+      "customers": 196,
+      "sha256": "127507efc2bfb8887d1dca3f55894779a39c72b17927bef8fd96f0c48c7d4c49"
+    },
+    {
+      "file": "budapest-workday-16h-v1-047.json",
+      "seed": 47,
+      "customers": 197,
+      "sha256": "16408db3313ea301b497b6b8ee9690b761403ffc7d2cdbbee752cfe02a941324"
+    },
+    {
+      "file": "budapest-workday-16h-v1-048.json",
+      "seed": 48,
+      "customers": 198,
+      "sha256": "407baecba4813c3f83df7dc97fce0145a9c800493bda96441375e9d8b15f662f"
+    },
+    {
+      "file": "budapest-workday-16h-v1-049.json",
+      "seed": 49,
+      "customers": 199,
+      "sha256": "3a34f9b7860c21fea26260046ddacad460945d07c3cc8aae84f48f9f22fe9cef"
+    },
+    {
+      "file": "budapest-workday-16h-v1-050.json",
+      "seed": 50,
+      "customers": 200,
+      "sha256": "58e0d5af8ed8439df32689ea7bce9463786112c686a9bc0377105dd7f7ddd88b"
+    },
+    {
+      "file": "budapest-workday-16h-v1-051.json",
+      "seed": 51,
+      "customers": 201,
+      "sha256": "ba2d1306aa423c46d0b0198710afa5a9cb972832bf4b4702838b59d5adcfa571"
+    },
+    {
+      "file": "budapest-workday-16h-v1-052.json",
+      "seed": 52,
+      "customers": 202,
+      "sha256": "55c5cb6a3bfe04cf6779002bfe9660001a417e14b0c35b52f4551d9743f662a3"
+    },
+    {
+      "file": "budapest-workday-16h-v1-053.json",
+      "seed": 53,
+      "customers": 203,
+      "sha256": "77eda8ae3af061549daa23a3d0fdcefc5362612bcd00088a812854e870b789d5"
+    },
+    {
+      "file": "budapest-workday-16h-v1-054.json",
+      "seed": 54,
+      "customers": 204,
+      "sha256": "4eef82d44d5005b08489842373f113432b90f71e29a81bb10523279279261c31"
+    },
+    {
+      "file": "budapest-workday-16h-v1-055.json",
+      "seed": 55,
+      "customers": 205,
+      "sha256": "9050b8ad90da1f9e782e94fc531f1ed4a2c700944f86b090bd16ff14053b26ae"
+    },
+    {
+      "file": "budapest-workday-16h-v1-056.json",
+      "seed": 56,
+      "customers": 206,
+      "sha256": "097fe42c153387393216b2ddb007927d108bac59ffcbe4ae91e561d762a775c2"
+    },
+    {
+      "file": "budapest-workday-16h-v1-057.json",
+      "seed": 57,
+      "customers": 207,
+      "sha256": "4dc1e0cc8c3fc0316f9deaa1e849245c0e687b6b4e6b8eee0122a261d37669a3"
+    },
+    {
+      "file": "budapest-workday-16h-v1-058.json",
+      "seed": 58,
+      "customers": 208,
+      "sha256": "f4125e3233e5936bdeb65ef6ec43e5fad7e78a8aa432bbb6c3768044857b5569"
+    },
+    {
+      "file": "budapest-workday-16h-v1-059.json",
+      "seed": 59,
+      "customers": 209,
+      "sha256": "6c603d8abb1c20c38d4e21884ce27fbdfb769c5f5a859897482844a9bacdde3a"
+    },
+    {
+      "file": "budapest-workday-16h-v1-060.json",
+      "seed": 60,
+      "customers": 210,
+      "sha256": "13551d9ddf4e5508e746ac95dc5264b4b7ca4a8b5cbcd3aabcc2bd4332175cfb"
+    },
+    {
+      "file": "budapest-workday-16h-v1-061.json",
+      "seed": 61,
+      "customers": 211,
+      "sha256": "2080672b6c0365a9989e5c70dbf03f57dff5000fe32a2e883368627473c58fb0"
+    },
+    {
+      "file": "budapest-workday-16h-v1-062.json",
+      "seed": 62,
+      "customers": 212,
+      "sha256": "300d21717b70bef3515c884061ec8af710d8fb39f1434268127ee53c7128c74c"
+    },
+    {
+      "file": "budapest-workday-16h-v1-063.json",
+      "seed": 63,
+      "customers": 213,
+      "sha256": "74c3ef6d5ca267e337adf6d4d166ff84b263d1d81e4bfbe38708895456201379"
+    },
+    {
+      "file": "budapest-workday-16h-v1-064.json",
+      "seed": 64,
+      "customers": 214,
+      "sha256": "a70ad16584e1a36f9de041740b0eacf6bd6210cfd28d63df1e85ae9c7454db05"
+    },
+    {
+      "file": "budapest-workday-16h-v1-065.json",
+      "seed": 65,
+      "customers": 215,
+      "sha256": "3a99c1b3327ea0aa670fc59e98066898728c98498fdc5efeac24db3f7b105c01"
+    },
+    {
+      "file": "budapest-workday-16h-v1-066.json",
+      "seed": 66,
+      "customers": 216,
+      "sha256": "5f0ca9fd6e202ba6491c695ac88239cbbb234c8b75f9a576197f79b1cedf04ea"
+    },
+    {
+      "file": "budapest-workday-16h-v1-067.json",
+      "seed": 67,
+      "customers": 217,
+      "sha256": "d8a6d8f16483b93371fa205c9ed201f4950c957b60dbaf4ab8a83bb626b87c8d"
+    },
+    {
+      "file": "budapest-workday-16h-v1-068.json",
+      "seed": 68,
+      "customers": 218,
+      "sha256": "12fcaa772c64e8f3a88f2143e01a7907ab76cd330606fa46772180be8f2b6478"
+    },
+    {
+      "file": "budapest-workday-16h-v1-069.json",
+      "seed": 69,
+      "customers": 219,
+      "sha256": "b79e8fbd1911fa02c6f28f1bd8180bdc4d9a3b26e1d4d0faa931e441406219f0"
+    },
+    {
+      "file": "budapest-workday-16h-v1-070.json",
+      "seed": 70,
+      "customers": 220,
+      "sha256": "6598b974aa2768ba1746957b85db3791e0f84d6b207f5d597e3f6e87f335469b"
+    },
+    {
+      "file": "budapest-workday-16h-v1-071.json",
+      "seed": 71,
+      "customers": 221,
+      "sha256": "9d69a153a33f298ca92db1295fd830a91008f7b2ec3c3436b34a422bea416ad7"
+    },
+    {
+      "file": "budapest-workday-16h-v1-072.json",
+      "seed": 72,
+      "customers": 222,
+      "sha256": "c3a3dbcc3d43fa3f6d04165cab002286d2f4cf9a73d6e16f046e94ab158bbdcc"
+    },
+    {
+      "file": "budapest-workday-16h-v1-073.json",
+      "seed": 73,
+      "customers": 223,
+      "sha256": "6451eeb369d9da98635d7ad4a93953c9603754a9688c4f5ca4235205a4b206c4"
+    },
+    {
+      "file": "budapest-workday-16h-v1-074.json",
+      "seed": 74,
+      "customers": 224,
+      "sha256": "cfad7c3c41fb51f5df3ba1794ec1139621cc45732a1123a7f43b5ceb2861519f"
+    },
+    {
+      "file": "budapest-workday-16h-v1-075.json",
+      "seed": 75,
+      "customers": 225,
+      "sha256": "3a7e2458a82c6aa4f5cc2ff150a6e4d6d9eb21d4a7f5f124b6d7a75065323fa8"
+    },
+    {
+      "file": "budapest-workday-16h-v1-076.json",
+      "seed": 76,
+      "customers": 226,
+      "sha256": "0b1abd4ea14eee6f9a65d9e1396a8e944687fd82d3e47744668eb6225e755fd3"
+    },
+    {
+      "file": "budapest-workday-16h-v1-077.json",
+      "seed": 77,
+      "customers": 227,
+      "sha256": "32fd875bde6744f9d9b0bf352503039c89e92b4bbb9f6cf649e3a50010bfc00c"
+    },
+    {
+      "file": "budapest-workday-16h-v1-078.json",
+      "seed": 78,
+      "customers": 228,
+      "sha256": "d871297a9ddac8a6d41b7f9a89b2c2839bec124ed6881e93590f276470053d8e"
+    },
+    {
+      "file": "budapest-workday-16h-v1-079.json",
+      "seed": 79,
+      "customers": 229,
+      "sha256": "34b90d73348e0406cf5e6def2e6ad13df0a8762d1a326ad461df1abc16d12367"
+    },
+    {
+      "file": "budapest-workday-16h-v1-080.json",
+      "seed": 80,
+      "customers": 230,
+      "sha256": "e14b0f5e88d3b91f93be1377eb9678a5fe582789a48e3fde2702c5790eb466a6"
+    },
+    {
+      "file": "budapest-workday-16h-v1-081.json",
+      "seed": 81,
+      "customers": 231,
+      "sha256": "a428577eac7be6eb8b858749a15f35e4888a7640176f1823f5e8951520182a7a"
+    },
+    {
+      "file": "budapest-workday-16h-v1-082.json",
+      "seed": 82,
+      "customers": 232,
+      "sha256": "024069bb89162ce06dc30ce03f16eb77bd7eb6e9bbad50411dc7b57330b6e6fb"
+    },
+    {
+      "file": "budapest-workday-16h-v1-083.json",
+      "seed": 83,
+      "customers": 233,
+      "sha256": "0eef78e18ecaca201da3840bff9dd5c619ee7bec22f373de641f0c2ddd775468"
+    },
+    {
+      "file": "budapest-workday-16h-v1-084.json",
+      "seed": 84,
+      "customers": 234,
+      "sha256": "d7277f0a952515d6f3c0d9f4c0b1675598ef903a4ddf9f013151985046352553"
+    },
+    {
+      "file": "budapest-workday-16h-v1-085.json",
+      "seed": 85,
+      "customers": 235,
+      "sha256": "a5c508b9de55dcf535463fd4dda639958eb1eedfe1ae0b10f76f428e09e20a8d"
+    },
+    {
+      "file": "budapest-workday-16h-v1-086.json",
+      "seed": 86,
+      "customers": 236,
+      "sha256": "a4f737daf75c9e195b2062784bc5b3f5539ea1ab57b609b98a5406b3547fdcd8"
+    },
+    {
+      "file": "budapest-workday-16h-v1-087.json",
+      "seed": 87,
+      "customers": 237,
+      "sha256": "7b9eec3f466fa6c118649f2b112a49e524a734d92e8edd2408683976b104ca97"
+    },
+    {
+      "file": "budapest-workday-16h-v1-088.json",
+      "seed": 88,
+      "customers": 238,
+      "sha256": "705854d645eed2ef38907080f5787fd376d7706978525494f2dca8aef0495c5f"
+    },
+    {
+      "file": "budapest-workday-16h-v1-089.json",
+      "seed": 89,
+      "customers": 239,
+      "sha256": "f359fe2996752fdd6b5fa8abd6e7694f859ee9be5bb269d5c98edd811003a63f"
+    },
+    {
+      "file": "budapest-workday-16h-v1-090.json",
+      "seed": 90,
+      "customers": 240,
+      "sha256": "acae84e15447ee8053aa6c10b32760344aaf008f661c1fc827ccd6b6ac92afd3"
+    },
+    {
+      "file": "budapest-workday-16h-v1-091.json",
+      "seed": 91,
+      "customers": 241,
+      "sha256": "b2c70534f2662c1cb191ec7892fbf29228ef1ca374ac355f3567eb2fb9ef3ca6"
+    },
+    {
+      "file": "budapest-workday-16h-v1-092.json",
+      "seed": 92,
+      "customers": 242,
+      "sha256": "bba4fd2ca2d9605bc13f82a39125951525c30265abb42c11712df8c1663eea77"
+    },
+    {
+      "file": "budapest-workday-16h-v1-093.json",
+      "seed": 93,
+      "customers": 243,
+      "sha256": "620b3e883ef4515644ef7d32fa7bcbbff265d9ccecaa014d6bc80bde3c7bfbf4"
+    },
+    {
+      "file": "budapest-workday-16h-v1-094.json",
+      "seed": 94,
+      "customers": 244,
+      "sha256": "f89fde170b51b2a24faf171a25a92ee99d11b1daf4e9d02cc4ae051e34137752"
+    },
+    {
+      "file": "budapest-workday-16h-v1-095.json",
+      "seed": 95,
+      "customers": 245,
+      "sha256": "7d08dcd64ee1db75f6595750ba5e97f2ff91d0559bf714cad1ac44dd358ab484"
+    },
+    {
+      "file": "budapest-workday-16h-v1-096.json",
+      "seed": 96,
+      "customers": 246,
+      "sha256": "ecf8aa13cff3fe9fe43f904c926d58282cdde4d57501b196e7d2f28628a10c48"
+    },
+    {
+      "file": "budapest-workday-16h-v1-097.json",
+      "seed": 97,
+      "customers": 247,
+      "sha256": "debaa9252fd8ad16772140f130a067af459520655bf27ff774c8ed4b6120ecec"
+    },
+    {
+      "file": "budapest-workday-16h-v1-098.json",
+      "seed": 98,
+      "customers": 248,
+      "sha256": "03dd7fe817fee25deaa0c4b228da9aeebb038cf51937063e3dc459b2e2acc7e6"
+    },
+    {
+      "file": "budapest-workday-16h-v1-099.json",
+      "seed": 99,
+      "customers": 249,
+      "sha256": "94e7d4cd9f795880d4a399671e84db86e0675d0b168b0e4c0e24aed8ec4f5562"
+    }
+  ]
+}
