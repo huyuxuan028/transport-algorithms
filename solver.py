@@ -384,7 +384,8 @@ def candidate_metrics(candidate,horizon):
 def solve(inst,seed=0,population=40,generations=100,objective='fuel_litres',method='ga',
           volume_buffer=None,cost_overrides=None,local_search=True,crossover_rate=0.9,
           heuristic_seed=True,evaluation_budget=None,audit=False,initial_transports=None,
-          relocate=False,swap=False,cross_trip_trials_per_generation=40):
+          relocate=False,swap=False,cross_trip_trials_per_generation=40,
+          horizon_penalty_eur_per_minute=None):
     """Search within a budget that counts GA candidates and cross-trip trials."""
     allowed=validate_instance(inst,volume_buffer);n=len(inst['customers'])-1
     fixed=fixed_type_indices(inst)
@@ -393,6 +394,9 @@ def solve(inst,seed=0,population=40,generations=100,objective='fuel_litres',meth
     if evaluation_budget is not None and (type(evaluation_budget) is not int or evaluation_budget<population):
         raise ValueError('Evaluation budget must be an integer covering initialization')
     if initial_transports is not None and not heuristic_seed:raise ValueError('An explicit seed requires seeded initialization')
+    rate=horizon_penalty_eur_per_minute
+    if rate is not None and (objective!='cost' or type(rate) not in (int,float) or not math.isfinite(rate) or rate<=0):
+        raise ValueError('Horizon penalty requires the cost objective and a positive finite rate')
     cross_trip=None
     if relocate or swap:
         if objective!='cost' or method!='ga' or type(cross_trip_trials_per_generation) is not int or cross_trip_trials_per_generation<1:
@@ -417,6 +421,13 @@ def solve(inst,seed=0,population=40,generations=100,objective='fuel_litres',meth
         return candidate
     def rank(candidate):
         return candidate['horizon_excess_minutes'],candidate[key]
+    def score(candidate):
+        # Selection key. Without a rate any plan inside the horizon outranks any plan over it,
+        # so cost is ignored until a plan fits; the rate prices each minute over in EUR instead.
+        # The incumbent `best` always uses `rank`, so only horizon-feasible plans are returned.
+        if rate is None:return rank(candidate)
+        excess=candidate['horizon_excess_minutes']
+        return candidate[key]+(rate*excess if excess else 0.)
     def local_trial_count():
         return cross_trip.trials if cross_trip is not None else 0
     def budget_exhausted():
@@ -522,7 +533,7 @@ def solve(inst,seed=0,population=40,generations=100,objective='fuel_litres',meth
                 break
             if method=='random':g=random_genome()
             else:
-                a=min(rng.sample(pool,3),key=rank)['genome'];b=min(rng.sample(pool,3),key=rank)['genome']
+                a=min(rng.sample(pool,3),key=score)['genome'];b=min(rng.sample(pool,3),key=score)['genome']
                 order=ox(a[0],b[0],rng) if rng.random()<crossover_rate else a[0][:]
                 assignment=[aa if rng.random()<.5 else bb for aa,bb in zip(a[1],b[1])]
                 if n>1 and rng.random()<.3:
@@ -565,7 +576,7 @@ def solve(inst,seed=0,population=40,generations=100,objective='fuel_litres',meth
                     j=rng.randrange(len(types));types[j]=rng.randrange(len(inst['vehicle_types']))
                 g=repair([order,assignment,types])
             child=evaluate(g);next_pool.append(child)
-        pool=sorted(next_pool,key=rank);best=min(best,pool[0],key=rank)
+        pool=sorted(next_pool,key=score);best=min([best,*pool],key=rank)
         if cross_trip is not None and rank(best)[0]==0. and not budget_exhausted():
             local_limit=cross_trip_trials_per_generation
             if evaluation_budget is not None:
@@ -573,7 +584,7 @@ def solve(inst,seed=0,population=40,generations=100,objective='fuel_litres',meth
             improved=cross_trip.improve(best,local_limit)
             if improved is not best:
                 pool[-1]=improved
-                pool.sort(key=rank)
+                pool.sort(key=score)
                 best=improved
         history.append(diagnostic(generation))
     feasible=rank(best)[0]==0.
@@ -593,6 +604,7 @@ def solve(inst,seed=0,population=40,generations=100,objective='fuel_litres',meth
         'relocate_rejections':cross_trip.relocate_rejections if relocate else {},
         'relocate_screened_route_pairs':cross_trip.relocate_screened_route_pairs if relocate else {},
         'local_trials':history[-1]['local_trials'],'combined_evaluations':history[-1]['combined_evaluations'],
+        'horizon_penalty_eur_per_minute':rate,
         'validation':validate_solution(inst,best['transports'],best['fleet'],volume_buffer=volume_buffer,cost_overrides=cost_overrides) if feasible else {'feasible':False},
         **({'initial_random_audit':initial_random} if audit else {}),'history':history,'stop_count_mode':inst['model'].get('stop_count_mode','soft'),
         'optimality_gap':None,'warning':'No certified optimum. Five available vehicles; idle slots are allowed. Overtime is charged at the configured multiplier. No 3D loading.'}
@@ -606,7 +618,8 @@ def main():
     p.add_argument('--wage',type=float,default=None);p.add_argument('--overtime-multiplier',type=float,default=None)
     p.add_argument('--no-heuristic-seed',action='store_true',help='Initialize from random chromosomes only')
     p.add_argument('--relocate',action='store_true',help='Enable cross-trip single-customer moves')
-    p.add_argument('--swap',action='store_true',help='Enable cross-trip customer exchanges');a=p.parse_args()
+    p.add_argument('--swap',action='store_true',help='Enable cross-trip customer exchanges')
+    p.add_argument('--horizon-penalty',type=float,default=None,help='EUR per minute over the workday during search; default ranks feasibility first');a=p.parse_args()
     overrides={}
     if a.fuel_price is not None:overrides['fuel_price']=a.fuel_price
     if a.wage is not None:overrides['wage']=a.wage
@@ -614,7 +627,7 @@ def main():
     inst=json.loads(a.instance.read_bytes())
     if a.stop_count_mode:inst['model']['stop_count_mode']=a.stop_count_mode
     if a.require_road and ('road_network' not in inst or 'duration_matrix_s' not in inst):raise ValueError('Road matrices and provenance are required')
-    result=solve(inst,a.seed,a.population,a.generations,a.objective,a.method,volume_buffer=a.volume_buffer,cost_overrides=overrides,heuristic_seed=not a.no_heuristic_seed,relocate=a.relocate,swap=a.swap)
+    result=solve(inst,a.seed,a.population,a.generations,a.objective,a.method,volume_buffer=a.volume_buffer,cost_overrides=overrides,heuristic_seed=not a.no_heuristic_seed,relocate=a.relocate,swap=a.swap,horizon_penalty_eur_per_minute=a.horizon_penalty)
     a.output.parent.mkdir(parents=True,exist_ok=True);a.output.write_text(json.dumps(result,indent=2,allow_nan=False))
     print(json.dumps({k:result[k] for k in ['instance','method','objective','runtime_seconds','evaluations']},indent=2))
     print(json.dumps({k:v for k,v in result['validation'].items() if k!='trip_details'},indent=2))

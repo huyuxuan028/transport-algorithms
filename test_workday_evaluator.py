@@ -87,6 +87,29 @@ class WorkdayEvaluatorTests(unittest.TestCase):
         self.assertFalse(result['validation']['feasible'])
         self.assertIsNone(result['best'])
 
+    def test_horizon_penalty_search_returns_a_validated_plan_inside_the_workday(self):
+        instance = ready()
+        instance['model'].update(time_horizon_minutes=960, min_stops_per_trip=1, max_stops_per_trip=2)
+        instance['duration_matrix_s'] = [[0 if a == b else 1200 for b in range(5)] for a in range(5)]
+        for customer in instance['customers'][1:]:
+            customer['service_minutes'] = 210
+        instance['customers'][4]['service_minutes'] += 1  # the reference plan now ends at minute 961
+        instance['reference_transports'] = schedule([[[1, 2], [3, 4]], [], [], [], []], instance)
+        result = solve(instance, seed=0, population=12, generations=5, objective='cost',
+                       horizon_penalty_eur_per_minute=5.0)
+        self.assertEqual(result['horizon_penalty_eur_per_minute'], 5.0)
+        self.assertTrue(result['validation']['feasible'])
+        self.assertLessEqual(max(result['validation']['finish_minutes_by_vehicle']), 960)
+        objectives = [point['objective'] for point in result['history'] if point['objective'] is not None]
+        self.assertEqual(objectives, sorted(objectives, reverse=True))  # incumbent never gets worse
+
+    def test_horizon_penalty_requires_cost_objective_and_positive_rate(self):
+        instance = ready()
+        for objective, rate in [('distance', 5.0), ('cost', 0), ('cost', float('inf'))]:
+            with self.subTest(objective=objective, rate=rate), self.assertRaisesRegex(ValueError, 'Horizon penalty'):
+                solve(instance, population=4, generations=1, objective=objective,
+                      horizon_penalty_eur_per_minute=rate)
+
 
 if __name__ == '__main__':
     print(json.dumps(evaluator_cases(), indent=2))
