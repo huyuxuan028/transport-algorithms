@@ -6,7 +6,7 @@ and batch conversion of all 100 test instances (test_3001..test_3100).
 
 Usage:
     # Single instance:
-    python import_pso_dataset.py --source ../industrial-transport --output data/shared_pso_250.json
+    python import_pso_dataset.py --source ../industrial-transport/dataset --output data/shared_pso_250.json
     python import_pso_dataset.py --source ../industrial-transport/instances/test/test_3001 --output data/pso_test_3001.json
 
     # Batch convert 100 test instances:
@@ -37,24 +37,24 @@ def read_csv(path):
     with Path(path).open(encoding='utf-8-sig',newline='') as f:return list(csv.DictReader(f))
 
 def resolve_dataset_dir(source_path):
-    """Support both repo root containing dataset/ and direct instance directory."""
+    """Resolve instance files from source_path explicitly."""
     src=Path(source_path)
-    if (src/'dataset').is_dir() and (src/'dataset/params.json').exists():
+    if (src/'dataset').is_dir() and (src/'dataset/params.json').is_file():
         return src/'dataset'
-    if (src/'params.json').exists() and (src/'orders.csv').exists():
+    if (src/'params.json').is_file() and (src/'orders.csv').is_file():
         return src
     raise FileNotFoundError(f"Could not locate dataset files (params.json, orders.csv) in {source_path}")
 
-def convert(source,solver_dir=ROOT,name=None,seed=None,time_horizon_minutes=None,pso_solution=None):
+def convert(source,solver_dir=ROOT,name=None,seed=None,time_horizon_minutes=None,pso_solution=None,furniture_file=None):
     src=Path(source);ds=resolve_dataset_dir(src)
     params=json.loads((ds/'params.json').read_text(encoding='utf-8'))
     inst_info=params.get('instance',{})
     inst_name=name or inst_info.get('name') or ('Shared-PSO-250-Budapest' if ds.name=='dataset' else ds.name)
     inst_seed=seed if seed is not None else inst_info.get('seed',42)
 
-    furniture_path=ds/'furniture_clean.csv'
-    if not furniture_path.exists() and (ds.parent.parent.parent/'dataset/furniture_clean.csv').exists():
-        furniture_path=ds.parent.parent.parent/'dataset/furniture_clean.csv'
+    furniture_path=Path(furniture_file) if furniture_file else ds/'furniture_clean.csv'
+    if not furniture_path.is_file():
+        raise FileNotFoundError(f"Required furniture_clean.csv not found at {furniture_path}. Specify via --furniture-file.")
     furniture={r['id']:r for r in read_csv(furniture_path)}
     locations={int(r['location_id']):r for r in read_csv(ds/'locations.csv')}
     orders=sorted(read_csv(ds/'orders.csv'),key=lambda r:int(r['location_id']))
@@ -96,7 +96,7 @@ def convert(source,solver_dir=ROOT,name=None,seed=None,time_horizon_minutes=None
             types.append({'id':t,'name':r['model'],'volume_m3':float(r['max_volume_m3']),'payload_kg':float(r['max_weight_kg']),
                           'cargo_length_m':float(r['cargo_length_m']),'cargo_width_m':float(r['cargo_width_m']),'cargo_height_m':float(r['cargo_height_m']),
                           'fuel_l_per_100km':round(float(r['fuel_l_per_km'])*100,4),'top_speed_kmh':float(r['top_speed_kmh']),
-                          'speed_kmh':float(r['avg_speed_kmh']),'wage_eur_per_h':float(r['wage_per_h']),
+                          'speed_kmh':float(r['avg_speed_kmh']),'wage_eur_per_h':float(r['wage_per_h']),\
                           'maintenance_eur_per_1000km':float(r['maintenance_per_1000km']),\
                           'source':'PSO team vehicles.csv (xsilentkiller/industrial-transport); cargo dims, speeds, wages, maintenance marked assumed there'})
     witness_types=[type_index[r['type_id']] for r in vrows]
@@ -153,21 +153,15 @@ def convert(source,solver_dir=ROOT,name=None,seed=None,time_horizon_minutes=None
 
     allowed=solver.validate_instance(inst)
     if any(not allowed[i] for i in range(1,n+1)):raise ValueError('an order fits no vehicle under the volume buffer')
-    # Witness validation uses None horizon so greedy neutral start is verified for capacity and stop limits
     witness_model=dict(inst['model'],time_horizon_minutes=None)
     check=solver.validate_solution(dict(inst,model=witness_model),inst['reference_transports'])
 
-    # Optional PSO team published plan for evaluator cross-checking
+    # PSO team plan for evaluator cross-checking is only loaded if explicitly supplied
     pso_check=None
-    sol_file=None
     if pso_solution is not None:
         sol_file=Path(pso_solution)
-    elif (src/'output/best_solution.json').exists():
-        sol_file=src/'output/best_solution.json'
-    elif (src.parent.parent/'output'/f"{ds.name}/best_solution.json").exists():
-        sol_file=src.parent.parent/'output'/f"{ds.name}/best_solution.json"
-
-    if sol_file and sol_file.exists():
+        if not sol_file.is_file():
+            raise FileNotFoundError(f"Specified PSO solution file '{pso_solution}' does not exist.")
         sol_raw=json.loads(sol_file.read_text(encoding='utf-8'))
         best=sol_raw.get('best_solution',sol_raw)
         pso_groups=[[] for _ in vehicles]
@@ -179,7 +173,7 @@ def convert(source,solver_dir=ROOT,name=None,seed=None,time_horizon_minutes=None
 
     return inst,check,pso_check
 
-def batch_convert(source_dir,output_dir,solver_dir=ROOT,time_horizon_minutes=None):
+def batch_convert(source_dir,output_dir,solver_dir=ROOT,time_horizon_minutes=None,furniture_file=None):
     """Batch convert all instance subdirectories in source_dir into output_dir and write manifest."""
     src=Path(source_dir);out=Path(output_dir);out.mkdir(parents=True,exist_ok=True)
     instance_dirs=sorted([p for p in src.iterdir() if p.is_dir() and (p/'params.json').exists()])
@@ -187,7 +181,7 @@ def batch_convert(source_dir,output_dir,solver_dir=ROOT,time_horizon_minutes=Non
         raise ValueError(f"No instance directories with params.json found in {source_dir}")
     entries=[]
     for p in instance_dirs:
-        inst,check,pso_check=convert(p,solver_dir=solver_dir,time_horizon_minutes=time_horizon_minutes)
+        inst,check,pso_check=convert(p,solver_dir=solver_dir,time_horizon_minutes=time_horizon_minutes,furniture_file=furniture_file)
         filename=f"{p.name}.json"
         content=(json.dumps(inst,sort_keys=True,separators=(',',':'),allow_nan=False)+'\n').encode('utf-8')
         (out/filename).write_bytes(content)
@@ -201,11 +195,12 @@ def batch_convert(source_dir,output_dir,solver_dir=ROOT,time_horizon_minutes=Non
 
 def main():
     p=argparse.ArgumentParser(description=__doc__,formatter_class=argparse.RawDescriptionHelpFormatter)
-    p.add_argument('--source',type=Path,help='path to industrial-transport repo or specific instance directory')
+    p.add_argument('--source',type=Path,help='path to instance directory (e.g. instances/test/test_3001 or dataset)')
     p.add_argument('--batch-source',type=Path,help='path to directory containing instances (e.g. instances/test)')
     p.add_argument('--batch-output',type=Path,help='output directory for batch conversion')
     p.add_argument('--output',type=Path,default=ROOT/'data/shared_pso_250.json')
-    p.add_argument('--pso-solution',type=Path,help='optional path to PSO best_solution.json')
+    p.add_argument('--pso-solution',type=Path,help='optional explicit path to PSO best_solution.json')
+    p.add_argument('--furniture-file',type=Path,help='optional explicit path to furniture_clean.csv')
     p.add_argument('--seed',type=int,help='override random seed')
     p.add_argument('--name',type=str,help='override instance name')
     p.add_argument('--time-horizon-minutes',type=float,help='time horizon in minutes (e.g. 960 for 16h)')
@@ -213,7 +208,7 @@ def main():
 
     if a.batch_source:
         dest=a.batch_output or a.output.parent/'batch_converted'
-        manifest=batch_convert(a.batch_source,dest,solver_dir=a.solver_dir,time_horizon_minutes=a.time_horizon_minutes)
+        manifest=batch_convert(a.batch_source,dest,solver_dir=a.solver_dir,time_horizon_minutes=a.time_horizon_minutes,furniture_file=a.furniture_file)
         print(f"Batch converted {manifest['count']} instances to {dest}. Manifest: {dest/'manifest.json'}")
         return
 
@@ -221,7 +216,8 @@ def main():
         p.error("Either --source or --batch-source is required")
 
     inst,check,pso_check=convert(a.source,solver_dir=a.solver_dir,name=a.name,seed=a.seed,
-                                 time_horizon_minutes=a.time_horizon_minutes,pso_solution=a.pso_solution)
+                                 time_horizon_minutes=a.time_horizon_minutes,pso_solution=a.pso_solution,
+                                 furniture_file=a.furniture_file)
     a.output.parent.mkdir(parents=True,exist_ok=True);a.output.write_text(json.dumps(inst,indent=1,allow_nan=False),encoding='utf-8')
     res={'instance':inst['name'],'customers':len(inst['customers'])-1,'vehicles':[v['id'] for v in inst['vehicles']],
          'neutral_witness':{'trips':check['trips'],'real_cost_eur':check['cost']['real_cost_eur'],'penalty_eur':check['cost']['penalty_eur'],'total_eur':check['cost']['total_eur'],'below_min':check['cost']['trips_below_min']},

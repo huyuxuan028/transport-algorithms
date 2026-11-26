@@ -1,12 +1,12 @@
 """Unit tests for import_pso_dataset.py and cross_evaluate_pso.py.
 
 Verifies:
-  1. Single instance conversion directly from an instance directory (test_3001).
-  2. Optional PSO solution parsing and evaluation.
+  1. Single instance conversion directly from an explicit instance directory (test_3001).
+  2. Optional PSO solution parsing and evaluation when explicitly passed.
   3. Batch instance conversion across test instances with manifest generation.
   4. Bidirectional evaluator agreement:
      - PSO plan scored by GA evaluator.
-     - GA plan scored by PSO evaluator.
+     - GA plan scored by PSO evaluator with explicit repository path.
 """
 from __future__ import annotations
 
@@ -19,26 +19,16 @@ from import_pso_dataset import batch_convert, convert, resolve_dataset_dir
 from cross_evaluate_pso import evaluate_ga_with_pso, evaluate_pso_with_ga
 
 ROOT = Path(__file__).resolve().parent
-
-
-def find_pso_repo() -> Path:
-    candidates = [
-        ROOT.parent / 'industrial-transport',
-        Path.cwd() / 'industrial-transport',
-    ]
-    for c in candidates:
-        if (c / 'src/data_loader.py').exists():
-            return c
-    raise FileNotFoundError(f"Could not locate industrial-transport repo. Searched: {candidates}")
+PSO_ROOT = ROOT.parent / 'industrial-transport'
 
 
 class TestImportPSODataset(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.pso_root = find_pso_repo()
+        cls.pso_root = PSO_ROOT
 
     def test_resolve_dataset_dir(self):
-        self.assertEqual(resolve_dataset_dir(self.pso_root), self.pso_root / 'dataset')
+        self.assertEqual(resolve_dataset_dir(self.pso_root / 'dataset'), self.pso_root / 'dataset')
         self.assertEqual(
             resolve_dataset_dir(self.pso_root / 'instances/test/test_3001'),
             self.pso_root / 'instances/test/test_3001',
@@ -86,7 +76,7 @@ class TestImportPSODataset(unittest.TestCase):
 class TestCrossEvaluator(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.pso_root = find_pso_repo()
+        cls.pso_root = PSO_ROOT
 
     def test_pso_to_ga_seed_42(self):
         res = evaluate_pso_with_ga(

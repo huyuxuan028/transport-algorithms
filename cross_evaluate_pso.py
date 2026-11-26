@@ -4,14 +4,13 @@ Evaluates:
   1. PSO plans using GA's evaluator (solver.validate_solution).
   2. GA plans using PSO's evaluator (src.cost.trip_metrics, day_metrics, decoder.check_solution).
 
-All instance, solution, and dataset paths are passed dynamically via function
-arguments or CLI flags. No environment-specific paths are hardcoded.
+All instance, solution, and repository paths are explicitly supplied via function
+arguments or CLI parameters without implicit discovery or search heuristics.
 """
 from __future__ import annotations
 
 import argparse
 import json
-import math
 import sys
 from pathlib import Path
 from typing import Any
@@ -23,22 +22,19 @@ if str(ROOT) not in sys.path:
 import solver
 
 
-def _ensure_pso_imported(pso_repo_path: str | Path | None = None):
-    """Dynamically import PSO packages from the specified or discovered directory."""
-    if 'src.data_loader' in sys.modules:
-        return
-    candidates = []
-    if pso_repo_path:
-        candidates.append(Path(pso_repo_path).resolve())
-    candidates.append(ROOT.parent / 'industrial-transport')
-    for c in candidates:
-        if (c / 'src/data_loader.py').exists():
-            if str(c) not in sys.path:
-                sys.path.insert(0, str(c))
-            return
-    raise ImportError(
-        f"Could not locate industrial-transport repository. Please provide --pso-repo. Searched: {candidates}"
-    )
+def import_pso_modules(pso_repo_dir: str | Path):
+    """Explicitly import PSO packages from the specified pso_repo_dir.
+
+    No implicit search heuristics or candidate guessing are used.
+    """
+    repo = Path(pso_repo_dir).resolve()
+    if not (repo / 'src' / 'data_loader.py').is_file():
+        raise FileNotFoundError(
+            f"Specified pso_repo_dir '{pso_repo_dir}' does not contain 'src/data_loader.py'."
+        )
+    repo_str = str(repo)
+    if repo_str not in sys.path:
+        sys.path.insert(0, repo_str)
 
 
 def evaluate_pso_with_ga(
@@ -62,7 +58,7 @@ def evaluate_pso_with_ga(
     # Schedule through GA solver
     scheduled_trips = solver.schedule(pso_groups, ga_instance, vehicles)
 
-    # Validate against instance (using witness horizon if instance has no horizon)
+    # Validate against instance
     model = dict(ga_instance.get('model', {}))
     inst_for_val = dict(ga_instance, model=model)
     validation = solver.validate_solution(inst_for_val, scheduled_trips)
@@ -89,12 +85,22 @@ def evaluate_pso_with_ga(
 def evaluate_ga_with_pso(
     ga_solution_path: str | Path,
     pso_dataset_dir: str | Path,
-    pso_repo_dir: str | Path | None = None,
+    pso_repo_dir: str | Path,
+    preserve_trip_order: bool = True,
 ) -> dict[str, Any]:
-    """Score a GA solution file using PSO's cost, day_metrics, and check_solution."""
-    _ensure_pso_imported(pso_repo_dir)
+    """Score a GA solution file using PSO's cost, day_metrics, and check_solution.
+
+    Args:
+        ga_solution_path: Path to GA solution or instance with transports JSON.
+        pso_dataset_dir: Path to the PSO instance/dataset directory containing params.json, etc.
+        pso_repo_dir: Explicit path to the industrial-transport repo (no guessing).
+        preserve_trip_order: If True, evaluates last delivery according to the exact sequence
+            of trips as scheduled by GA. If False, follows PSO decoder convention where the trip
+            with the maximum return leg is ordered last.
+    """
+    import_pso_modules(pso_repo_dir)
     import numpy as np
-    from src.cost import DEFAULT_WEIGHTS, day_metrics, trip_metrics
+    from src.cost import DEFAULT_WEIGHTS, day_metrics, return_leg_min, trip_metrics
     from src.data_loader import ProblemData, load_problem
     from src.decoder import Solution, TripPlan, check_solution
 
@@ -121,16 +127,21 @@ def evaluate_ga_with_pso(
 
     V = data.n_vehicles
     v_times = np.zeros(V, dtype=np.float64)
-    v_max_ret = np.zeros(V, dtype=np.float64)
+    v_last_returns = np.zeros(V, dtype=np.float64)
 
     for tp in trip_plans:
         k = tp.vehicle_index
         v_times[k] += tp.metrics.total_min
-        ret_min = float(data.distance[tp.customers[-1], 0] / data.vehicles[k].avg_speed_kmh * 60.0)
-        v_max_ret[k] = max(v_max_ret[k], ret_min)
+        ret_min = return_leg_min(data, k, tp.customers[-1])
+        if preserve_trip_order:
+            # Last delivery of the actual scheduled order: return leg of the last trip in sequence
+            v_last_returns[k] = ret_min
+        else:
+            # PSO convention: trip with longest return leg placed last
+            v_last_returns[k] = max(v_last_returns[k], ret_min)
 
     days = [
-        day_metrics(data, k, v_times[k], v_max_ret[k], DEFAULT_WEIGHTS)
+        day_metrics(data, k, v_times[k], v_last_returns[k], DEFAULT_WEIGHTS)
         for k in range(V)
     ]
     vehicle_overtime_min = np.array([d.beyond_shift_min for d in days])
@@ -192,23 +203,30 @@ def evaluate_ga_with_pso(
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--pso-repo', type=Path, help='path to industrial-transport repository')
     sub = parser.add_subparsers(dest='command', required=True)
 
     p1 = sub.add_parser('pso-to-ga', help='Evaluate PSO plan with GA validator')
-    p1.add_argument('--pso-solution', type=Path, required=True)
-    p1.add_argument('--ga-instance', type=Path, required=True)
+    p1.add_argument('--pso-solution', type=Path, required=True, help='Path to PSO best_solution.json')
+    p1.add_argument('--ga-instance', type=Path, required=True, help='Path to GA instance JSON')
 
     p2 = sub.add_parser('ga-to-pso', help='Evaluate GA plan with PSO validator')
-    p2.add_argument('--ga-solution', type=Path, required=True)
-    p2.add_argument('--pso-dataset', type=Path, required=True)
+    p2.add_argument('--ga-solution', type=Path, required=True, help='Path to GA solution JSON')
+    p2.add_argument('--pso-dataset', type=Path, required=True, help='Path to PSO instance/dataset folder')
+    p2.add_argument('--pso-repo', type=Path, required=True, help='Explicit path to industrial-transport repo')
+    p2.add_argument('--reorder-last-trip', action='store_true', default=False,
+                    help='Reorder trips to put max return leg last (PSO convention) instead of preserving plan sequence')
 
     args = parser.parse_args()
     if args.command == 'pso-to-ga':
         res = evaluate_pso_with_ga(args.pso_solution, args.ga_instance)
         print(json.dumps(res, indent=2))
     elif args.command == 'ga-to-pso':
-        res = evaluate_ga_with_pso(args.ga_solution, args.pso_dataset, pso_repo_dir=args.pso_repo)
+        res = evaluate_ga_with_pso(
+            args.ga_solution,
+            args.pso_dataset,
+            pso_repo_dir=args.pso_repo,
+            preserve_trip_order=not args.reorder_last_trip,
+        )
         print(json.dumps(res, indent=2))
 
 
